@@ -75,7 +75,7 @@ class _LoginUPState extends State<LoginUP> {
       }
       _showErrorDialog(errorMessage);
     } catch (e) {
-      print({e});
+      print({e.toString()});
       const errorMessage = "Couldn't authenticate please try again";
       _showErrorDialog(errorMessage);
     }
@@ -97,16 +97,17 @@ class _LoginUPState extends State<LoginUP> {
                 //adding padding based on the media size
                 bottom: MediaQuery.of(context).viewInsets.bottom + 10),
             color: backG,
-            height:
-                deviceSize.height - MediaQuery.of(context).viewInsets.bottom,
+            height: deviceSize.height -
+                MediaQuery.of(context).viewInsets.bottom +
+                432,
             width: double.infinity,
             alignment: Alignment.center,
             child: Column(
               children: [
-                const LogoHeading(),
-                const SizedBox(
-                  height: 20,
-                ),
+                // const LogoHeading(),
+                // const SizedBox(
+                //   height: 20,
+                // ),
                 Padding(
                   padding: const EdgeInsets.all(11.0),
                   child: Form(
@@ -114,16 +115,16 @@ class _LoginUPState extends State<LoginUP> {
                     child: Column(crossAxisAlignment: CrossAxisAlignment.center,
                         // mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            child: const Text(
-                              'Udhyog 4.0 (U4) is a start-up initiation by professionals in 2019, and mainly provides technological solutions related to emerging technologies such as Industry 4.0. This in turn transform existing industrial setup into SMART and sustainable manufacturing setup. ',
-                              maxLines: 5,
-                              style: TextStyle(overflow: TextOverflow.ellipsis),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
+                          // Container(
+                          //   child: const Text(
+                          //     'Udhyog 4.0 (U4) is a start-up initiation by professionals in 2019, and mainly provides technological solutions related to emerging technologies such as Industry 4.0. This in turn transform existing industrial setup into SMART and sustainable manufacturing setup. ',
+                          //     maxLines: 5,
+                          //     style: TextStyle(overflow: TextOverflow.ellipsis),
+                          //   ),
+                          // ),
+                          // const SizedBox(
+                          //   height: 20,
+                          // ),
                           Container(
                             width: double.maxFinite,
                             child: TextFormField(

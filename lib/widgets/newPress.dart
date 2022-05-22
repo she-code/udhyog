@@ -4,8 +4,9 @@ import 'package:udhyog/providers/auth.dart';
 import 'package:udhyog/providers/press.dart';
 
 class NewPress extends StatefulWidget {
-  Function addPress;
-  NewPress(this.addPress);
+  static const routeName = "/newPress";
+  //Function addPress;
+  NewPress();
 
   @override
   State<NewPress> createState() => _NewPressState();
@@ -46,49 +47,71 @@ class _NewPressState extends State<NewPress> {
     //   Navigator.of(context).pop();
     // }
 
-    return SingleChildScrollView(
-      child: Card(
-        elevation: 5,
-        child: Container(
-          padding: EdgeInsets.only(
-              top: 10,
-              left: 10,
-              right: 10,
-              bottom: MediaQuery.of(context).viewInsets.bottom + 20),
-          child: Form(
-            key: _form,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                // TextField(
-                //   decoration: const InputDecoration(labelText: 'Name'),
-                //   controller: pressNameCont,
-                //   onSubmitted: (_) => submitData(),
-                // ),
-                TextField(
-                  decoration: const InputDecoration(labelText: 'Type'),
-                  controller: pressTypeCont,
-                  // keyboardType: TextInputType.number,
-                  onSubmitted: (_) => submitData(),
-
-                  //  onChanged: (value) => amountInput = value,
-                ),
-                SizedBox(
-                  height: 70,
-                ),
-                ElevatedButton(
-                    onPressed: submitData,
-                    child: Text('Add Press'),
-                    style: ElevatedButton.styleFrom(
-                        primary: Theme.of(context).primaryColor,
-                        textStyle: TextStyle(
-                          color: Theme.of(context).textTheme.button?.color,
-                        )))
-              ],
+    return Scaffold(
+      body: SafeArea(
+          child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              child: Text("Logo"),
             ),
-          ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              child: Text("company"),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              child: Text("Wax Injection Press Monitoring System"),
+            )
+          ],
         ),
-      ),
+      )),
     );
   }
 }
+ //Card(
+      //   elevation: 5,
+      //   child: Container(
+      //     padding: EdgeInsets.only(
+      //         top: 10,
+      //         left: 10,
+      //         right: 10,
+      //         bottom: MediaQuery.of(context).viewInsets.bottom + 20),
+      //     child: Form(
+      //       key: _form,
+      //       child: Column(
+      //         crossAxisAlignment: CrossAxisAlignment.end,
+      //         children: <Widget>[
+      //           // TextField(
+      //           //   decoration: const InputDecoration(labelText: 'Name'),
+      //           //   controller: pressNameCont,
+      //           //   onSubmitted: (_) => submitData(),
+      //           // ),
+      //           TextField(
+      //             decoration: const InputDecoration(labelText: 'Type'),
+      //             controller: pressTypeCont,
+      //             // keyboardType: TextInputType.number,
+      //             onSubmitted: (_) => submitData(),
+
+      //             //  onChanged: (value) => amountInput = value,
+      //           ),
+      //           SizedBox(
+      //             height: 70,
+      //           ),
+      //           ElevatedButton(
+      //               onPressed: submitData,
+      //               child: Text('Add Press'),
+      //               style: ElevatedButton.styleFrom(
+      //                   primary: Theme.of(context).primaryColor,
+      //                   textStyle: TextStyle(
+      //                     color: Theme.of(context).textTheme.button?.color,
+      //                   )))
+      //         ],
+      //       ),
+      //     ),
+      //   ),
+      // )

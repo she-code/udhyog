@@ -43,8 +43,8 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> signin(String email, String password) async {
-    //final url = Uri.parse('http://192.168.122.189:5001/auth/signin');
-    final url = Uri.parse('http://localhost:5001/auth/signin');
+    final url = Uri.parse('http://192.168.58.189:5001/users/login');
+    // final url = Uri.parse('http://localhost:5001/users/login');
     print({password, email});
     try {
       final response = await http.post(url,
@@ -105,6 +105,7 @@ class Auth with ChangeNotifier {
   Future<bool> tryAutoLogin() async {
     final prefs = await SharedPreferences.getInstance();
     if (!prefs.containsKey('userData')) {
+      print("No token stored");
       return false;
     }
     final extractedUserData =
@@ -112,6 +113,7 @@ class Auth with ChangeNotifier {
     final expiryDate =
         DateTime.parse(extractedUserData['expiryDate'].toString());
     if (expiryDate.isBefore(DateTime.now())) {
+      print("expired");
       return false;
     }
     _token = extractedUserData['token'].toString();

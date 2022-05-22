@@ -13,7 +13,7 @@ class Overview extends StatelessWidget {
       Press(
         pressId: 1,
         partCount: 1.2,
-        pressName: 'Press 1',
+        pressName: 'Location 1',
         blockTemp: '23',
         clientId: 1,
         createdAt: DateTime.now(),
@@ -26,7 +26,7 @@ class Overview extends StatelessWidget {
       Press(
         pressId: 2,
         partCount: 1.2,
-        pressName: 'Press 2',
+        pressName: 'Location 2',
         blockTemp: '23',
         clientId: 1,
         createdAt: DateTime.now(),
@@ -39,7 +39,7 @@ class Overview extends StatelessWidget {
       Press(
         pressId: 3,
         partCount: 1.2,
-        pressName: 'Press 3',
+        pressName: 'Location 3',
         blockTemp: '23',
         clientId: 1,
         createdAt: DateTime.now(),
@@ -79,15 +79,16 @@ class Overview extends StatelessWidget {
                         child: ListView(
                           scrollDirection: Axis.horizontal,
                           children: [
-                            GaugeApp(
-                                'Lower Tank Temp', press[index].tankLowerTemp),
-                            GaugeApp(
-                                'Higher Tank Temp',
-                                double.parse(
-                                    press[index].tankTopTemp.toString())),
-                            GaugeApp('Hose Temp', press[index].hoseTemp),
-                            GaugeApp('Block Temp',
-                                double.parse(press[index].blockTemp)),
+                            // GaugeApp(
+                            //     'Lower Tank Temp', press[index].tankLowerTemp),
+                            // GaugeApp(
+                            //     'Higher Tank Temp', press[index].tankTopTemp),
+                            // GaugeApp('Hose Temp', press[index].hoseTemp),
+                            // GaugeApp('Block Temp', press[index].blockTemp),
+                            GaugeApp('Lower Tank Temp', 23),
+                            GaugeApp('Higher Tank Temp', 25),
+                            GaugeApp('Hose Temp', 10),
+                            GaugeApp('Block Temp', 45),
                           ],
                         )),
                   ],

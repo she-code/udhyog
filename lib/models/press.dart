@@ -4,9 +4,9 @@ class Press {
   String pressName;
   int clientId;
   DateTime createdAt;
-  int tankTopTemp;
+  var tankTopTemp;
   var tankLowerTemp;
-  String blockTemp;
+  var blockTemp;
   var hoseTemp;
   var partCount;
   int timer;

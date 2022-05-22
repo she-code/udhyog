@@ -18,19 +18,6 @@ class PressContainer extends StatefulWidget {
 
 class _PressContainerState extends State<PressContainer>
     with TickerProviderStateMixin {
-  void _showPressAddModal() {
-    showModalBottomSheet(
-        context: context,
-        builder: (_) {
-          return GestureDetector(
-            // used to prevent closing when clicking in the modal
-            onTap: () {},
-            child: NewPress(_addNewPress),
-            behavior: HitTestBehavior.opaque,
-          );
-        });
-  }
-
   void _addNewPress(String pressType) {}
   // void _addNewPress(String pType, String presName) {
   //   final newTx = Press(
@@ -55,99 +42,101 @@ class _PressContainerState extends State<PressContainer>
 
     return SafeArea(
       child: Scaffold(
-          body: Container(
-            padding: const EdgeInsets.all(8.0),
-            color: backG,
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            child: Column(
-              children: [
-                Row(
-                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.all(10),
-                      child: Image.asset(
-                        'assets/images/mainLogo.png',
-                        // fit: BoxFit.cover,
-                        width: 70,
-                        height: 70,
-                      ),
+        body: Container(
+          padding: const EdgeInsets.all(8.0),
+          color: backG,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            children: [
+              Row(
+                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(10),
+                    child: Image.asset(
+                      'assets/images/mainLogo.png',
+                      // fit: BoxFit.cover,
+                      width: 70,
+                      height: 70,
                     ),
-                    Expanded(
-                        child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Container(
-                            padding: const EdgeInsets.all(5),
-                            margin: const EdgeInsets.only(bottom: 10),
-                            child: const Text(
-                              'Turbo cast india (Private limited) Rajkot ',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            decoration: BoxDecoration(
-                                color:
-                                    Theme.of(context).colorScheme.secondary)),
-                        Container(
+                  ),
+                  Expanded(
+                      child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Container(
                           padding: const EdgeInsets.all(5),
-                          decoration: const BoxDecoration(color: Colors.green),
-                          child: Row(
-                              //crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: const [
-                                Text(
-                                  'Pattern Injection',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                Text('Pattern Processing',
-                                    style: TextStyle(color: Colors.white))
-                              ]),
-                        )
-                      ],
-                    )),
+                          margin: const EdgeInsets.only(bottom: 10),
+                          child: const Text(
+                            'Turbo cast india (Private limited) Rajkot ',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.secondary)),
+                      Container(
+                        padding: const EdgeInsets.all(5),
+                        decoration: const BoxDecoration(color: Colors.green),
+                        child: Row(
+                            //crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: const [
+                              Text(
+                                'Pattern Injection',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              Text('Pattern Processing',
+                                  style: TextStyle(color: Colors.white))
+                            ]),
+                      )
+                    ],
+                  )),
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                width: double.maxFinite,
+                child: TabBar(
+                  labelStyle: const TextStyle(
+                      fontSize: 18.0, fontWeight: FontWeight.w600),
+                  controller: _tabController,
+                  labelPadding: EdgeInsets.zero,
+                  isScrollable: true,
+                  tabs: [
+                    Tab(child: PressList('Overview')),
+                    Tab(child: PressList('Location 1')),
+                    Tab(child: PressList('Location 2')),
+                    Tab(child: PressList('Location 3')),
+                    Tab(child: PressList('Location 4')),
+                    Tab(child: PressList('Location 5')),
                   ],
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
+              ),
+              //),
+              Expanded(
+                child: Container(
                   width: double.maxFinite,
-                  child: TabBar(
-                    labelStyle: const TextStyle(
-                        fontSize: 18.0, fontWeight: FontWeight.w600),
-                    controller: _tabController,
-                    labelPadding: EdgeInsets.zero,
-                    isScrollable: true,
-                    tabs: [
-                      Tab(child: PressList('Overview')),
-                      Tab(child: PressList('Press 1')),
-                      Tab(child: PressList('Press 2')),
-                      Tab(child: PressList('Press 3')),
-                      Tab(child: PressList('Press 4')),
-                      Tab(child: PressList('Press 5')),
-                    ],
-                  ),
+                  child: TabBarView(controller: _tabController, children: [
+                    Overview(),
+                    PressDetails(),
+                    ReportDownload(),
+                    AddImage(),
+                    Text('helle'),
+                    Text('helle')
+                  ]),
                 ),
-                //),
-                Expanded(
-                  child: Container(
-                    width: double.maxFinite,
-                    child: TabBarView(controller: _tabController, children: [
-                      Overview(),
-                      PressDetails(),
-                      ReportDownload(),
-                      AddImage(),
-                      Text('helle'),
-                      Text('helle')
-                    ]),
-                  ),
-                )
-              ],
-            ),
+              )
+            ],
           ),
-          floatingActionButton: FloatingActionButton(
-              child: const Icon(Icons.add), onPressed: _showPressAddModal)),
+        ),
+        // floatingActionButton: FloatingActionButton(
+        //     child: const Icon(Icons.add), onPressed: () {}
+        //     // Navigator.of(context).pushNamed(AddPress.routeName)
+        //     )
+      ),
     );
   }
 }

@@ -114,7 +114,7 @@ class _PressDetailsState extends State<PressDetails> {
               Text("Report Type: "),
               Container(
                 height: 50,
-                width: 110,
+                width: 115,
                 child: ListTile(
                   // title: Text(
                   //   "Report",
@@ -197,7 +197,7 @@ class _PressDetailsState extends State<PressDetails> {
                 ),
                 Container(
                   height: 50,
-                  width: 110,
+                  width: 120,
                   child: ListTile(
                     // title: Text(
                     //   "Chart",
@@ -222,7 +222,7 @@ class _PressDetailsState extends State<PressDetails> {
                 ),
                 Container(
                   height: 50,
-                  width: 115,
+                  width: 125,
                   child: ListTile(
                     // title: Text(
                     //   "Chart",
@@ -247,7 +247,7 @@ class _PressDetailsState extends State<PressDetails> {
                 ),
                 Container(
                   height: 50,
-                  width: 130,
+                  width: 135,
                   child: ListTile(
                     // title: Text(
                     //   "Chart",

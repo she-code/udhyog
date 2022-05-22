@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../models/press.dart';
 import '../providers/press.dart';
@@ -79,13 +80,13 @@ class ReportTable extends StatelessWidget {
                       DataCell(Container(
                           alignment: AlignmentDirectional.center,
                           child: Text(
-                            DateTime.now().toIso8601String(),
+                            DateFormat.yMd().format(DateTime.now()).toString(),
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ))),
                       DataCell(Container(
                           alignment: AlignmentDirectional.center,
                           child: Text(
-                            DateTime.now().toIso8601String(),
+                            DateFormat.Hm().format(DateTime.now()).toString(),
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ))),
                       DataCell(Container(

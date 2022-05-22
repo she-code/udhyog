@@ -8,22 +8,22 @@ class LogoHeading extends StatelessWidget {
     return Container(
       color: Colors.white,
       child: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.all(8.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
               child: Image.asset(
                 'assets/images/mainLogo.png',
-                width: 100,
-                height: 100,
+                width: 80,
+                height: 80,
               ),
             ),
             Container(
               child: Image.asset(
                 'assets/images/loginLogo.png',
-                width: 100,
-                height: 100,
+                width: 80,
+                height: 80,
               ),
             ),
           ],
