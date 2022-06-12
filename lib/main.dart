@@ -6,6 +6,8 @@ import 'package:udhyog/screens/auth.dart';
 import 'package:udhyog/screens/login%20copy.dart';
 import 'package:udhyog/screens/loginUp.dart';
 import 'package:udhyog/screens/mainPage.dart';
+import 'package:udhyog/screens/payment.dart';
+import 'package:udhyog/screens/press_details.dart';
 import 'package:udhyog/screens/splash_screen.dart';
 import 'package:udhyog/widgets/newPress.dart';
 import 'package:udhyog/widgets/slier.dart';
@@ -27,12 +29,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider(
-            create: (ctx) => Auth(),
+          ChangeNotifierProvider.value(
+            value: Auth(),
           ),
+          // ChangeNotifierProvider(
+          //   create: (ctx) => PressProvider('', []),
+          // ),
           ChangeNotifierProxyProvider<Auth, PressProvider>(
-              update: (ctx, auth, previousState) =>
-                  PressProvider(auth.token!, previousState!.presses),
+              update: (ctx, auth, previousState) => PressProvider(
+                  auth.token.toString(),
+                  previousState == null ? [] : previousState.presses),
+              // PressProvider(auth.token!, previousState!.presses),
               create: (_) => PressProvider('', []))
         ],
         child: Consumer<Auth>(
@@ -58,6 +65,8 @@ class MyApp extends StatelessWidget {
                     '/main': (ctx) => MainPage(),
                     PressContainer.routeName: (ctx) => PressContainer(),
                     NewPress.routeName: (ctx) => NewPress(),
+                    Payment.routeName: (ctx) => Payment(),
+                    PressDetails.routeName: (ctx) => PressDetails()
                     //  AddPress.routeName:(ctx) => AddPress(),
                   },
                 )));

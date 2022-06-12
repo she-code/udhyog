@@ -24,15 +24,26 @@ class _AddImageState extends State<AddImage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      CircleAvatar(
-          radius: 40,
-          backgroundImage:
-              _pickedImage != null ? FileImage(_pickedImage) : null),
-      TextButton.icon(
-          onPressed: _pickImage,
-          icon: Icon(Icons.image),
-          label: Text('Add Image'))
-    ]);
+    return Row(
+      children: [
+        Container(
+          child: Text(
+            "Company Logo",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+        ),
+        Container(
+            child: TextButton.icon(
+                onPressed: _pickImage,
+                icon: Icon(
+                  Icons.image,
+                  color: Theme.of(context).primaryColorDark,
+                ),
+                label: Text(
+                  'Add Image',
+                  style: TextStyle(color: Theme.of(context).primaryColorDark),
+                ))),
+      ],
+    );
   }
 }

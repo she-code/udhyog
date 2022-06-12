@@ -10,6 +10,8 @@ class Auth with ChangeNotifier {
   DateTime? _expiryDate = null;
   late String _userId;
   late String company;
+  late String city;
+  // late String logo;
   // Timer _authTimer;
   bool get isAuth {
     return token != null;
@@ -25,26 +27,88 @@ class Auth with ChangeNotifier {
     return null;
   }
 
-  Future<void> signup(String company, String email, String password) async {
-    final url = Uri.parse('http://localhost:5001/auth/signup');
-    print({password, email});
+  Future<void> signup(
+      // String company_id,
+      String company,
+      String email,
+      String password,
+      String address1,
+      String address2,
+      String city,
+      int pin,
+      String state,
+      String country,
+      int cellNo,
+      String gst,
+      String gstNo,
+      String contactPerson,
+      String logo,
+      String webpage) async {
+    // final url = Uri.parse('http://192.168.58.189:5001/users/register');
+    final url = Uri.parse('http://localhost:5001/users/register');
+
     final response = await http.post(url,
         body: json.encode(
-          {"company": company, "email": email, "password": password},
+          {
+            // "company_id": company_id,
+            "company": company,
+            "email": email,
+            "password": password,
+            "address1": address1,
+            "address2": address2,
+            "city": city,
+            "pin": pin,
+            "logo": logo,
+            "state": state,
+            "country": country,
+            "cellNo": cellNo,
+            "gst": gst,
+            "gstNo": gstNo,
+            "contactPerson": contactPerson,
+            "webpage": webpage
+          },
         ),
         headers: {
           "Content-Type": "application/json",
-          "Access-Control_Allow_Origin": "*"
+          "Access-Control_Allow_Origin": "*",
+          "accept": "application/json"
         }
         //{"Accept": "application/json"},
         );
 
     print({'body', json.decode(response.body)});
+    final responseData = json.decode(response.body);
+    // print({'body', responseData});
+    if (responseData['error'] != null) {
+      print(responseData['error']['message']);
+      throw HttpException(responseData['error']['message']);
+    }
+
+    _token = responseData['token'];
+    _userId = responseData['id'].toString();
+    _expiryDate = DateTime.now()
+        .add(Duration(seconds: int.parse(responseData['expiresIn'])));
+    company = responseData['company'];
+    city = responseData['city'];
+    // logo = responseData['logo'];
+    // print({"token", _token});
+    notifyListeners();
+
+    final prefs = await SharedPreferences.getInstance();
+    final userData = json.encode({
+      'token': _token,
+      'userId': _userId,
+      'expiryDate': _expiryDate!.toIso8601String(),
+    });
+    prefs.setString('userData', userData);
+    // if (!prefs.containsKey('userData')) {
+    //   return null;
+    // }
   }
 
   Future<void> signin(String email, String password) async {
-    final url = Uri.parse('http://192.168.58.189:5001/users/login');
-    // final url = Uri.parse('http://localhost:5001/users/login');
+    //final url = Uri.parse('http://192.168.96.189:5001/users/login');
+    final url = Uri.parse('http://localhost:5001/users/login');
     print({password, email});
     try {
       final response = await http.post(url,
@@ -70,6 +134,9 @@ class Auth with ChangeNotifier {
       _expiryDate = DateTime.now()
           .add(Duration(seconds: int.parse(responseData['expiresIn'])));
       company = responseData['company'];
+      city = responseData['city'];
+      // logo = responseData['logo'];
+      print({responseData, city});
       // print({"token", _token});
       notifyListeners();
 

@@ -17,6 +17,7 @@ class _GaugeAppState extends State<GaugeApp> {
   Widget build(BuildContext context) {
     // String temp;
     return Container(
+      height: 100,
       margin: EdgeInsets.all(10),
       width: 300,
       padding: EdgeInsets.all(8),

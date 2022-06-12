@@ -21,7 +21,7 @@ class _LoginUPState extends State<LoginUP> {
   Color backG = Color(0xFFE6E7E9);
   Color iconColor = Color(0xFF70CF7D);
   final GlobalKey<FormState> _form = GlobalKey();
-  Map<String, String> _authData = {'email': '', 'password': ''};
+  final Map<String, String> _authData = {'email': '', 'password': ''};
   var _isLoading = false;
 
   void _showErrorDialog(String message) {

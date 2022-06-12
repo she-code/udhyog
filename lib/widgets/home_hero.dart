@@ -9,7 +9,7 @@ class HomeHero extends StatelessWidget {
     Color orange = Color(0xfffaaa55);
 
     return Container(
-        width: 400,
+        width: double.infinity,
         height: 180,
         alignment: Alignment.center,
         decoration: BoxDecoration(

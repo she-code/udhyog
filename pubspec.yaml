@@ -43,6 +43,10 @@ dependencies:
   universal_html: ^2.0.8
   intl: ^0.17.0
   image_picker: ^0.8.4+11
+  basic_utils: ^4.2.2
+  flutter_slidable: ^1.3.0
+  
+  
 
 
 

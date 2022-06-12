@@ -24,10 +24,10 @@ class _PressListTabsState extends State<PressListTabs> {
                     borderRadius: BorderRadius.circular(10), // Creates border
                     color: Colors.greenAccent),
                 tabs: [
-                  PressList('Overview'),
-                  PressList('Press 1'),
-                  PressList('Press 2'),
-                  PressList('Press 3'),
+                  Press_List('Overview'),
+                  Press_List('Press 1'),
+                  Press_List('Press 2'),
+                  Press_List('Press 3'),
                 ],
               )
             ],

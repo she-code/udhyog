@@ -6,47 +6,47 @@ import '../providers/press.dart';
 //import 'package';
 
 class ReportTable extends StatelessWidget {
-  final List<Press> press = PressProvider('', [
-    Press(
-      pressId: 1,
-      partCount: 1.2,
-      pressName: 'Press 1',
-      blockTemp: '23',
-      clientId: 1,
-      createdAt: DateTime.now(),
-      hoseTemp: 24,
-      pressType: 'automatic',
-      tankLowerTemp: 24,
-      tankTopTemp: 25,
-      timer: 123,
-    ),
-    Press(
-      pressId: 2,
-      partCount: 1.2,
-      pressName: 'Press 2',
-      blockTemp: '23',
-      clientId: 1,
-      createdAt: DateTime.now(),
-      hoseTemp: 24,
-      pressType: 'automatic',
-      tankLowerTemp: 24,
-      tankTopTemp: 25,
-      timer: 123,
-    ),
-    Press(
-      pressId: 3,
-      partCount: 1.2,
-      pressName: 'Press 3',
-      blockTemp: '23',
-      clientId: 1,
-      createdAt: DateTime.now(),
-      hoseTemp: 24,
-      pressType: 'automatic',
-      tankLowerTemp: 24,
-      tankTopTemp: 25,
-      timer: 123,
-    ),
-  ]).presses;
+  // final List<Press> press = PressProvider('', [
+  //   Press(
+  //     pressId: 1,
+  //     partCount: 1.2,
+  //     pressName: 'Press 1',
+  //     blockTemp: '23',
+  //     clientId: 1,
+  //     createdAt: DateTime.now(),
+  //     hoseTemp: 24,
+  //     pressType: 'automatic',
+  //     tankLowerTemp: 24,
+  //     tankTopTemp: 25,
+  //     timer: 123,
+  //   ),
+  //   Press(
+  //     pressId: 2,
+  //     partCount: 1.2,
+  //     pressName: 'Press 2',
+  //     blockTemp: '23',
+  //     clientId: 1,
+  //     createdAt: DateTime.now(),
+  //     hoseTemp: 24,
+  //     pressType: 'automatic',
+  //     tankLowerTemp: 24,
+  //     tankTopTemp: 25,
+  //     timer: 123,
+  //   ),
+  //   Press(
+  //     pressId: 3,
+  //     partCount: 1.2,
+  //     pressName: 'Press 3',
+  //     blockTemp: '23',
+  //     clientId: 1,
+  //     createdAt: DateTime.now(),
+  //     hoseTemp: 24,
+  //     pressType: 'automatic',
+  //     tankLowerTemp: 24,
+  //     tankTopTemp: 25,
+  //     timer: 123,
+  //   ),
+  // ]).presses;
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -75,46 +75,46 @@ class ReportTable extends StatelessWidget {
               DataColumn(label: Text('Power Consumption')),
             ],
             rows: [
-              ...press.map((press) => DataRow(
-                    cells: [
-                      DataCell(Container(
-                          alignment: AlignmentDirectional.center,
-                          child: Text(
-                            DateFormat.yMd().format(DateTime.now()).toString(),
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ))),
-                      DataCell(Container(
-                          alignment: AlignmentDirectional.center,
-                          child: Text(
-                            DateFormat.Hm().format(DateTime.now()).toString(),
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ))),
-                      DataCell(Container(
-                          alignment: AlignmentDirectional.center,
-                          child: Text(
-                            press.tankTopTemp.toString(),
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ))),
-                      DataCell(Container(
-                          alignment: AlignmentDirectional.center,
-                          child: Text(press.tankLowerTemp.toString()))),
-                      DataCell(Container(
-                          alignment: AlignmentDirectional.center,
-                          child: Text(press.blockTemp.toString()))),
-                      DataCell(Container(
-                          alignment: AlignmentDirectional.center,
-                          child: Text(press.hoseTemp.toString()))),
-                      DataCell(Container(
-                          alignment: AlignmentDirectional.center,
-                          child: Text(press.timer.toString()))),
-                      DataCell(Container(
-                          alignment: AlignmentDirectional.center,
-                          child: Text(press.partCount.toString()))),
-                      DataCell(Container(
-                          alignment: AlignmentDirectional.center,
-                          child: Text('y'))),
-                    ],
-                  ))
+              // ...press.map((press) => DataRow(
+              //       cells: [
+              //         DataCell(Container(
+              //             alignment: AlignmentDirectional.center,
+              //             child: Text(
+              //               DateFormat.yMd().format(DateTime.now()).toString(),
+              //               style: TextStyle(fontWeight: FontWeight.bold),
+              //             ))),
+              //         DataCell(Container(
+              //             alignment: AlignmentDirectional.center,
+              //             child: Text(
+              //               DateFormat.Hm().format(DateTime.now()).toString(),
+              //               style: TextStyle(fontWeight: FontWeight.bold),
+              //             ))),
+              //         DataCell(Container(
+              //             alignment: AlignmentDirectional.center,
+              //             child: Text(
+              //               press.tankTopTemp.toString(),
+              //               style: TextStyle(fontWeight: FontWeight.bold),
+              //             ))),
+              //         DataCell(Container(
+              //             alignment: AlignmentDirectional.center,
+              //             child: Text(press.tankLowerTemp.toString()))),
+              //         DataCell(Container(
+              //             alignment: AlignmentDirectional.center,
+              //             child: Text(press.blockTemp.toString()))),
+              //         DataCell(Container(
+              //             alignment: AlignmentDirectional.center,
+              //             child: Text(press.hoseTemp.toString()))),
+              //         DataCell(Container(
+              //             alignment: AlignmentDirectional.center,
+              //             child: Text(press.timer.toString()))),
+              //         DataCell(Container(
+              //             alignment: AlignmentDirectional.center,
+              //             child: Text(press.partCount.toString()))),
+              //         DataCell(Container(
+              //             alignment: AlignmentDirectional.center,
+              //             child: Text('y'))),
+              //       ],
+              //     ))
             ]),
       ),
     );

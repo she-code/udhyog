@@ -10,47 +10,47 @@ import '../providers/press.dart';
 
 class ReportDownload extends StatelessWidget {
   //const ReportDownload({Key? key}) : super(key: key);
-  final List<Press> press = PressProvider('', [
-    Press(
-      pressId: 1,
-      partCount: 1.2,
-      pressName: 'Press 1',
-      blockTemp: '23',
-      clientId: 1,
-      createdAt: DateTime.now(),
-      hoseTemp: 24,
-      pressType: 'automatic',
-      tankLowerTemp: 24,
-      tankTopTemp: 25,
-      timer: 123,
-    ),
-    Press(
-      pressId: 2,
-      partCount: 1.2,
-      pressName: 'Press 2',
-      blockTemp: '23',
-      clientId: 1,
-      createdAt: DateTime.now(),
-      hoseTemp: 24,
-      pressType: 'automatic',
-      tankLowerTemp: 24,
-      tankTopTemp: 25,
-      timer: 123,
-    ),
-    Press(
-      pressId: 3,
-      partCount: 1.2,
-      pressName: 'Press 3',
-      blockTemp: '23',
-      clientId: 1,
-      createdAt: DateTime.now(),
-      hoseTemp: 24,
-      pressType: 'automatic',
-      tankLowerTemp: 24,
-      tankTopTemp: 25,
-      timer: 123,
-    ),
-  ]).presses;
+  // final List<Press> press = PressProvider('', [
+  //   Press(
+  //     pressId: 1,
+  //     partCount: 1.2,
+  //     pressName: 'Press 1',
+  //     blockTemp: '23',
+  //     clientId: 1,
+  //     createdAt: DateTime.now(),
+  //     hoseTemp: 24,
+  //     pressType: 'automatic',
+  //     tankLowerTemp: 24,
+  //     tankTopTemp: 25,
+  //     timer: 123,
+  //   ),
+  //   Press(
+  //     pressId: 2,
+  //     partCount: 1.2,
+  //     pressName: 'Press 2',
+  //     blockTemp: '23',
+  //     clientId: 1,
+  //     createdAt: DateTime.now(),
+  //     hoseTemp: 24,
+  //     pressType: 'automatic',
+  //     tankLowerTemp: 24,
+  //     tankTopTemp: 25,
+  //     timer: 123,
+  //   ),
+  //   Press(
+  //     pressId: 3,
+  //     partCount: 1.2,
+  //     pressName: 'Press 3',
+  //     blockTemp: '23',
+  //     clientId: 1,
+  //     createdAt: DateTime.now(),
+  //     hoseTemp: 24,
+  //     pressType: 'automatic',
+  //     tankLowerTemp: 24,
+  //     tankTopTemp: 25,
+  //     timer: 123,
+  //   ),
+  // ]).presses;
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -97,18 +97,18 @@ class ReportDownload extends StatelessWidget {
 
     PdfGridRow row = grid.rows.add();
     // press.map((press) =>row.cells[press].value
-    for (int i = 0; i < press.length; i++) {
-      // row.cells[i].value = (press[i].blockTemp).toString();
-      row.cells[0].value = press[i].createdAt.toIso8601String();
-      row.cells[1].value = DateTime.now().toIso8601String();
-      row.cells[2].value = press[i].tankTopTemp.toString();
-      row.cells[3].value = press[i].tankLowerTemp.toString();
-      row.cells[4].value = press[i].blockTemp.toLowerCase();
-      row.cells[5].value = press[i].hoseTemp.toString();
-      row.cells[6].value = press[i].timer.toString();
-      row.cells[7].value = press[i].partCount.toString();
-      row.cells[8].value = '1';
-    }
+    // for (int i = 0; i < press.length; i++) {
+    //   // row.cells[i].value = (press[i].blockTemp).toString();
+    //   row.cells[0].value = press[i].createdAt.toIso8601String();
+    //   row.cells[1].value = DateTime.now().toIso8601String();
+    //   row.cells[2].value = press[i].tankTopTemp.toString();
+    //   row.cells[3].value = press[i].tankLowerTemp.toString();
+    //   row.cells[4].value = press[i].blockTemp.toLowerCase();
+    //   row.cells[5].value = press[i].hoseTemp.toString();
+    //   row.cells[6].value = press[i].timer.toString();
+    //   row.cells[7].value = press[i].partCount.toString();
+    //   row.cells[8].value = '1';
+    // }
     // row = grid.rows.add();
     // row.cells[0].value = '1';
     // row.cells[1].value = 'RR';

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:udhyog/models/menuItems.dart';
+import 'package:udhyog/screens/press_container.dart';
+import 'package:udhyog/screens/press_details.dart';
 import 'package:udhyog/widgets/home_menu.dart';
 import 'package:udhyog/widgets/logoHeading.dart';
+import 'package:udhyog/widgets/mainFooter.dart';
 import 'package:udhyog/widgets/slier.dart';
+import 'package:udhyog/widgets/userNameHeader.dart';
 
 import '../providers/auth.dart';
 import '../widgets/home_hero.dart';
@@ -16,7 +20,25 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Color greenLight = Color(0xff63d47a);
     final deviceSize = MediaQuery.of(context).size;
-    // final company = Provider.of<Auth>(context, listen: false).company;
+    final company = Provider.of<Auth>(context, listen: false).company;
+    final city = Provider.of<Auth>(context, listen: false).city;
+    var children2 = [
+      LogoHeading(),
+      const SizedBox(
+        height: 10,
+      ),
+      UserNameHeader(),
+      const SizedBox(
+        height: 10,
+      ),
+      GestureDetector(
+        child: HomeHero(),
+        onTap: () {
+          Navigator.of(context).pushNamed(PressContainer.routeName);
+        },
+      ),
+      MainFooter()
+    ];
     return SafeArea(
       child: Scaffold(
         body: Container(
@@ -25,61 +47,8 @@ class MainPage extends StatelessWidget {
             decoration: BoxDecoration(color: Colors.white),
             // height: MediaQuery.of(context).size.height -
             //     MediaQuery.of(context).padding.top,
-            child: Column(children: [
-              LogoHeading(),
+            child: Column(children: children2)),
 
-              const SizedBox(
-                height: 10,
-              ),
-              // Padding(
-              //padding: const EdgeInsets.all(5.0),
-              Container(
-                height: 50,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(color: greenLight),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    // if (company != null)
-                    //   Text(company)
-                    // else
-                    Text('hello',
-                        //company
-                        style: TextStyle(color: Colors.white, fontSize: 15)),
-                    CircleAvatar(
-                      child: Icon(Icons.person),
-                    )
-                  ],
-                ),
-              ),
-              // ),
-              const SizedBox(
-                height: 10,
-              ),
-              HomeHero(),
-
-              Expanded(
-                child: Align(
-                  alignment: FractionalOffset.bottomCenter,
-                  child: Container(
-                      height: 50,
-                      child: Column(
-                        children: [
-                          Text(
-                            "Copyright @ 2020".toUpperCase(),
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 11),
-                          ),
-                          Text(
-                            'udhyog'.toUpperCase(),
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 11),
-                          )
-                        ],
-                      )),
-                ),
-              ),
-            ])),
         floatingActionButton: FloatingActionButton(
             backgroundColor: greenLight,
             child: const Icon(Icons.add),
