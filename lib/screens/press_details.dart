@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:udhyog/providers/auth.dart';
 import 'package:udhyog/widgets/logoHeading.dart';
 import 'package:udhyog/widgets/report_type.dart';
 import 'package:udhyog/widgets/userNameHeader.dart';
@@ -26,8 +27,14 @@ class _PressDetailsState extends State<PressDetails> {
 
   @override
   Widget build(BuildContext context) {
+    final pressId = ModalRoute.of(context)?.settings.arguments as String;
     final pressData =
-        Provider.of<PressProvider>(context, listen: false).presses;
+        Provider.of<PressProvider>(context, listen: false).findByID(pressId);
+    final pressDetails = pressData.details;
+    final latestDetail = pressDetails.last;
+    //pressDetails.map((index) => {print(pressDetails[index]['BlockTemp'])});
+    // print(pressDetails.last);
+    final logo = Provider.of<Auth>(context, listen: false).logo;
     Color backG = Color.fromARGB(174, 230, 231, 233);
 
     final deviceSize = MediaQuery.of(context).size;
@@ -41,7 +48,8 @@ class _PressDetailsState extends State<PressDetails> {
           child: SingleChildScrollView(
             child: Column(children: [
               LogoHeading(),
-              const SizedBox(height: 10), UserNameHeader(),
+              const SizedBox(height: 10),
+              UserNameHeader(),
               const SizedBox(
                 height: 20,
               ),
@@ -51,99 +59,84 @@ class _PressDetailsState extends State<PressDetails> {
                   alignment: Alignment.center,
                   decoration: const BoxDecoration(color: Colors.white),
                   child: Container(
-                      width: 400,
-                      height: 400,
-                      decoration: const BoxDecoration(
-                          image: DecorationImage(
-                        image: AssetImage(
-                          'assets/images/press_img.jpg',
+                    alignment: Alignment.center,
+                    width: 400,
+                    height: 400,
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                      image: AssetImage(
+                        'assets/images/press_img.jpg',
+                      ),
+                      fit: BoxFit.cover,
+                    )),
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          bottom: 100,
+                          left: 60,
+                          child: Image.asset("assets/images/mainLogo.png",
+                              height: 50, width: 60),
                         ),
-                        fit: BoxFit.cover,
-                      )),
-                      child: Text("Wait")
-                      //  Image.asset("assets/images/mainLogo.png",
-                      //     height: 40, width: 40)),
-                      )),
-              // Container(
-              //     height: 400,
-              //     width: MediaQuery.of(context).size.width,
-              //     decoration: BoxDecoration(
-              //         color: Colors.white,
-              //         borderRadius: BorderRadius.circular(15),
-              //         image: DecorationImage(
-              //           image: AssetImage(
-              //             'assets/images/press_img.jpg',
-              //           ),
-              //           fit: BoxFit.cover,
-              //         )),
-              //     padding: EdgeInsets.all(15),
-              //     child: Stack(
-              //       children: [
-              //         Positioned(
-              //             top: 220,
-              //             left: 25,
-              //             child: Image.asset("assets/images/mainLogo.png",
-              //                 height: 80, width: 70)),
-              //         Positioned(
-              //           child: Text(
-              //             '1',
-              //             style: TextStyle(color: Colors.white, fontSize: 10),
-              //           ),
-              //           top: 90,
-              //           right: 80,
-              //         ),
-              //         Positioned(
-              //           child: Text(
-              //             '1',
-              //             style: TextStyle(color: Colors.white, fontSize: 10),
-              //           ),
-              //           top: 90,
-              //           right: 30,
-              //         ),
-
-              //         Positioned(
-              //           child: Text(
-              //             '1',
-              //             style: TextStyle(color: Colors.white, fontSize: 10),
-              //           ),
-              //           top: 120,
-              //           right: 80,
-              //         ),
-
-              //         Positioned(
-              //           child: Text(
-              //             '1',
-              //             style: TextStyle(color: Colors.white, fontSize: 10),
-              //           ),
-              //           top: 120,
-              //           right: 30,
-              //         ),
-
-              //         Positioned(
-              //           child: Text(
-              //             '1',
-              //             style: TextStyle(color: Colors.white, fontSize: 10),
-              //           ),
-              //           top: 150,
-              //           right: 80,
-              //         ),
-
-              //         Positioned(
-              //           child: Text(
-              //             '1',
-              //             style: TextStyle(color: Colors.white, fontSize: 10),
-              //           ),
-              //           top: 150,
-              //           right: 30,
-              //         ),
-
-              //         //Text('hi'))
-              //       ],
-              //     )),
+                        Positioned(
+                          top: 107,
+                          right: 63,
+                          child: Text(
+                            latestDetail['BlockTemp'].toString(),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        Positioned(
+                          top: 107,
+                          right: 105,
+                          child: Text(
+                            latestDetail['TankTopTemp'].toString(),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        Positioned(
+                          top: 133,
+                          right: 63,
+                          child: Text(
+                            latestDetail['TankLowerTemp'].toString(),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        Positioned(
+                          top: 133,
+                          right: 105,
+                          child: Text(
+                            latestDetail['HoseTemp']!.toString(),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        Positioned(
+                          top: 165,
+                          right: 63,
+                          child: Text(
+                            latestDetail['PartCount']!.toString(),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        Positioned(
+                          top: 165,
+                          right: 105,
+                          child: Text(
+                            latestDetail['Timer']!.toString(),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        // Positioned(
+                        //   bottom: 100,
+                        //   right: 60,
+                        //   child: Image.network('http://localhost/:5001/$logo',
+                        //       height: 50, width: 60),
+                        // )
+                      ],
+                    ),
+                  )),
               const SizedBox(
                 height: 20,
               ),
-
               Container(
                   margin: EdgeInsets.all(8),
                   width: double.maxFinite,
@@ -151,17 +144,18 @@ class _PressDetailsState extends State<PressDetails> {
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     children: [
-                      GaugeApp('Lower Tank Temp', 23),
-                      GaugeApp('Higher Tank Temp', 25),
-                      GaugeApp('Hose Temp', 10),
-                      GaugeApp('Block Temp', 45),
+                      GaugeApp(
+                          'Lower Tank Temp', latestDetail["TankLowerTemp"]),
+                      GaugeApp('Higher Tank Temp', latestDetail['TankTopTemp']),
+                      GaugeApp('Hose Temp', latestDetail['HoseTemp']),
+                      GaugeApp('Block Temp',
+                          double.parse(latestDetail['BlockTemp'])),
                     ],
                   )),
-
-              //RadioType(),
-              // SizedBox(
-              //   height: 20,
-              // ),
+              RadioType(),
+              SizedBox(
+                height: 20,
+              ),
               // ReportTable(),
               // Padding(
               //   padding: const EdgeInsets.all(8.0),
@@ -236,7 +230,8 @@ class _PressDetailsState extends State<PressDetails> {
               //           trailing: Text(
               //             "Daily",
               //             style: TextStyle(
-              //                 color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+              //                 color: Color.fromARGB(169, 0, 0, 0),
+              //                 fontSize: 15),
               //           ),
               //           leading: Radio<timeDuration>(
               //             value: timeDuration.daily,
@@ -261,7 +256,8 @@ class _PressDetailsState extends State<PressDetails> {
               //           trailing: Text(
               //             "Weekly",
               //             style: TextStyle(
-              //                 color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+              //                 color: Color.fromARGB(169, 0, 0, 0),
+              //                 fontSize: 15),
               //           ),
               //           leading: Radio<timeDuration>(
               //             value: timeDuration.weekly,
@@ -286,7 +282,8 @@ class _PressDetailsState extends State<PressDetails> {
               //           trailing: Text(
               //             "Monthly",
               //             style: TextStyle(
-              //                 color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+              //                 color: Color.fromARGB(169, 0, 0, 0),
+              //                 fontSize: 15),
               //           ),
               //           leading: Radio<timeDuration>(
               //             value: timeDuration.monthly,
@@ -311,7 +308,8 @@ class _PressDetailsState extends State<PressDetails> {
               //           trailing: Text(
               //             "Customize",
               //             style: TextStyle(
-              //                 color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+              //                 color: Color.fromARGB(169, 0, 0, 0),
+              //                 fontSize: 15),
               //           ),
               //           leading: Radio<timeDuration>(
               //             value: timeDuration.customize,
@@ -328,8 +326,12 @@ class _PressDetailsState extends State<PressDetails> {
               //     ]),
               //   ),
               // ),
-              // if (_reportType == reportType.report) ReportTable(),
-              // if (_reportType == reportType.chart) Text('chart'),
+              if (_reportType == reportType.report)
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ReportTable(pressDetails),
+                ),
+              if (_reportType == reportType.chart) Text('chart'),
             ]),
           ),
         ),

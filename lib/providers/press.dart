@@ -11,49 +11,14 @@ class PressProvider with ChangeNotifier {
     _authToken = value;
   }
 
+  Press findByID(String id) {
+    return _presses.firstWhere((prod) => prod.press_id == id);
+  }
+
   PressProvider(this._authToken, this._presses);
 
   List<Press> _presses = [];
-  //   Press(
-  //     pressId: 1,
-  //     partCount: 1.2,
-  //     pressName: 'Press 1',
-  //     blockTemp: '23',
-  //     clientId: 1,
-  //     createdAt: DateTime.now(),
-  //     hoseTemp: 24,
-  //     pressType: 'automatic',
-  //     tankLowerTemp: 24,
-  //     tankTopTemp: 25,
-  //     timer: 123,
-  //   ),
-  //   Press(
-  //     pressId: 1,
-  //     partCount: 1.2,
-  //     pressName: 'Press 2',
-  //     blockTemp: '23',
-  //     clientId: 1,
-  //     createdAt: DateTime.now(),
-  //     hoseTemp: 24,
-  //     pressType: 'automatic',
-  //     tankLowerTemp: 24,
-  //     tankTopTemp: 25,
-  //     timer: 123,
-  //   ),
-  //   Press(
-  //     pressId: 1,
-  //     partCount: 1.2,
-  //     pressName: 'Press 2',
-  //     blockTemp: '23',
-  //     clientId: 1,
-  //     createdAt: DateTime.now(),
-  //     hoseTemp: 24,
-  //     pressType: 'automatic',
-  //     tankLowerTemp: 24,
-  //     tankTopTemp: 25,
-  //     timer: 123,
-  //   ),
-  // ];
+
   List<Press> get presses {
     return [..._presses];
   }
@@ -100,7 +65,7 @@ class PressProvider with ChangeNotifier {
 
   Future<void> getPressForCompany() async {
     try {
-      //  final url = Uri.parse('http://117.99.60.241:5001/press');
+      // final url = Uri.parse('http://10.120.1.37:5001/press');
       final url = Uri.parse('http://localhost:5001/press');
       final responseData = await http.get(url, headers: {
         "Content-Type": "application/json",
@@ -121,16 +86,17 @@ class PressProvider with ChangeNotifier {
     }
   }
 
-  Future<void> getProduct() async {
+  Future<void> getPress(String pressId) async {
     try {
-      final url = Uri.parse('http://localhost:5001/press/:id');
+      final url = Uri.parse('http://localhost:5001/press/$pressId');
       final responseData = await http.get(url, headers: {
         "Content-Type": "application/json",
         "Access-Control_Allow_Origin": "*",
         "Authorization": _authToken
       });
+      var press = json.decode(responseData.body);
 
-      print(responseData);
+      print(press['press']['press_id']);
       notifyListeners();
     } catch (e) {
       throw e;

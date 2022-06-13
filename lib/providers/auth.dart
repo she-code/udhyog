@@ -11,7 +11,7 @@ class Auth with ChangeNotifier {
   late String _userId;
   late String company;
   late String city;
-  // late String logo;
+  late String logo;
   // Timer _authTimer;
   bool get isAuth {
     return token != null;
@@ -90,7 +90,7 @@ class Auth with ChangeNotifier {
         .add(Duration(seconds: int.parse(responseData['expiresIn'])));
     company = responseData['company'];
     city = responseData['city'];
-    // logo = responseData['logo'];
+    logo = responseData['logo'];
     // print({"token", _token});
     notifyListeners();
 
@@ -107,7 +107,7 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> signin(String email, String password) async {
-    //final url = Uri.parse('http://192.168.96.189:5001/users/login');
+    //final url = Uri.parse('http://10.120.1.37:5001/users/login');
     final url = Uri.parse('http://localhost:5001/users/login');
     print({password, email});
     try {
@@ -135,7 +135,7 @@ class Auth with ChangeNotifier {
           .add(Duration(seconds: int.parse(responseData['expiresIn'])));
       company = responseData['company'];
       city = responseData['city'];
-      // logo = responseData['logo'];
+      logo = responseData['logo'];
       print({responseData, city});
       // print({"token", _token});
       notifyListeners();

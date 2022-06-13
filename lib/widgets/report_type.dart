@@ -21,118 +21,116 @@ class _RadioTypeState extends State<RadioType> {
   Widget build(BuildContext context) {
     return //Container(child:Text('Hello'));
         Container(
+      height: 100,
       child: Padding(
         padding: EdgeInsets.all(15),
         // width: 300,
         // height: 300,
         child: Column(
           children: [
-            Container(
-              height: 50,
-              child: ListView(scrollDirection: Axis.horizontal, children: [
-                Text("Time Duration: "),
-                Container(
-                  height: 50,
-                  width: 110,
-                  child: ListTile(
-                    // title: Text(
-                    //   "Report",
-                    //   style: TextStyle(color: Colors.grey, fontSize: 15),
-                    // ),
-                    trailing: Text(
-                      "Daily",
-                      style: TextStyle(
-                          color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
-                    ),
-                    leading: Radio<timeDuration>(
-                      value: timeDuration.daily,
-                      groupValue: _timeDuration,
-                      onChanged: (timeDuration? value) {
-                        setState(() {
-                          _timeDuration = value;
-                        });
-                      },
-                      activeColor: Colors.green,
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 50,
-                  width: 110,
-                  child: ListTile(
-                    // title: Text(
-                    //   "Chart",
-                    //   style: TextStyle(color: Colors.grey, fontSize: 15),
-                    // ),
-                    trailing: Text(
-                      "Weekly",
-                      style: TextStyle(
-                          color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
-                    ),
-                    leading: Radio<timeDuration>(
-                      value: timeDuration.weekly,
-                      groupValue: _timeDuration,
-                      onChanged: (timeDuration? value) {
-                        setState(() {
-                          _timeDuration = value;
-                        });
-                      },
-                      activeColor: Colors.green,
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 50,
-                  width: 115,
-                  child: ListTile(
-                    // title: Text(
-                    //   "Chart",
-                    //   style: TextStyle(color: Colors.grey, fontSize: 15),
-                    // ),
-                    trailing: Text(
-                      "Monthly",
-                      style: TextStyle(
-                          color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
-                    ),
-                    leading: Radio<timeDuration>(
-                      value: timeDuration.monthly,
-                      groupValue: _timeDuration,
-                      onChanged: (timeDuration? value) {
-                        setState(() {
-                          _timeDuration = value;
-                        });
-                      },
-                      activeColor: Colors.green,
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 50,
-                  width: 130,
-                  child: ListTile(
-                    // title: Text(
-                    //   "Chart",
-                    //   style: TextStyle(color: Colors.grey, fontSize: 15),
-                    // ),
-                    trailing: Text(
-                      "Customize",
-                      style: TextStyle(
-                          color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
-                    ),
-                    leading: Radio<timeDuration>(
-                      value: timeDuration.customize,
-                      groupValue: _timeDuration,
-                      onChanged: (timeDuration? value) {
-                        setState(() {
-                          _timeDuration = value;
-                        });
-                      },
-                      activeColor: Colors.green,
-                    ),
-                  ),
-                ),
-              ]),
-            ),
+            // Wrap(children: [
+            //   Text("Time Duration: "),
+            //   Container(
+            //     height: 50,
+            //     width: 110,
+            //     child: ListTile(
+            //       // title: Text(
+            //       //   "Report",
+            //       //   style: TextStyle(color: Colors.grey, fontSize: 15),
+            //       // ),
+            //       trailing: Text(
+            //         "Daily",
+            //         style: TextStyle(
+            //             color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+            //       ),
+            //       leading: Radio<timeDuration>(
+            //         value: timeDuration.daily,
+            //         groupValue: _timeDuration,
+            //         onChanged: (timeDuration? value) {
+            //           setState(() {
+            //             _timeDuration = value;
+            //           });
+            //         },
+            //         activeColor: Colors.green,
+            //       ),
+            //     ),
+            //   ),
+            //   Container(
+            //     height: 50,
+            //     width: 110,
+            //     child: ListTile(
+            //       // title: Text(
+            //       //   "Chart",
+            //       //   style: TextStyle(color: Colors.grey, fontSize: 15),
+            //       // ),
+            //       trailing: Text(
+            //         "Weekly",
+            //         style: TextStyle(
+            //             color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+            //       ),
+            //       leading: Radio<timeDuration>(
+            //         value: timeDuration.weekly,
+            //         groupValue: _timeDuration,
+            //         onChanged: (timeDuration? value) {
+            //           setState(() {
+            //             _timeDuration = value;
+            //           });
+            //         },
+            //         activeColor: Colors.green,
+            //       ),
+            //     ),
+            //   ),
+            //   Container(
+            //     height: 50,
+            //     width: 115,
+            //     child: ListTile(
+            //       // title: Text(
+            //       //   "Chart",
+            //       //   style: TextStyle(color: Colors.grey, fontSize: 15),
+            //       // ),
+            //       trailing: Text(
+            //         "Monthly",
+            //         style: TextStyle(
+            //             color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+            //       ),
+            //       leading: Radio<timeDuration>(
+            //         value: timeDuration.monthly,
+            //         groupValue: _timeDuration,
+            //         onChanged: (timeDuration? value) {
+            //           setState(() {
+            //             _timeDuration = value;
+            //           });
+            //         },
+            //         activeColor: Colors.green,
+            //       ),
+            //     ),
+            //   ),
+            //   Container(
+            //     height: 50,
+            //     width: 130,
+            //     child: ListTile(
+            //       // title: Text(
+            //       //   "Chart",
+            //       //   style: TextStyle(color: Colors.grey, fontSize: 15),
+            //       // ),
+            //       trailing: Text(
+            //         "Customize",
+            //         style: TextStyle(
+            //             color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+            //       ),
+            //       leading: Radio<timeDuration>(
+            //         value: timeDuration.customize,
+            //         groupValue: _timeDuration,
+            //         onChanged: (timeDuration? value) {
+            //           setState(() {
+            //             _timeDuration = value;
+            //           });
+            //         },
+            //         activeColor: Colors.green,
+            //       ),
+            //     ),
+            //   ),
+            // ]),
             Row(children: [
               Text("Report Type: "),
               Container(

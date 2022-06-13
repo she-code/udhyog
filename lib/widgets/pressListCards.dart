@@ -1,5 +1,7 @@
 import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:udhyog/providers/press.dart';
 import 'package:udhyog/screens/press_details.dart';
 
 class PressListCards extends StatefulWidget {
@@ -24,6 +26,8 @@ class _PressListCardsState extends State<PressListCards> {
         setState(() {
           showActive = !showActive;
         });
+        Provider.of<PressProvider>(context, listen: false)
+            .getPress(widget.press_id);
       },
       child: Container(
         alignment: Alignment.center,

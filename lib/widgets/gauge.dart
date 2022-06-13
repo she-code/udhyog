@@ -17,7 +17,7 @@ class _GaugeAppState extends State<GaugeApp> {
   Widget build(BuildContext context) {
     // String temp;
     return Container(
-      height: 100,
+      height: 150,
       margin: EdgeInsets.all(10),
       width: 300,
       padding: EdgeInsets.all(8),
@@ -40,7 +40,7 @@ class _GaugeAppState extends State<GaugeApp> {
           axes: <RadialAxis>[
             RadialAxis(
                 minimum: 0,
-                maximum: 50,
+                maximum: 100,
                 minorTickStyle: const MinorTickStyle(
                     length: 0.05,
                     lengthUnit: GaugeSizeUnit.factor,
@@ -58,7 +58,7 @@ class _GaugeAppState extends State<GaugeApp> {
                 ranges: <GaugeRange>[
                   GaugeRange(
                     startValue: 0,
-                    endValue: 30,
+                    endValue: 50,
                     color: Colors.green,
                     startWidth: 10,
                     endWidth: 10,
@@ -66,8 +66,8 @@ class _GaugeAppState extends State<GaugeApp> {
                     // sizeUnit: GaugeSizeUnit.factor,
                   ),
                   GaugeRange(
-                    startValue: 30,
-                    endValue: 50,
+                    startValue: 50,
+                    endValue: 100,
                     color: Colors.orange,
                     startWidth: 10,
                     endWidth: 10,
@@ -97,9 +97,9 @@ class _GaugeAppState extends State<GaugeApp> {
                       widget: Container(
                           child: Text(widget.temp.toString(),
                               style: TextStyle(
-                                  fontSize: 13, fontWeight: FontWeight.bold))),
+                                  fontSize: 15, fontWeight: FontWeight.bold))),
                       angle: 90,
-                      positionFactor: .7)
+                      positionFactor: .9)
                 ])
           ]),
     );
