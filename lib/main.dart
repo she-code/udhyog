@@ -9,6 +9,7 @@ import 'package:udhyog/screens/mainPage.dart';
 import 'package:udhyog/screens/payment.dart';
 import 'package:udhyog/screens/press_details.dart';
 import 'package:udhyog/screens/splash_screen.dart';
+import 'package:udhyog/screens/userDetails.dart';
 import 'package:udhyog/widgets/newPress.dart';
 import 'package:udhyog/widgets/slier.dart';
 import 'package:udhyog/widgets/gauge.dart';
@@ -66,7 +67,8 @@ class MyApp extends StatelessWidget {
                     PressContainer.routeName: (ctx) => PressContainer(),
                     NewPress.routeName: (ctx) => NewPress(),
                     Payment.routeName: (ctx) => Payment(),
-                    PressDetails.routeName: (ctx) => PressDetails()
+                    PressDetails.routeName: (ctx) => PressDetails(),
+                    UserDetails.routeName: (ctx) => UserDetails()
                     //  AddPress.routeName:(ctx) => AddPress(),
                   },
                 )));

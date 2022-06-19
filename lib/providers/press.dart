@@ -36,7 +36,9 @@ class PressProvider with ChangeNotifier {
     String TypeOfPress,
     //String authTok
   ) async {
-    final url = Uri.parse('http://localhost:5001/press');
+    //final url = Uri.parse('http://localhost:5001/press');
+    final url = Uri.parse('http://192.168.66.189:5001/press');
+
     try {
       // print(_pressData);
       print(_authToken);
@@ -65,8 +67,8 @@ class PressProvider with ChangeNotifier {
 
   Future<void> getPressForCompany() async {
     try {
-      // final url = Uri.parse('http://10.120.1.37:5001/press');
-      final url = Uri.parse('http://localhost:5001/press');
+      final url = Uri.parse('http://192.168.66.189:5001/press');
+      // final url = Uri.parse('http://localhost:5001/press');
       final responseData = await http.get(url, headers: {
         "Content-Type": "application/json",
         "Access-Control_Allow_Origin": "*",
@@ -88,7 +90,7 @@ class PressProvider with ChangeNotifier {
 
   Future<void> getPress(String pressId) async {
     try {
-      final url = Uri.parse('http://localhost:5001/press/$pressId');
+      final url = Uri.parse('http://192.168.66.189:5001/press/$pressId');
       final responseData = await http.get(url, headers: {
         "Content-Type": "application/json",
         "Access-Control_Allow_Origin": "*",
@@ -105,8 +107,8 @@ class PressProvider with ChangeNotifier {
 
   Future<void> removePress(String pressId) async {
     try {
+      // final url = Uri.parse('http://localhost:5001/press/$pressId');
       final url = Uri.parse('http://localhost:5001/press/$pressId');
-      // final url = Uri.parse('http://117.99.60.241:5001/press/:$pressId');
 
       final responseData = await http.delete(url, headers: {
         "Content-Type": "application/json",

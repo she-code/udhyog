@@ -8,7 +8,7 @@ import '../models/http_exception.dart';
 class Auth with ChangeNotifier {
   late String _token;
   DateTime? _expiryDate = null;
-  late String _userId;
+  late String userId;
   late String company;
   late String city;
   late String logo;
@@ -85,7 +85,7 @@ class Auth with ChangeNotifier {
     }
 
     _token = responseData['token'];
-    _userId = responseData['id'].toString();
+    userId = responseData['id'].toString();
     _expiryDate = DateTime.now()
         .add(Duration(seconds: int.parse(responseData['expiresIn'])));
     company = responseData['company'];
@@ -97,7 +97,7 @@ class Auth with ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     final userData = json.encode({
       'token': _token,
-      'userId': _userId,
+      'userId': userId,
       'expiryDate': _expiryDate!.toIso8601String(),
     });
     prefs.setString('userData', userData);
@@ -107,8 +107,8 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> signin(String email, String password) async {
-    //final url = Uri.parse('http://10.120.1.37:5001/users/login');
-    final url = Uri.parse('http://localhost:5001/users/login');
+    final url = Uri.parse('http://192.168.66.189:5001/users/login');
+   // final url = Uri.parse('http://localhost:5001/users/login');
     print({password, email});
     try {
       final response = await http.post(url,
@@ -130,7 +130,7 @@ class Auth with ChangeNotifier {
       }
 
       _token = responseData['token'];
-      _userId = responseData['id'].toString();
+      userId = responseData['id'].toString();
       _expiryDate = DateTime.now()
           .add(Duration(seconds: int.parse(responseData['expiresIn'])));
       company = responseData['company'];
@@ -143,7 +143,7 @@ class Auth with ChangeNotifier {
       final prefs = await SharedPreferences.getInstance();
       final userData = json.encode({
         'token': _token,
-        'userId': _userId,
+        'userId': userId,
         'expiryDate': _expiryDate!.toIso8601String(),
       });
       prefs.setString('userData', userData);
@@ -158,7 +158,7 @@ class Auth with ChangeNotifier {
 
   Future<void> logout() async {
     // _token = null;
-    // _userId = null;
+    // userId = null;
     // _expiryDate = null;
     // if (_authTimer != null) {
     //   _authTimer.canecl();
@@ -184,7 +184,7 @@ class Auth with ChangeNotifier {
       return false;
     }
     _token = extractedUserData['token'].toString();
-    _userId = extractedUserData['userId'].toString();
+    userId = extractedUserData['userId'].toString();
     _expiryDate = expiryDate;
     notifyListeners();
     // _authoLogout();

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:udhyog/widgets/press_table.dart';
 
 class RadioType extends StatefulWidget {
-  const RadioType({Key? key}) : super(key: key);
-
+  Function updateReport;
+  var repoT;
+  RadioType(this.repoT, this.updateReport);
   @override
   State<RadioType> createState() => _RadioTypeState();
 }
@@ -147,13 +148,14 @@ class _RadioTypeState extends State<RadioType> {
                         color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
                   ),
                   leading: Radio<reportType>(
-                    value: reportType.report,
+                    value: widget.repoT.report,
                     groupValue: _reportType,
-                    onChanged: (reportType? value) {
-                      setState(() {
-                        _reportType = value;
-                      });
-                    },
+                    onChanged: (_) => widget.updateReport(widget.repoT.report),
+                    // (reportType? value) {
+                    //   setState(() {
+                    //     _reportType = value;
+                    //   });
+                    // },
                     activeColor: Colors.green,
                   ),
                 ),
@@ -172,13 +174,14 @@ class _RadioTypeState extends State<RadioType> {
                         color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
                   ),
                   leading: Radio<reportType>(
-                    value: reportType.chart,
+                    value: widget.repoT.chart,
                     groupValue: _reportType,
-                    onChanged: (reportType? value) {
-                      setState(() {
-                        _reportType = value;
-                      });
-                    },
+                    onChanged: (_) => widget.updateReport(widget.repoT.report),
+                    //  (reportType? value) {
+                    //   setState(() {
+                    //     _reportType = value;
+                    //   });
+                    // },
                     activeColor: Colors.green,
                   ),
                 ),

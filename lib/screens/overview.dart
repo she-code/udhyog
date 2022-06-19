@@ -146,8 +146,8 @@ class _OverviewState extends State<Overview> {
                         Text(StringUtils.capitalize(widget.press_name)),
                         Text(StringUtils.capitalize(widget.TypeOfPress)),
                         Text(widget.press_id),
-                        Text(widget.press_id.toUpperCase()),
-                        Text(widget.location),
+                        Text(widget.static_id.toUpperCase()),
+                        Text(StringUtils.capitalize(widget.location)),
                         Text(widget.frequency),
                         const Text("Paid")
                       ]),

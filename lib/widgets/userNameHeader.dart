@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:udhyog/screens/userDetails.dart';
 
 import '../providers/auth.dart';
 
@@ -26,9 +27,18 @@ class UserNameHeader extends StatelessWidget {
                     ? "Hello"
                     : '${company.toUpperCase()} - ${city.toUpperCase()}',
                 style: TextStyle(color: Colors.white, fontSize: 15)),
-            // CircleAvatar(
-            //   backgroundImage: NetworkImage(logo),
-            // )
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed(UserDetails.routeName,
+                    arguments:
+                        Provider.of<Auth>(context, listen: false).userId);
+              },
+              child: CircleAvatar(
+                radius: 20,
+                child: Text(company.substring(0, 1).toUpperCase()),
+                // backgroundImage: NetworkImage(logo),
+              ),
+            )
           ],
         ));
   }
