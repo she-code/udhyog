@@ -31,6 +31,7 @@ enum frequency {
   thirtyMin,
   oneHour
 }
+
 enum pressType { automatic, semiautomatic }
 
 extension freEnum on frequency {
@@ -69,6 +70,8 @@ class _NewPressState extends State<NewPress> {
   TextEditingController _location = TextEditingController();
   TextEditingController _hotspot = TextEditingController();
   TextEditingController _hotsPassword = TextEditingController();
+  String dropDownValue = "Automatic";
+
   //global keys
   final GlobalKey<FormState> _form = GlobalKey();
 
@@ -151,6 +154,265 @@ class _NewPressState extends State<NewPress> {
     _hotsPassFocusNode.dispose();
 
     super.dispose();
+  }
+
+  Widget frequencyWidget() {
+    return Flexible(
+        // width: 500,
+        // padding: EdgeInsets.symmetric(horizontal: 8),
+        // height: 150,
+        child: Wrap(
+            //S scrollDirection: Axis.horizontal,
+            children: [
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Text("Frequency: "),
+          ),
+          Container(
+            height: 50,
+            width: 110,
+            child: ListTile(
+              // title: Text(
+              //   "Report",
+              //   style: TextStyle(color: Colors.grey, fontSize: 15),
+              // ),
+              trailing: Text(
+                "1 sec",
+                style: TextStyle(
+                    color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+              ),
+              leading: Radio<frequency>(
+                value: frequency.oneS,
+                groupValue: _frequency,
+                onChanged: (frequency? value) {
+                  setState(() {
+                    _frequency = value;
+                    _pressData["frequency"] = value.toString();
+                  });
+                },
+                activeColor: Colors.green,
+              ),
+            ),
+          ),
+          Container(
+            height: 50,
+            width: 110,
+            child: ListTile(
+              // title: Text(
+              //   "Report",
+              //   style: TextStyle(color: Colors.grey, fontSize: 15),
+              // ),
+              trailing: Text(
+                "30 sec",
+                style: TextStyle(
+                    color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+              ),
+              leading: Radio<frequency>(
+                value: frequency.thirtyS,
+                groupValue: _frequency,
+                onChanged: (frequency? value) {
+                  setState(() {
+                    _frequency = value;
+                    _pressData["frequency"] = value.toString();
+                  });
+                },
+                activeColor: Colors.green,
+              ),
+            ),
+          ),
+          Container(
+            height: 50,
+            width: 110,
+            child: ListTile(
+              // title: Text(
+              //   "Report",
+              //   style: TextStyle(color: Colors.grey, fontSize: 15),
+              // ),
+              trailing: Text(
+                "60 sec",
+                style: TextStyle(
+                    color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+              ),
+              leading: Radio<frequency>(
+                value: frequency.sixtyS,
+                groupValue: _frequency,
+                onChanged: (frequency? value) {
+                  setState(() {
+                    _frequency = value;
+                    _pressData["frequency"] = value.toString();
+                  });
+                },
+                activeColor: Colors.green,
+              ),
+            ),
+          ),
+          Container(
+            height: 50,
+            width: 110,
+            child: ListTile(
+              // title: Text(
+              //   "Report",
+              //   style: TextStyle(color: Colors.grey, fontSize: 15),
+              // ),
+              trailing: Text(
+                "300 sec",
+                style: TextStyle(
+                    color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+              ),
+              leading: Radio<frequency>(
+                value: frequency.threehunS,
+                groupValue: _frequency,
+                onChanged: (frequency? value) {
+                  setState(() {
+                    _frequency = value;
+                    _pressData["frequency"] = value.toString();
+                  });
+                },
+                activeColor: Colors.green,
+              ),
+            ),
+          ),
+          Container(
+            height: 50,
+            width: 110,
+            child: ListTile(
+              // title: Text(
+              //   "Report",
+              //   style: TextStyle(color: Colors.grey, fontSize: 15),
+              // ),
+              trailing: Text(
+                "10 min",
+                style: TextStyle(
+                    color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+              ),
+              leading: Radio<frequency>(
+                value: frequency.tenMin,
+                groupValue: _frequency,
+                onChanged: (frequency? value) {
+                  setState(() {
+                    _frequency = value;
+                    _pressData["frequency"] = value.toString();
+                  });
+                },
+                activeColor: Colors.green,
+              ),
+            ),
+          ),
+          Container(
+            height: 50,
+            width: 110,
+            child: ListTile(
+              // title: Text(
+              //   "Report",
+              //   style: TextStyle(color: Colors.grey, fontSize: 15),
+              // ),
+              trailing: Text(
+                "20 min",
+                style: TextStyle(
+                    color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+              ),
+              leading: Radio<frequency>(
+                value: frequency.TwenMin,
+                groupValue: _frequency,
+                onChanged: (frequency? value) {
+                  setState(() {
+                    _frequency = value;
+                    _pressData["frequency"] = value.toString();
+                  });
+                },
+                activeColor: Colors.green,
+              ),
+            ),
+          ),
+          Container(
+            height: 50,
+            width: 110,
+            child: ListTile(
+              // title: Text(
+              //   "Report",
+              //   style: TextStyle(color: Colors.grey, fontSize: 15),
+              // ),
+              trailing: Text(
+                "30 min",
+                style: TextStyle(
+                    color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+              ),
+              leading: Radio<frequency>(
+                value: frequency.thirtyMin,
+                groupValue: _frequency,
+                onChanged: (frequency? value) {
+                  setState(() {
+                    _frequency = value;
+                    _pressData["frequency"] = value.toString();
+                  });
+                },
+                activeColor: Colors.green,
+              ),
+            ),
+          ),
+          Container(
+            height: 50,
+            width: 110,
+            child: ListTile(
+              // title: Text(
+              //   "Report",
+              //   style: TextStyle(color: Colors.grey, fontSize: 15),
+              // ),
+              trailing: Text(
+                "1 hour",
+                style: TextStyle(
+                    color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+              ),
+              leading: Radio<frequency>(
+                value: frequency.oneHour,
+                groupValue: _frequency,
+                onChanged: (frequency? value) {
+                  setState(() {
+                    _frequency = value;
+                    _pressData["frequency"] = value.toString();
+                  });
+                },
+                activeColor: Colors.green,
+              ),
+            ),
+          ),
+        ]));
+  }
+
+  Widget pressTypeWidget() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 30),
+          child: const Text("Press Type:"),
+        ),
+        DropdownButton<String>(
+          value: dropDownValue,
+          onChanged: (String? newValue) {
+            // setState(() {
+            dropDownValue = newValue!;
+            _pressData["TypeOfPress"] = dropDownValue;
+            print(_pressData['TypeOFPress']);
+            // });
+          },
+          style: const TextStyle(
+              //te
+              color: Colors.grey, //Font color
+              fontSize: 15 //font size on dropdown button
+              ),
+          items: <String>[
+            'Automatic',
+            'Semi Automatic',
+          ].map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
+      ],
+    );
   }
 
   @override
@@ -344,269 +606,9 @@ class _NewPressState extends State<NewPress> {
                     const SizedBox(
                       height: 20,
                     ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: [
-                    //     Container(
-                    //       margin: const EdgeInsets.symmetric(horizontal: 30),
-                    //       child: const Text("Press Type:"),
-                    //     ),
-                    //     DropdownButton<String>(
-                    //       value: dropDownValue,
-                    //       onChanged: (String? newValue) {
-                    //         // setState(() {
-                    //         dropDownValue = newValue!;
-                    //         _pressData["TypeOfPress"] = dropDownValue;
-                    //         print(_pressData['TypeOFPress']);
-                    //         // });
-                    //       },
-                    //       style: const TextStyle(
-                    //           //te
-                    //           color: Colors.grey, //Font color
-                    //           fontSize: 15 //font size on dropdown button
-                    //           ),
-                    //       items: <String>[
-                    //         'Automatic',
-                    //         'Semi Automatic',
-                    //       ].map<DropdownMenuItem<String>>((String value) {
-                    //         return DropdownMenuItem<String>(
-                    //           value: value,
-                    //           child: Text(value),
-                    //         );
-                    //       }).toList(),
-                    //     ),
-                    //   ],
-                    // ),
-
-                    PressType(_pressData["TypeOfPress"].toString()),
-                    // Flexible(
-                    //     // width: 500,
-                    //     // padding: EdgeInsets.symmetric(horizontal: 8),
-                    //     // height: 150,
-                    //     child: Wrap(
-                    //         //S scrollDirection: Axis.horizontal,
-                    //         children: [
-                    //       Padding(
-                    //         padding: const EdgeInsets.all(15.0),
-                    //         child: Text("Frequency: "),
-                    //       ),
-                    //       Container(
-                    //         height: 50,
-                    //         width: 110,
-                    //         child: ListTile(
-                    //           // title: Text(
-                    //           //   "Report",
-                    //           //   style: TextStyle(color: Colors.grey, fontSize: 15),
-                    //           // ),
-                    //           trailing: Text(
-                    //             "1 sec",
-                    //             style: TextStyle(
-                    //                 color: Color.fromARGB(169, 0, 0, 0),
-                    //                 fontSize: 15),
-                    //           ),
-                    //           leading: Radio<frequency>(
-                    //             value: frequency.oneS,
-                    //             groupValue: _frequency,
-                    //             onChanged: (frequency? value) {
-                    //               setState(() {
-                    //                 _frequency = value;
-                    //                 _pressData["frequency"] = value.toString();
-                    //               });
-                    //             },
-                    //             activeColor: Colors.green,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       Container(
-                    //         height: 50,
-                    //         width: 110,
-                    //         child: ListTile(
-                    //           // title: Text(
-                    //           //   "Report",
-                    //           //   style: TextStyle(color: Colors.grey, fontSize: 15),
-                    //           // ),
-                    //           trailing: Text(
-                    //             "30 sec",
-                    //             style: TextStyle(
-                    //                 color: Color.fromARGB(169, 0, 0, 0),
-                    //                 fontSize: 15),
-                    //           ),
-                    //           leading: Radio<frequency>(
-                    //             value: frequency.thirtyS,
-                    //             groupValue: _frequency,
-                    //             onChanged: (frequency? value) {
-                    //               setState(() {
-                    //                 _frequency = value;
-                    //                 _pressData["frequency"] = value.toString();
-                    //               });
-                    //             },
-                    //             activeColor: Colors.green,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       Container(
-                    //         height: 50,
-                    //         width: 110,
-                    //         child: ListTile(
-                    //           // title: Text(
-                    //           //   "Report",
-                    //           //   style: TextStyle(color: Colors.grey, fontSize: 15),
-                    //           // ),
-                    //           trailing: Text(
-                    //             "60 sec",
-                    //             style: TextStyle(
-                    //                 color: Color.fromARGB(169, 0, 0, 0),
-                    //                 fontSize: 15),
-                    //           ),
-                    //           leading: Radio<frequency>(
-                    //             value: frequency.sixtyS,
-                    //             groupValue: _frequency,
-                    //             onChanged: (frequency? value) {
-                    //               setState(() {
-                    //                 _frequency = value;
-                    //                 _pressData["frequency"] = value.toString();
-                    //               });
-                    //             },
-                    //             activeColor: Colors.green,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       Container(
-                    //         height: 50,
-                    //         width: 110,
-                    //         child: ListTile(
-                    //           // title: Text(
-                    //           //   "Report",
-                    //           //   style: TextStyle(color: Colors.grey, fontSize: 15),
-                    //           // ),
-                    //           trailing: Text(
-                    //             "300 sec",
-                    //             style: TextStyle(
-                    //                 color: Color.fromARGB(169, 0, 0, 0),
-                    //                 fontSize: 15),
-                    //           ),
-                    //           leading: Radio<frequency>(
-                    //             value: frequency.threehunS,
-                    //             groupValue: _frequency,
-                    //             onChanged: (frequency? value) {
-                    //               setState(() {
-                    //                 _frequency = value;
-                    //                 _pressData["frequency"] = value.toString();
-                    //               });
-                    //             },
-                    //             activeColor: Colors.green,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       Container(
-                    //         height: 50,
-                    //         width: 110,
-                    //         child: ListTile(
-                    //           // title: Text(
-                    //           //   "Report",
-                    //           //   style: TextStyle(color: Colors.grey, fontSize: 15),
-                    //           // ),
-                    //           trailing: Text(
-                    //             "10 min",
-                    //             style: TextStyle(
-                    //                 color: Color.fromARGB(169, 0, 0, 0),
-                    //                 fontSize: 15),
-                    //           ),
-                    //           leading: Radio<frequency>(
-                    //             value: frequency.tenMin,
-                    //             groupValue: _frequency,
-                    //             onChanged: (frequency? value) {
-                    //               setState(() {
-                    //                 _frequency = value;
-                    //                 _pressData["frequency"] = value.toString();
-                    //               });
-                    //             },
-                    //             activeColor: Colors.green,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       Container(
-                    //         height: 50,
-                    //         width: 110,
-                    //         child: ListTile(
-                    //           // title: Text(
-                    //           //   "Report",
-                    //           //   style: TextStyle(color: Colors.grey, fontSize: 15),
-                    //           // ),
-                    //           trailing: Text(
-                    //             "20 min",
-                    //             style: TextStyle(
-                    //                 color: Color.fromARGB(169, 0, 0, 0),
-                    //                 fontSize: 15),
-                    //           ),
-                    //           leading: Radio<frequency>(
-                    //             value: frequency.TwenMin,
-                    //             groupValue: _frequency,
-                    //             onChanged: (frequency? value) {
-                    //               setState(() {
-                    //                 _frequency = value;
-                    //                 _pressData["frequency"] = value.toString();
-                    //               });
-                    //             },
-                    //             activeColor: Colors.green,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       Container(
-                    //         height: 50,
-                    //         width: 110,
-                    //         child: ListTile(
-                    //           // title: Text(
-                    //           //   "Report",
-                    //           //   style: TextStyle(color: Colors.grey, fontSize: 15),
-                    //           // ),
-                    //           trailing: Text(
-                    //             "30 min",
-                    //             style: TextStyle(
-                    //                 color: Color.fromARGB(169, 0, 0, 0),
-                    //                 fontSize: 15),
-                    //           ),
-                    //           leading: Radio<frequency>(
-                    //             value: frequency.thirtyMin,
-                    //             groupValue: _frequency,
-                    //             onChanged: (frequency? value) {
-                    //               setState(() {
-                    //                 _frequency = value;
-                    //                 _pressData["frequency"] = value.toString();
-                    //               });
-                    //             },
-                    //             activeColor: Colors.green,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       Container(
-                    //         height: 50,
-                    //         width: 110,
-                    //         child: ListTile(
-                    //           // title: Text(
-                    //           //   "Report",
-                    //           //   style: TextStyle(color: Colors.grey, fontSize: 15),
-                    //           // ),
-                    //           trailing: Text(
-                    //             "1 hour",
-                    //             style: TextStyle(
-                    //                 color: Color.fromARGB(169, 0, 0, 0),
-                    //                 fontSize: 15),
-                    //           ),
-                    //           leading: Radio<frequency>(
-                    //             value: frequency.oneHour,
-                    //             groupValue: _frequency,
-                    //             onChanged: (frequency? value) {
-                    //               setState(() {
-                    //                 _frequency = value;
-                    //                 _pressData["frequency"] = value.toString();
-                    //               });
-                    //             },
-                    //             activeColor: Colors.green,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //     ])),
+                    //  PressType(_pressData["TypeOfPress"].toString()),
+                    pressTypeWidget(),
+                    frequencyWidget(),
                     const SizedBox(
                       height: 20,
                     ),

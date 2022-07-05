@@ -1,7 +1,10 @@
 import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
+
 import 'package:udhyog/providers/auth.dart';
+import 'package:udhyog/screens/payment.dart';
 import 'package:udhyog/widgets/logoHeading.dart';
 import 'package:udhyog/widgets/report_type.dart';
 import 'package:udhyog/widgets/userNameHeader.dart';
@@ -20,15 +23,56 @@ class PressDetails extends StatefulWidget {
 }
 
 enum reportType { report, chart }
-enum timeDuration { daily, weekly, monthly, customize }
+
+enum timeDuration { daily, weekly, monthly, customize, all }
 
 class _PressDetailsState extends State<PressDetails> {
   reportType? _reportType = reportType.report;
-  timeDuration? _timeDuration = timeDuration.daily;
+  timeDuration? _timeDuration = timeDuration.all;
+  DateTime _selectedDate = DateTime.now();
 
   void updateReportType(reportType rt) {
     setState(() {
       _reportType = rt;
+    });
+  }
+
+  var _isinit = true;
+  var _isLoading = false;
+  @override
+  void didChangeDependencies() {
+    final pressId = ModalRoute.of(context)?.settings.arguments as String;
+
+    if (_isinit) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      Provider.of<PressProvider>(context)
+          .getDailyPressData(pressId)
+          .then((_) => setState(() {
+                _isLoading = false;
+              }));
+    }
+    _isinit = false;
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
+
+  void _presentDatePicker() {
+    final today = DateTime.now();
+    showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: today.subtract(const Duration(days: 30)),
+            lastDate: DateTime.now())
+        .then((pickedDate) {
+      if (pickedDate == null) {
+        return;
+      }
+      setState(() {
+        _selectedDate = pickedDate;
+      });
     });
   }
 
@@ -90,6 +134,8 @@ class _PressDetailsState extends State<PressDetails> {
   }
 
   Widget _time_Duration() {
+    final pressId = ModalRoute.of(context)?.settings.arguments as String;
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -98,6 +144,30 @@ class _PressDetailsState extends State<PressDetails> {
           Container(
             child: Text("Time Duration: "),
             margin: EdgeInsets.only(top: 15),
+          ),
+          Container(
+            width: 110,
+            child: ListTile(
+              // title: Text(
+              //   "Report",
+              //   style: TextStyle(color: Colors.grey, fontSize: 15),
+              // ),
+              trailing: Text(
+                "All",
+                style: TextStyle(
+                    color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+              ),
+              leading: Radio<timeDuration>(
+                value: timeDuration.all,
+                groupValue: _timeDuration,
+                onChanged: (timeDuration? value) {
+                  setState(() {
+                    _timeDuration = value;
+                  });
+                },
+                activeColor: Colors.green,
+              ),
+            ),
           ),
           Container(
             width: 110,
@@ -117,6 +187,8 @@ class _PressDetailsState extends State<PressDetails> {
                 onChanged: (timeDuration? value) {
                   setState(() {
                     _timeDuration = value;
+                    Provider.of<PressProvider>(context, listen: false)
+                        .getDailyPressData(pressId);
                   });
                 },
                 activeColor: Colors.green,
@@ -141,6 +213,8 @@ class _PressDetailsState extends State<PressDetails> {
                 onChanged: (timeDuration? value) {
                   setState(() {
                     _timeDuration = value;
+                    Provider.of<PressProvider>(context, listen: false)
+                        .getWeeklyPressData(pressId);
                   });
                 },
                 activeColor: Colors.green,
@@ -165,6 +239,8 @@ class _PressDetailsState extends State<PressDetails> {
                 onChanged: (timeDuration? value) {
                   setState(() {
                     _timeDuration = value;
+                    Provider.of<PressProvider>(context, listen: false)
+                        .getMonthlyPressData(pressId);
                   });
                 },
                 activeColor: Colors.green,
@@ -190,6 +266,9 @@ class _PressDetailsState extends State<PressDetails> {
                   setState(() {
                     _timeDuration = value;
                   });
+                  _presentDatePicker();
+                  Provider.of<PressProvider>(context, listen: false)
+                      .getCustomizedPressData(pressId, _selectedDate.toString());
                 },
                 activeColor: Colors.green,
               ),
@@ -207,11 +286,15 @@ class _PressDetailsState extends State<PressDetails> {
         Provider.of<PressProvider>(context, listen: false).findByID(pressId);
     final pressDetails = pressData.details.isEmpty ? [] : pressData.details;
     final latestDetail = pressData.details.isEmpty ? [] : pressDetails.last;
-    //pressDetails.map((index) => {print(pressDetails[index]['BlockTemp'])});
+    final pressDataList =
+        Provider.of<PressProvider>(context, listen: false).pressdatas;
+    final lastPressData = pressDataList.isEmpty ? [] : pressDataList.last;
+
+    // print(lastPressData.entery_id);
+    //pressDataList.map((index) => {print(pressDataList[index]['BlockTemp'])});
     // print(pressDetails.last);
     final logo = Provider.of<Auth>(context, listen: false).logo;
     Color backG = Color.fromARGB(174, 230, 231, 233);
-
     final deviceSize = MediaQuery.of(context).size;
     return Scaffold(
       body: pressDetails.isEmpty
@@ -327,22 +410,22 @@ class _PressDetailsState extends State<PressDetails> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Container(
-                        margin: EdgeInsets.all(8),
-                        width: double.maxFinite,
-                        height: 200,
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: [
-                            GaugeApp('Lower Tank Temp',
-                                latestDetail["TankLowerTemp"]),
-                            GaugeApp('Higher Tank Temp',
-                                latestDetail['TankTopTemp']),
-                            GaugeApp('Hose Temp', latestDetail['HoseTemp']),
-                            GaugeApp('Block Temp',
-                                double.parse(latestDetail['BlockTemp'])),
-                          ],
-                        )),
+                    // Container(
+                    //     margin: EdgeInsets.all(8),
+                    //     width: double.maxFinite,
+                    //     height: 200,
+                    //     child: ListView(
+                    //       scrollDirection: Axis.horizontal,
+                    //       children: [
+                    //         GaugeApp('Lower Tank Temp',
+                    //             latestDetail["TankLowerTemp"]),
+                    //         GaugeApp('Higher Tank Temp',
+                    //             latestDetail['TankTopTemp']),
+                    //         GaugeApp('Hose Temp', latestDetail['HoseTemp']),
+                    //         GaugeApp('Block Temp',
+                    //             double.parse(latestDetail['BlockTemp'])),
+                    //       ],
+                    //     )),
                     //  RadioType(reportType, updateReportType),
                     SizedBox(
                       height: 20,
@@ -352,13 +435,31 @@ class _PressDetailsState extends State<PressDetails> {
                     if (_reportType == reportType.report)
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: ReportTable(pressDetails),
+                        child: ReportTable(pressDataList),
                       ),
                     if (_reportType == reportType.chart) Text('chart'),
                   ]),
                 ),
               ),
             ),
+      floatingActionButton:
+          SpeedDial(icon: Icons.menu, backgroundColor: Colors.amber, children: [
+        SpeedDialChild(
+          child: const Icon(Icons.money),
+          label: 'Make Payment',
+          backgroundColor: Colors.amberAccent,
+          onTap: () {
+            Navigator.of(context)
+                .pushNamed(Payment.routeName, arguments: pressData.press_id);
+          },
+        ),
+        SpeedDialChild(
+          child: const Icon(Icons.add),
+          label: 'Add Press',
+          backgroundColor: Colors.amberAccent,
+          onTap: () {/* Do something */},
+        ),
+      ]),
     );
   }
 }

@@ -7,8 +7,9 @@ import 'package:udhyog/screens/press_details.dart';
 class PressListCards extends StatefulWidget {
   final String press_id;
   final String press_name;
+  var pressDetails;
 
-  PressListCards(this.press_id, this.press_name);
+  PressListCards(this.press_id, this.press_name, this.pressDetails);
 
   @override
   State<PressListCards> createState() => _PressListCardsState();
@@ -16,18 +17,34 @@ class PressListCards extends StatefulWidget {
 
 class _PressListCardsState extends State<PressListCards> {
   var showActive = false;
+  var disabled = true;
 
   @override
   Widget build(BuildContext context) {
+    bool openDetails = false;
+    final snackBar = SnackBar(
+      content: Text('Press details is empty'),
+      duration: Duration(seconds: 3),
+    );
+    //  Scaffold.of(context).showSnackBar(snackBar);
+
     return GestureDetector(
       onTap: () {
-        Navigator.of(context)
-            .pushNamed(PressDetails.routeName, arguments: widget.press_id);
-        setState(() {
-          showActive = !showActive;
-        });
-        Provider.of<PressProvider>(context, listen: false)
-            .getPress(widget.press_id);
+        if (!widget.pressDetails.isEmpty) {
+          Navigator.of(context)
+              .pushNamed(PressDetails.routeName, arguments: widget.press_id);
+          setState(() {
+            showActive = !showActive;
+          });
+          Provider.of<PressProvider>(context, listen: false)
+              .getPress(widget.press_id);
+        } else {
+          setState(() {
+            openDetails = true;
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            print("object");
+          });
+        }
       },
       child: Container(
         alignment: Alignment.center,
@@ -35,7 +52,11 @@ class _PressListCardsState extends State<PressListCards> {
         margin: EdgeInsets.all(6),
         padding: EdgeInsets.symmetric(horizontal: 6),
         decoration: BoxDecoration(
-            color: showActive ? Colors.orange : Colors.white,
+            color: showActive
+                ? Colors.orange
+                : widget.pressDetails.isEmpty
+                    ? Colors.grey.shade300
+                    : Colors.white,
             borderRadius: BorderRadius.circular(11),
             boxShadow: const [
               BoxShadow(

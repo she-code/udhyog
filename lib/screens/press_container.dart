@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:udhyog/providers/press.dart';
-import 'package:udhyog/screens/overview.dart';
+import 'package:udhyog/widgets/overview.dart';
 import 'package:udhyog/screens/press_details.dart';
 import 'package:udhyog/screens/report_download.dart';
 import 'package:udhyog/widgets/addImage.dart';
@@ -78,11 +78,12 @@ class _PressContainerState extends State<PressContainer>
                           scrollDirection: Axis.horizontal,
                           itemCount: pressData.length,
                           itemBuilder: (_, index) {
-                            return PressListCards(pressData[index].press_id,
-                                pressData[index].press_name);
+                            return PressListCards(
+                                pressData[index].press_id,
+                                pressData[index].press_name,
+                                pressData[index].details);
                           }),
                 ),
-              
                 Expanded(
                   child: _isLoading
                       ? Center(

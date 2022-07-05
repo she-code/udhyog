@@ -13,9 +13,34 @@ import '../providers/auth.dart';
 import '../widgets/home_hero.dart';
 import '../widgets/newPress.dart';
 
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
   static const routeName = '/main';
+
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  // var _isinit = true;
+  // var _isLoading = false;
+  // @override
+  // void didChangeDependencies() {
+  //   if (_isinit) {
+  //     setState(() {
+  //       _isLoading = true;
+  //     });
+
+  //     Provider.of<Auth>(context).myProfile().then((data) => setState(() {
+  //           _isLoading = false;
+  //           print({data, data.company});
+  //         }));
+  //   }
+  //   _isinit = false;
+  //   // TODO: implement didChangeDependencies
+  //   super.didChangeDependencies();
+  // }
+
   @override
   Widget build(BuildContext context) {
     Color greenLight = Color(0xff63d47a);
