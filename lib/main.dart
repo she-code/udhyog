@@ -1,32 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:udhyog/models/press.dart';
-import 'package:udhyog/providers/auth.dart';
-import 'package:udhyog/providers/press.dart';
-import 'package:udhyog/screens/auth.dart';
-import 'package:udhyog/screens/login%20copy.dart';
-import 'package:udhyog/screens/loginUp.dart';
-import 'package:udhyog/screens/mainPage.dart';
-import 'package:udhyog/screens/payment.dart';
-import 'package:udhyog/screens/press_details.dart';
-import 'package:udhyog/screens/splash_screen.dart';
-import 'package:udhyog/screens/userDetails.dart';
-import 'package:udhyog/widgets/newPress.dart';
-import 'package:udhyog/widgets/slier.dart';
-import 'package:udhyog/widgets/gauge.dart';
-
-import './screens/login.dart';
 import 'package:provider/provider.dart';
-import 'package:udhyog/screens/press_container.dart';
+import 'package:udhyog/screens/register.dart';
+
+import './providers/auth.dart';
+import './providers/press.dart';
+import './screens/auth.dart';
+import './screens/mainPage.dart';
+import './screens/payment.dart';
+import './screens/pdfPriview.dart';
+import './screens/press_details.dart';
+import './screens/splash_screen.dart';
+import './screens/userDetails.dart';
+import './screens/newPress.dart';
+import './screens/press_container.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 //rzp_test_ovopv6bm1rGf6q //keyid
 //MzVihCR05CyhFXF7ppliRYnw //keysecret
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
+  //const MyApp({Key? key}) : super(key: key);
+  Color greenLight = Color(0xff63d47a);
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -49,10 +45,13 @@ class MyApp extends StatelessWidget {
             builder: (ctx, auth, _) => MaterialApp(
                   title: 'Udhyog',
                   theme: ThemeData(
-                      primarySwatch: Colors.green,
-                      colorScheme: ThemeData.light()
-                          .colorScheme
-                          .copyWith(secondary: Colors.orange)),
+                      primaryColor: Colors.green,
+                      primaryColorDark: Colors.green[800],
+                      primaryColorLight: greenLight,
+                      colorScheme: ThemeData.light().colorScheme.copyWith(
+                          secondary: Colors.orange,
+                          primary: Colors.green,
+                          error: Colors.red)),
                   home: auth.isAuth
                       ? MainPage()
                       : FutureBuilder(
@@ -70,7 +69,9 @@ class MyApp extends StatelessWidget {
                     NewPress.routeName: (ctx) => NewPress(),
                     Payment.routeName: (ctx) => Payment(),
                     PressDetails.routeName: (ctx) => PressDetails(),
-                    UserDetails.routeName: (ctx) => UserDetails()
+                    UserDetails.routeName: (ctx) => UserDetails(),
+                    Register.routeName: (ctx) => Register(),
+                    PdfPreviewPage.routeName: (ctx) => PdfPreviewPage()
                     //  AddPress.routeName:(ctx) => AddPress(),
                   },
                 )));

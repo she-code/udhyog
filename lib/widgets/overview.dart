@@ -66,6 +66,7 @@ class _OverviewState extends State<Overview> {
             },
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,
+            padding: EdgeInsets.all(15),
             icon: Icons.delete,
             label: 'Delete',
           ),
@@ -73,7 +74,7 @@ class _OverviewState extends State<Overview> {
             onPressed: (_) {
               print("object");
             },
-            backgroundColor: const Color(0xFF0392CF),
+            backgroundColor: Theme.of(context).primaryColor,
             foregroundColor: Colors.white,
             icon: Icons.edit,
             label: 'Edit',

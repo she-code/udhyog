@@ -14,6 +14,7 @@ class UserNameHeader extends StatelessWidget {
     final company = Provider.of<Auth>(context, listen: false).company;
     final city = Provider.of<Auth>(context, listen: false).city;
     //final logo = Provider.of<Auth>(context, listen: false).logo ?? "";
+    final logo = Provider.of<Auth>(context, listen: false).logo;
 
     return Container(
         height: 50,

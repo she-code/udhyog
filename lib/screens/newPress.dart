@@ -1,16 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
-import 'package:udhyog/models/http_exception.dart';
-import 'package:udhyog/providers/auth.dart';
-import 'package:udhyog/providers/press.dart';
-import 'package:udhyog/screens/payment.dart';
-import 'package:udhyog/widgets/logoHeading.dart';
-import 'package:udhyog/widgets/mainFooter.dart';
-import 'package:udhyog/widgets/selectPressTy.dart';
-import 'package:udhyog/widgets/userNameHeader.dart';
-
-import '../screens/mainPage.dart';
+import '../models/http_exception.dart';
+import '../providers/press.dart';
+import '../screens/payment.dart';
+import '../widgets/logoHeading.dart';
+import '../widgets/mainFooter.dart';
 
 class NewPress extends StatefulWidget {
   static const routeName = "/newPress";
@@ -187,7 +182,7 @@ class _NewPressState extends State<NewPress> {
                 onChanged: (frequency? value) {
                   setState(() {
                     _frequency = value;
-                    _pressData["frequency"] = value.toString();
+                    _pressData["frequency"] = describeEnum(value!);
                   });
                 },
                 activeColor: Colors.green,
@@ -213,7 +208,7 @@ class _NewPressState extends State<NewPress> {
                 onChanged: (frequency? value) {
                   setState(() {
                     _frequency = value;
-                    _pressData["frequency"] = value.toString();
+                    _pressData["frequency"] = describeEnum(value!);
                   });
                 },
                 activeColor: Colors.green,
@@ -239,7 +234,7 @@ class _NewPressState extends State<NewPress> {
                 onChanged: (frequency? value) {
                   setState(() {
                     _frequency = value;
-                    _pressData["frequency"] = value.toString();
+                    _pressData["frequency"] = describeEnum(value!);
                   });
                 },
                 activeColor: Colors.green,
@@ -265,7 +260,7 @@ class _NewPressState extends State<NewPress> {
                 onChanged: (frequency? value) {
                   setState(() {
                     _frequency = value;
-                    _pressData["frequency"] = value.toString();
+                    _pressData["frequency"] = describeEnum(value!);
                   });
                 },
                 activeColor: Colors.green,
@@ -291,7 +286,7 @@ class _NewPressState extends State<NewPress> {
                 onChanged: (frequency? value) {
                   setState(() {
                     _frequency = value;
-                    _pressData["frequency"] = value.toString();
+                    _pressData["frequency"] = describeEnum(value!);
                   });
                 },
                 activeColor: Colors.green,
@@ -317,7 +312,7 @@ class _NewPressState extends State<NewPress> {
                 onChanged: (frequency? value) {
                   setState(() {
                     _frequency = value;
-                    _pressData["frequency"] = value.toString();
+                    _pressData["frequency"] = describeEnum(value!);
                   });
                 },
                 activeColor: Colors.green,
@@ -343,7 +338,7 @@ class _NewPressState extends State<NewPress> {
                 onChanged: (frequency? value) {
                   setState(() {
                     _frequency = value;
-                    _pressData["frequency"] = value.toString();
+                    _pressData["frequency"] = describeEnum(value!);
                   });
                 },
                 activeColor: Colors.green,
@@ -369,7 +364,7 @@ class _NewPressState extends State<NewPress> {
                 onChanged: (frequency? value) {
                   setState(() {
                     _frequency = value;
-                    _pressData["frequency"] = value.toString();
+                    _pressData["frequency"] = describeEnum(value!);
                   });
                 },
                 activeColor: Colors.green,

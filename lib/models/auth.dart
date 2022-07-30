@@ -15,7 +15,7 @@ class User {
   late String logo;
   String createdAt;
   User(
-      {required this.company_id,
+      {this.company_id = 0,
       required this.company,
       required this.email,
       required this.city,

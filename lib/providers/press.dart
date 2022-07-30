@@ -47,7 +47,7 @@ class PressProvider with ChangeNotifier {
     //String authTok
   ) async {
     final url = Uri.parse('http://localhost:5001/press');
-    //  final url = Uri.parse('http://192.168.66.189:5001/press');
+    //final url = Uri.parse('http://192.168.53.189:5001/press');
 
     try {
       // print(_pressData);
@@ -77,7 +77,7 @@ class PressProvider with ChangeNotifier {
 
   Future<void> getPressForCompany() async {
     try {
-      // final url = Uri.parse('http://192.168.138.189:5001/users/login');
+      // final url = Uri.parse('http://192.168.94.189:5001/press');
       final url = Uri.parse('http://localhost:5001/press');
       final responseData = await http.get(url, headers: {
         "Content-Type": "application/json",
@@ -98,7 +98,7 @@ class PressProvider with ChangeNotifier {
 
   Future<void> getPress(String pressId) async {
     try {
-      final url = Uri.parse('http://192.168.66.189:5001/press/$pressId');
+      final url = Uri.parse('http://192.168.53.189:5001/press/$pressId');
       final responseData = await http.get(url, headers: {
         "Content-Type": "application/json",
         "Access-Control_Allow_Origin": "*",
@@ -115,8 +115,9 @@ class PressProvider with ChangeNotifier {
 
   Future<void> removePress(String pressId) async {
     try {
-      // final url = Uri.parse('http://localhost:5001/press/$pressId');
       final url = Uri.parse('http://localhost:5001/press/$pressId');
+
+      /// final url = Uri.parse('http://192.168.53.189:5001/press/$pressId');
 
       final responseData = await http.delete(url, headers: {
         "Content-Type": "application/json",
@@ -134,7 +135,7 @@ class PressProvider with ChangeNotifier {
 
   Future<void> getDailyPressData(String id) async {
     try {
-      // final url = Uri.parse('http://192.168.138.189:5001/users/login');
+      // final url = Uri.parse('http://192.168.12.189:5001/press/$id/daily');
       final url = Uri.parse('http://localhost:5001/press/$id/daily');
       final responseData = await http.get(url, headers: {
         "Content-Type": "application/json",
@@ -154,9 +155,31 @@ class PressProvider with ChangeNotifier {
     }
   }
 
+  Future<void> getDailyTempLowPressData(String id) async {
+    try {
+      final url = Uri.parse('http://192.168.36.189:5001/press/$id/daily');
+      // final url = Uri.parse('http://localhost:5001/press/$id/tempLow/daily');
+      final responseData = await http.get(url, headers: {
+        "Content-Type": "application/json",
+        "Access-Control_Allow_Origin": "*",
+        "Authorization": _authToken
+      });
+      final data = json.decode(responseData.body) as Map<String, dynamic>;
+      final jsonData = json.decode(responseData.body);
+      // PressDataList pressDataList = PressDataList.fromJson(data['presses']);
+      // final List<PressData> pressDataLists = pressDataList.pressDatas;
+      // _pressData = pressDataLists;
+      print(jsonData);
+      notifyListeners();
+    } catch (e) {
+      print(e.toString());
+      throw e;
+    }
+  }
+
   Future<void> getWeeklyPressData(String id) async {
     try {
-      // final url = Uri.parse('http://192.168.138.189:5001/users/login');
+      // final url = Uri.parse('http://192.168.94.189:5001/press/$id/weekly');
       final url = Uri.parse('http://localhost:5001/press/$id/weekly');
       final responseData = await http.get(url, headers: {
         "Content-Type": "application/json",
@@ -179,7 +202,7 @@ class PressProvider with ChangeNotifier {
 
   Future<void> getMonthlyPressData(String id) async {
     try {
-      // final url = Uri.parse('http://192.168.138.189:5001/users/login');
+      // final url = Uri.parse('http://192.168.94.189:5001/press/$id/monthly');
       final url = Uri.parse('http://localhost:5001/press/$id/monthly');
       final responseData = await http.get(url, headers: {
         "Content-Type": "application/json",
@@ -202,7 +225,7 @@ class PressProvider with ChangeNotifier {
 
   Future<void> getCustomizedPressData(String id, String selectedDate) async {
     try {
-      // final url = Uri.parse('http://192.168.138.189:5001/users/login');
+      // final url = Uri.parse('http://192.168.94.189:5001/press/$id/customized');
       final url = Uri.parse('http://localhost:5001/press/$id/customized');
       final responseData = await http.post(url,
           body: json.encode({"selectedDate": selectedDate}),

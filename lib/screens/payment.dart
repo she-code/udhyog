@@ -5,7 +5,7 @@ import 'package:udhyog/models/auth.dart';
 import 'package:udhyog/widgets/overview.dart';
 import 'package:udhyog/screens/press_container.dart';
 import 'package:udhyog/widgets/logoHeading.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
+//import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:udhyog/widgets/userNameHeader.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
@@ -58,7 +58,7 @@ class _PaymentState extends State<Payment> {
   //     'key': 'rzp_test_ovopv6bm1rGf6q',
   //     'amount': 50000, //in the smallest currency sub-unit.
   //     'name': 'Acme Corp.',
-  //     'order_id': 'order_EMBFqjDHEEn80l', // Generate order_id using Orders API
+  //     'order_id': "order_Jz7Ab06IlRURcP", // Generate order_id using Orders API
   //     'description': 'Fine T-Shirt',
   //     'timeout': 60, // in seconds
   //     'prefill': {'contact': '9123456789', 'email': 'gaurav.kumar@example.com'}
