@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:udhyog/models/pressAvg.dart';
 import 'package:udhyog/models/pressData.dart';
 
 import '../models/press.dart';
@@ -133,7 +134,7 @@ class PressProvider with ChangeNotifier {
     }
   }
 
-  Future<void> getDailyPressData(String id) async {
+  Future<void> getDailPressData(String id) async {
     try {
       // final url = Uri.parse('http://192.168.12.189:5001/press/$id/daily');
       final url = Uri.parse('http://localhost:5001/press/$id/daily');
@@ -142,12 +143,33 @@ class PressProvider with ChangeNotifier {
         "Access-Control_Allow_Origin": "*",
         "Authorization": _authToken
       });
-      final data = json.decode(responseData.body) as Map<String, dynamic>;
-      final jsonData = json.decode(responseData.body);
-      PressDataList pressDataList = PressDataList.fromJson(data['presses']);
-      final List<PressData> pressDataLists = pressDataList.pressDatas;
-      _pressData = pressDataLists;
-      print(_pressData);
+      // final data = json.decode(responseData.body) as Map<String, dynamic>;
+      final results = json.decode(responseData.body);
+      // PressDataList pressDataList = PressDataList.fromJson(data['data']);
+      // print(results);
+      final data = results['data'];
+      print(data);
+      late var d = [];
+      data.forEach((key, val) => {
+            print(data[key]['TankLowerTemp']),
+            // val.forEach((k, v) => {
+            //       print(val['TankLowetTemp'])
+            //   d.add(PressAverage(
+            //       TankLowerTemp: double.parse(data[key]['TankLowerTemp']),
+            //       TankTopTemp: double.parse(data[key]['TankTopTemp']),
+            //       BlockTemp: double.parse(data[key]['BlockTemp']),
+            //       HoseTemp: double.parse(data[key]['HoseTemp']),
+            //       PartCount: double.parse(data[key]['PartCount']),
+            //       powerConsumption: double.parse(data[key]['powerConsumption']),
+            //       //   createdAt: key,
+            //       Timer: double.parse(data[key]['Timer']))),
+            //   //    })
+          });
+      print(d);
+      // print(results);
+      // final List<PressData> pressDataLists = pressDataList.pressDatas;
+      // _pressData = pressDataLists;
+      // print(_pressData);
       notifyListeners();
     } catch (e) {
       print(e.toString());
@@ -157,19 +179,43 @@ class PressProvider with ChangeNotifier {
 
   Future<void> getDailyTempLowPressData(String id) async {
     try {
-      final url = Uri.parse('http://192.168.36.189:5001/press/$id/daily');
-      // final url = Uri.parse('http://localhost:5001/press/$id/tempLow/daily');
+      // final url = Uri.parse('http://192.168.12.189:5001/press/$id/daily');
+      final url = Uri.parse('http://localhost:5001/press/$id/daily');
       final responseData = await http.get(url, headers: {
         "Content-Type": "application/json",
         "Access-Control_Allow_Origin": "*",
         "Authorization": _authToken
       });
-      final data = json.decode(responseData.body) as Map<String, dynamic>;
-      final jsonData = json.decode(responseData.body);
-      // PressDataList pressDataList = PressDataList.fromJson(data['presses']);
+      // final data = json.decode(responseData.body) as Map<String, dynamic>;
+      final results = json.decode(responseData.body);
+      // PressDataList pressDataList = PressDataList.fromJson(data['data']);
+      // print(results);
+      final data = results['data'];
+      print(data);
+      late var d = [];
+      data.forEach((key, val) => {
+            print(data[key]['TankLowerTemp']),
+            print(data[key]['Timer']),
+            // val.forEach((k, v) => {
+            //       print(val['TankLowetTemp'])
+            // d.add(PressAverage(
+            //     TankLowerTemp: double.parse(data[key]['TankLowerTemp']),
+            //     TankTopTemp: double.parse(data[key]['TankTopTemp']),
+            //     BlockTemp: double.parse(data[key]['BlockTemp']),
+            //     HoseTemp: double.parse(data[key]['HoseTemp']),
+            //     PartCount: double.parse(data[key]['PartCount']),
+            //     powerConsumption: double.parse(data[key]['powerConsumption']),
+            //     //   createdAt: key,
+            //     Timer: double.parse(data[key]['Timer'])
+
+            //    })
+            //   print(PressAverage(0, 0, 0, 0, 0, 0, 0))
+          });
+
+      // print(results);
       // final List<PressData> pressDataLists = pressDataList.pressDatas;
       // _pressData = pressDataLists;
-      print(jsonData);
+      // print(_pressData);
       notifyListeners();
     } catch (e) {
       print(e.toString());

@@ -60,8 +60,11 @@ class MyApp extends StatelessWidget {
                               authResultSnapshot.connectionState ==
                                       ConnectionState.waiting
                                   ? SplashScreen()
-                                  : const AuthPage(),
-                        ),
+
+                                  ///: authResultSnapshot.data == false
+                                  : const AuthPage()
+                          // : MainPage(),
+                          ),
                   // initialRoute: '/login',
                   routes: {
                     '/main': (ctx) => MainPage(),

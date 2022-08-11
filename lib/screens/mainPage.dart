@@ -41,8 +41,8 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     Color greenLight = Color(0xff63d47a);
     final deviceSize = MediaQuery.of(context).size;
-    final company = Provider.of<Auth>(context, listen: false).company;
-    final city = Provider.of<Auth>(context, listen: false).city;
+    // final company = Provider.of<Auth>(context, listen: false).company;
+    // final city = Provider.of<Auth>(context, listen: false).city;
 
     var children2 = [
       LogoHeading(),

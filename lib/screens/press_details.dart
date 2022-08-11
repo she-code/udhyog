@@ -53,7 +53,7 @@ class _PressDetailsState extends State<PressDetails> {
       });
 
       Provider.of<PressProvider>(context, listen: false)
-          .getDailyPressData(pressId)
+          .getDailyTempLowPressData(pressId)
           .then((_) => setState(() {
                 _isLoading = false;
               }));
@@ -194,7 +194,7 @@ class _PressDetailsState extends State<PressDetails> {
                   setState(() {
                     _timeDuration = value;
                     Provider.of<PressProvider>(context, listen: false)
-                        .getDailyPressData(pressId);
+                        .getDailPressData(pressId);
                   });
                 },
                 activeColor: Colors.green,
@@ -562,13 +562,13 @@ class _PressDetailsState extends State<PressDetails> {
                           child: _time_Duration(),
                         )
                       : SizedBox(),
-                  if (_reportType == reportType.report)
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ReportTable(pressDataList),
-                    ),
-                  if (_reportType == reportType.chart)
-                    ShowChart(pressId, pressDataList),
+                  // if (_reportType == reportType.report)
+                  //   Padding(
+                  //     padding: const EdgeInsets.all(8.0),
+                  //     child: ReportTable(pressDataList),
+                  //   ),
+                  // if (_reportType == reportType.chart)
+                  //   ShowChart(pressId, pressDataList),
                   //  Text('chart'),
                 ])),
               ),

@@ -26,7 +26,7 @@ class Auth with ChangeNotifier {
     if (_expiryDate != null &&
         _expiryDate!.isAfter(DateTime.now()) &&
         _token != null) {
-      //print({"tok", _token});
+      print({"tok", _token});
       return _token;
     }
     return null;
@@ -271,18 +271,21 @@ class Auth with ChangeNotifier {
       logo = responseData['logo'];
       print({responseData, city});
       // print({"token", _token});
-      notifyListeners();
 
       final prefs = await SharedPreferences.getInstance();
       final userData = json.encode({
         'token': _token,
         'userId': userId,
         'expiryDate': _expiryDate!.toIso8601String(),
+        'company': company,
+        'city': city,
+        'logo': logo
       });
       prefs.setString('userData', userData);
       // if (!prefs.containsKey('userData')) {
       //   return null;
       // }
+      notifyListeners();
     } catch (e) {
       // TODO
       throw e;
@@ -303,25 +306,36 @@ class Auth with ChangeNotifier {
   }
 
   Future<bool> tryAutoLogin() async {
-    final prefs = await SharedPreferences.getInstance();
-    if (!prefs.containsKey('userData')) {
-      print("No token stored");
-      return false;
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (!prefs.containsKey('userData')) {
+        print("No token stored");
+        return false;
+      }
+      final extractedUserData =
+          json.decode(prefs.getString('userData')!) as Map<String, dynamic>;
+      final expiryDate =
+          DateTime.parse(extractedUserData['expiryDate'].toString());
+      if (expiryDate.isBefore(DateTime.now())) {
+        print("expired");
+        return false;
+      }
+      _token = extractedUserData['token'].toString();
+      userId = extractedUserData['userId'].toString();
+      company = extractedUserData['company'].toString();
+      city = extractedUserData['city'].toString();
+      _expiryDate = expiryDate;
+      logo = extractedUserData['logo'];
+      // print({_token});
+      print({extractedUserData});
+
+      notifyListeners();
+    } on Exception catch (e) {
+      print(e.toString());
+      // TODO
     }
-    final extractedUserData =
-        json.decode(prefs.getString('userData')!) as Map<String, Object>;
-    final expiryDate =
-        DateTime.parse(extractedUserData['expiryDate'].toString());
-    if (expiryDate.isBefore(DateTime.now())) {
-      print("expired");
-      return false;
-    }
-    _token = extractedUserData['token'].toString();
-    userId = extractedUserData['userId'].toString();
-    _expiryDate = expiryDate;
-    notifyListeners();
     // _authoLogout();
-    print({extractedUserData});
+
     return true;
   }
 

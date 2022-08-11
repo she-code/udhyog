@@ -11,10 +11,12 @@ class UserNameHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     Color greenLight = Color(0xff63d47a);
     final deviceSize = MediaQuery.of(context).size;
-    final company = Provider.of<Auth>(context, listen: false).company;
+    final company = Provider.of<Auth>(context, listen: false).company == null
+        ? "F"
+        : Provider.of<Auth>(context, listen: false).company;
     final city = Provider.of<Auth>(context, listen: false).city;
     //final logo = Provider.of<Auth>(context, listen: false).logo ?? "";
-    final logo = Provider.of<Auth>(context, listen: false).logo;
+    // final logo = Provider.of<Auth>(context, listen: false).logo;
 
     return Container(
         height: 50,
