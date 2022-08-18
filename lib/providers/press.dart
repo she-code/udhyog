@@ -38,6 +38,11 @@ class PressProvider with ChangeNotifier {
     return [..._pressData];
   }
 
+  List<PressAverage> _PressAverage = [];
+  List<PressAverage> get PressAverages {
+    return [..._PressAverage];
+  }
+
   Future<void> addPressDb(
     String location,
     String static_id,
@@ -86,7 +91,6 @@ class PressProvider with ChangeNotifier {
         "Authorization": _authToken
       });
       final data = json.decode(responseData.body) as Map<String, dynamic>;
-      final jsonData = json.decode(responseData.body);
       PressList pressList = PressList.fromJson(data['presses']);
       final List<Press> presses = pressList.presses;
       _presses = presses;
@@ -125,57 +129,57 @@ class PressProvider with ChangeNotifier {
         "Access-Control_Allow_Origin": "*",
         "Authorization": _authToken
       });
-      _presses.remove(pressId);
-      print(pressId);
-      print(responseData);
+
+      _presses.removeWhere(((element) => element.press_id == pressId));
+
       notifyListeners();
     } catch (e) {
       throw e;
     }
   }
 
-  Future<void> getDailPressData(String id) async {
-    try {
-      // final url = Uri.parse('http://192.168.12.189:5001/press/$id/daily');
-      final url = Uri.parse('http://localhost:5001/press/$id/daily');
-      final responseData = await http.get(url, headers: {
-        "Content-Type": "application/json",
-        "Access-Control_Allow_Origin": "*",
-        "Authorization": _authToken
-      });
-      // final data = json.decode(responseData.body) as Map<String, dynamic>;
-      final results = json.decode(responseData.body);
-      // PressDataList pressDataList = PressDataList.fromJson(data['data']);
-      // print(results);
-      final data = results['data'];
-      print(data);
-      late var d = [];
-      data.forEach((key, val) => {
-            print(data[key]['TankLowerTemp']),
-            // val.forEach((k, v) => {
-            //       print(val['TankLowetTemp'])
-            //   d.add(PressAverage(
-            //       TankLowerTemp: double.parse(data[key]['TankLowerTemp']),
-            //       TankTopTemp: double.parse(data[key]['TankTopTemp']),
-            //       BlockTemp: double.parse(data[key]['BlockTemp']),
-            //       HoseTemp: double.parse(data[key]['HoseTemp']),
-            //       PartCount: double.parse(data[key]['PartCount']),
-            //       powerConsumption: double.parse(data[key]['powerConsumption']),
-            //       //   createdAt: key,
-            //       Timer: double.parse(data[key]['Timer']))),
-            //   //    })
-          });
-      print(d);
-      // print(results);
-      // final List<PressData> pressDataLists = pressDataList.pressDatas;
-      // _pressData = pressDataLists;
-      // print(_pressData);
-      notifyListeners();
-    } catch (e) {
-      print(e.toString());
-      throw e;
-    }
-  }
+  // Future<void> getDailPressData(String id) async {
+  //   try {
+  //     // final url = Uri.parse('http://192.168.12.189:5001/press/$id/daily');
+  //     final url = Uri.parse('http://localhost:5001/press/$id/daily');
+  //     final responseData = await http.get(url, headers: {
+  //       "Content-Type": "application/json",
+  //       "Access-Control_Allow_Origin": "*",
+  //       "Authorization": _authToken
+  //     });
+  //     // final data = json.decode(responseData.body) as Map<String, dynamic>;
+  //     final results = json.decode(responseData.body);
+  //     // PressDataList pressDataList = PressDataList.fromJson(data['data']);
+  //     // print(results);
+  //     final data = results['data'];
+  //     print(data);
+  //     late var d = [];
+  //     data.forEach((key, val) => {
+  //           print(data[key]['TankLowerTemp']),
+  //           // val.forEach((k, v) => {
+  //           //       print(val['TankLowetTemp'])
+  //           //   d.add(PressAverage(
+  //           //       TankLowerTemp: double.parse(data[key]['TankLowerTemp']),
+  //           //       TankTopTemp: double.parse(data[key]['TankTopTemp']),
+  //           //       BlockTemp: double.parse(data[key]['BlockTemp']),
+  //           //       HoseTemp: double.parse(data[key]['HoseTemp']),
+  //           //       PartCount: double.parse(data[key]['PartCount']),
+  //           //       powerConsumption: double.parse(data[key]['powerConsumption']),
+  //           //       //   createdAt: key,
+  //           //       Timer: double.parse(data[key]['Timer']))),
+  //           //   //    })
+  //         });
+  //     print(d);
+  //     // print(results);
+  //     // final List<PressData> pressDataLists = pressDataList.pressDatas;
+  //     // _pressData = pressDataLists;
+  //     // print(_pressData);
+  //     notifyListeners();
+  //   } catch (e) {
+  //     print(e.toString());
+  //     throw e;
+  //   }
+  // }
 
   Future<void> getDailyTempLowPressData(String id) async {
     try {
@@ -186,35 +190,11 @@ class PressProvider with ChangeNotifier {
         "Access-Control_Allow_Origin": "*",
         "Authorization": _authToken
       });
-      // final data = json.decode(responseData.body) as Map<String, dynamic>;
-      final results = json.decode(responseData.body);
-      // PressDataList pressDataList = PressDataList.fromJson(data['data']);
-      // print(results);
-      final data = results['data'];
-      print(data);
-      late var d = [];
-      data.forEach((key, val) => {
-            print(data[key]['TankLowerTemp']),
-            print(data[key]['Timer']),
-            // val.forEach((k, v) => {
-            //       print(val['TankLowetTemp'])
-            // d.add(PressAverage(
-            //     TankLowerTemp: double.parse(data[key]['TankLowerTemp']),
-            //     TankTopTemp: double.parse(data[key]['TankTopTemp']),
-            //     BlockTemp: double.parse(data[key]['BlockTemp']),
-            //     HoseTemp: double.parse(data[key]['HoseTemp']),
-            //     PartCount: double.parse(data[key]['PartCount']),
-            //     powerConsumption: double.parse(data[key]['powerConsumption']),
-            //     //   createdAt: key,
-            //     Timer: double.parse(data[key]['Timer'])
 
-            //    })
-            //   print(PressAverage(0, 0, 0, 0, 0, 0, 0))
-          });
-
-      // print(results);
-      // final List<PressData> pressDataLists = pressDataList.pressDatas;
-      // _pressData = pressDataLists;
+      final results = json.decode(responseData.body) as Map<String, dynamic>;
+      PressAverageList pA = PressAverageList.fromJson(results['data']);
+      final List<PressAverage> pressAvg = pA.PressAverages;
+      _PressAverage = pressAvg;
       // print(_pressData);
       notifyListeners();
     } catch (e) {
@@ -232,13 +212,12 @@ class PressProvider with ChangeNotifier {
         "Access-Control_Allow_Origin": "*",
         "Authorization": _authToken
       });
-      final data = json.decode(responseData.body) as Map<String, dynamic>;
-      final jsonData = json.decode(responseData.body);
-      PressDataList pressDataList = PressDataList.fromJson(data['presses']);
-      final List<PressData> pressDataLists = pressDataList.pressDatas;
-      _pressData = pressDataLists;
-      print(_pressData);
-      notifyListeners();
+
+      final results = json.decode(responseData.body) as Map<String, dynamic>;
+      PressAverageList pA = PressAverageList.fromJson(results['data']);
+      final List<PressAverage> pressAvg = pA.PressAverages;
+      _PressAverage = pressAvg;
+      // print(_pressData);
       notifyListeners();
     } catch (e) {
       print(e.toString());
@@ -255,13 +234,12 @@ class PressProvider with ChangeNotifier {
         "Access-Control_Allow_Origin": "*",
         "Authorization": _authToken
       });
-      final data = json.decode(responseData.body) as Map<String, dynamic>;
-      final jsonData = json.decode(responseData.body);
-      PressDataList pressDataList = PressDataList.fromJson(data['presses']);
-      final List<PressData> pressDataLists = pressDataList.pressDatas;
-      _pressData = pressDataLists;
-      print(_pressData);
-      notifyListeners();
+
+      final results = json.decode(responseData.body) as Map<String, dynamic>;
+      PressAverageList pA = PressAverageList.fromJson(results['data']);
+      final List<PressAverage> pressAvg = pA.PressAverages;
+      _PressAverage = pressAvg;
+      // print(_pressData);
       notifyListeners();
     } catch (e) {
       print(e.toString());
@@ -280,13 +258,11 @@ class PressProvider with ChangeNotifier {
             "Access-Control_Allow_Origin": "*",
             "Authorization": _authToken
           });
-      final data = json.decode(responseData.body) as Map<String, dynamic>;
-      final jsonData = json.decode(responseData.body);
-      PressDataList pressDataList = PressDataList.fromJson(data['presses']);
-      final List<PressData> pressDataLists = pressDataList.pressDatas;
-      _pressData = pressDataLists;
-      print(_pressData);
-      notifyListeners();
+      final results = json.decode(responseData.body) as Map<String, dynamic>;
+      PressAverageList pA = PressAverageList.fromJson(results['data']);
+      final List<PressAverage> pressAvg = pA.PressAverages;
+      _PressAverage = pressAvg;
+      // print(_pressData);
       notifyListeners();
     } catch (e) {
       print(e.toString());

@@ -19,7 +19,7 @@ class PdfPreviewPage extends StatelessWidget {
         title: Text('Report'),
       ),
       body: PdfPreview(
-        build: (context) => pdfExport().makePdf(pressDataList, company),
+        build: (context) => pdfExport().makePdf(pressDataList, company!),
       ),
     );
   }

@@ -14,6 +14,7 @@ class User {
   String gstNo;
   late String logo;
   String createdAt;
+  String contactPerson;
   User(
       {this.company_id = 0,
       required this.company,
@@ -29,7 +30,8 @@ class User {
       required this.createdAt,
       this.address2 = '',
       this.webpage = '',
-      this.logo = ''});
+      this.logo = '',
+      required this.contactPerson});
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
         company_id: json["company_id"],
@@ -46,7 +48,8 @@ class User {
         pin: json["pin"],
         gst: json["gst"],
         gstNo: json["gstNo"],
-        createdAt: json["createdAt"]);
+        createdAt: json["createdAt"],
+        contactPerson: json["contactPerson"]);
   }
 }
 

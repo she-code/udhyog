@@ -130,7 +130,7 @@ class _LoginUPState extends State<LoginUP> {
                   child: Column(crossAxisAlignment: CrossAxisAlignment.center,
                       // mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
+                        SizedBox(
                           width: 400,
                           child: TextFormField(
                             focusNode: _emailFocusNode,

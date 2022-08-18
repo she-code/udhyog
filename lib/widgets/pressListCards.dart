@@ -42,7 +42,7 @@ class _PressListCardsState extends State<PressListCards> {
           setState(() {
             openDetails = true;
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            print("object");
+            //  print("object");
           });
         }
       },

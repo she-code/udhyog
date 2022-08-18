@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
-import 'package:udhyog/providers/press.dart';
-import 'package:udhyog/screens/newPress.dart';
-import 'package:udhyog/widgets/overview.dart';
-import 'package:udhyog/widgets/pressListCards.dart';
-import 'package:udhyog/widgets/logoHeading.dart';
-import 'package:udhyog/widgets/userNameHeader.dart';
-import 'package:udhyog/screens/payment.dart';
+import '../providers/press.dart';
+import '../screens/newPress.dart';
+import '../widgets/overview.dart';
+import '../widgets/pressListCards.dart';
+import '../widgets/logoHeading.dart';
+import '../widgets/userNameHeader.dart';
 
 class PressContainer extends StatefulWidget {
   const PressContainer({Key? key}) : super(key: key);
@@ -53,9 +52,9 @@ class _PressContainerState extends State<PressContainer>
 
   @override
   Widget build(BuildContext context) {
-    Color backG = Color.fromARGB(174, 230, 231, 233);
-    TabController _tabController = TabController(length: 6, vsync: this);
-    final pressData = Provider.of<PressProvider>(context).presses;
+    Color backG = const Color.fromARGB(174, 230, 231, 233);
+    final pressData =
+        Provider.of<PressProvider>(context, listen: false).presses;
     return SafeArea(
         child: Scaffold(
       body: RefreshIndicator(
@@ -66,15 +65,15 @@ class _PressContainerState extends State<PressContainer>
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
             child: Column(children: [
-              LogoHeading(),
-              UserNameHeader(),
-              SizedBox(
+              const LogoHeading(),
+              const UserNameHeader(),
+              const SizedBox(
                 height: 20,
               ),
-              Container(
+              SizedBox(
                 height: 60,
                 child: _isLoading
-                    ? Center(
+                    ? const Center(
                         child: CircularProgressIndicator(),
                       )
                     : ListView.builder(
@@ -89,7 +88,7 @@ class _PressContainerState extends State<PressContainer>
               ),
               Expanded(
                 child: _isLoading
-                    ? Center(
+                    ? const Center(
                         child: Text("No presses"),
                       )
                     : ListView.builder(
@@ -110,12 +109,12 @@ class _PressContainerState extends State<PressContainer>
           foregroundColor: Colors.white,
           // activeBackgroundColor: Colors.transparent,
           icon: Icons.menu,
-          backgroundColor: Colors.amber,
+          backgroundColor: Colors.orange,
           children: [
             SpeedDialChild(
                 child: const Icon(Icons.money),
                 label: 'Make Payment',
-                backgroundColor: Colors.amberAccent,
+                backgroundColor: Colors.orangeAccent,
                 foregroundColor: Colors.white,
                 onTap: () {
                   //   Navigator.of(context)
@@ -125,7 +124,7 @@ class _PressContainerState extends State<PressContainer>
             SpeedDialChild(
               child: const Icon(Icons.add),
               label: 'Add Press',
-              backgroundColor: Colors.amberAccent,
+              backgroundColor: Colors.orangeAccent,
               foregroundColor: Colors.white,
               onTap: () {
                 Navigator.of(context).pushNamed(NewPress.routeName);

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:mime/mime.dart';
 import 'package:http/http.dart' as http;
@@ -11,13 +12,13 @@ import 'package:udhyog/models/auth.dart';
 import '../models/http_exception.dart';
 
 class Auth with ChangeNotifier {
-  late String _token;
-  DateTime? _expiryDate = null;
-  late String userId;
-  late String company;
-  late String city;
-  late String logo;
-  // Timer _authTimer;
+  String? _token;
+  DateTime? _expiryDate;
+  String? userId;
+  String? company;
+  String? city;
+  String? logo;
+  Timer? _authTimer;
   bool get isAuth {
     return token != null;
   }
@@ -37,6 +38,11 @@ class Auth with ChangeNotifier {
     return [..._users];
   }
 
+  User? _me;
+  User get me {
+    return _me!;
+  }
+
   User findById(String id) {
     return _users.firstWhere((element) => element.company_id == id);
   }
@@ -47,7 +53,7 @@ class Auth with ChangeNotifier {
       final responseData = await http.get(url, headers: {
         "Content-Type": "application/json",
         "Access-Control_Allow_Origin": "*",
-        "Authorization": _token
+        "Authorization": _token!
       });
       final response = json.decode(responseData.body);
       final user = response['user'];
@@ -65,8 +71,10 @@ class Auth with ChangeNotifier {
           pin: user['pin'],
           gst: user['gst'],
           gstNo: user['gstNo'],
-          createdAt: user['createdAt']);
-      // print({newUser});
+          createdAt: user['createdAt'],
+          contactPerson: user['contactPerson']);
+      print({newUser.address1});
+      _me = newUser;
       notifyListeners();
       return newUser;
     } catch (e) {
@@ -81,7 +89,7 @@ class Auth with ChangeNotifier {
       final responseData = await http.get(url, headers: {
         "Content-Type": "application/json",
         "Access-Control_Allow_Origin": "*",
-        "Authorization": _token
+        "Authorization": _token!
       });
       //print(json.decode(responseData.body));
       final data = json.decode(responseData.body) as Map<String, dynamic>;
@@ -285,24 +293,12 @@ class Auth with ChangeNotifier {
       // if (!prefs.containsKey('userData')) {
       //   return null;
       // }
+      //_autoLogout();
       notifyListeners();
     } catch (e) {
       // TODO
       throw e;
     }
-  }
-
-  Future<void> logout() async {
-    // _token = null;
-    // userId = null;
-    // _expiryDate = null;
-    // if (_authTimer != null) {
-    //   _authTimer.canecl();
-    // }
-    notifyListeners();
-    final prefs = await SharedPreferences.getInstance();
-    // clear to clear all , remove to remove specific
-    prefs.clear();
   }
 
   Future<bool> tryAutoLogin() async {
@@ -337,6 +333,33 @@ class Auth with ChangeNotifier {
     // _authoLogout();
 
     return true;
+  }
+
+  Future<void> logout() async {
+    _expiryDate = null;
+    _token = null;
+    userId = null;
+    company = null;
+    city = null;
+    logo = null;
+    if (_authTimer != null) {
+      _authTimer!.cancel();
+      _authTimer = null;
+    }
+
+    final prefs = await SharedPreferences.getInstance();
+    // clear to clear all , remove to remove specific
+    prefs.remove('userData');
+    notifyListeners();
+  }
+
+  void _autoLogout() {
+    if (_authTimer != null) {
+      _authTimer!.cancel();
+    }
+    final timeToExpiry = _expiryDate!.difference(DateTime.now()).inSeconds;
+    print(timeToExpiry);
+    _authTimer = Timer(Duration(seconds: timeToExpiry), logout);
   }
 
   Future<void> uploadImage() async {}

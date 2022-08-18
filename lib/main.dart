@@ -65,6 +65,7 @@ class MyApp extends StatelessWidget {
                                   : const AuthPage()
                           // : MainPage(),
                           ),
+
                   // initialRoute: '/login',
                   routes: {
                     '/main': (ctx) => MainPage(),

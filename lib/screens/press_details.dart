@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
 
-import 'package:udhyog/providers/auth.dart';
-import 'package:udhyog/screens/payment.dart';
-import 'package:udhyog/widgets/logoHeading.dart';
-import 'package:udhyog/widgets/show_chart.dart';
-import 'package:udhyog/widgets/userNameHeader.dart';
+import '../providers/auth.dart';
+import '../screens/payment.dart';
+import '../widgets/logoHeading.dart';
+import '../widgets/userNameHeader.dart';
 
 import '../providers/press.dart';
-import '../widgets/gauge.dart';
 import '../widgets/table.dart';
 import 'newPress.dart';
 
@@ -76,6 +74,7 @@ class _PressDetailsState extends State<PressDetails> {
       }
       setState(() {
         _selectedDate = pickedDate;
+        // print(_selectedDate);
       });
     });
   }
@@ -84,7 +83,7 @@ class _PressDetailsState extends State<PressDetails> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(children: [
-        Text("Report Type: "),
+        const Text("Report Type: "),
         Container(
           width: 110,
           child: ListTile(
@@ -117,7 +116,7 @@ class _PressDetailsState extends State<PressDetails> {
             //   "Chart",
             //   style: TextStyle(color: Colors.grey, fontSize: 15),
             //),
-            trailing: Text(
+            trailing: const Text(
               "Chart",
               style:
                   TextStyle(color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
@@ -148,43 +147,43 @@ class _PressDetailsState extends State<PressDetails> {
         width: double.infinity,
         child: Wrap(children: [
           Container(
-            child: Text("Time Duration: "),
-            margin: EdgeInsets.only(top: 15),
+            child: const Text("Time Duration: "),
+            margin: const EdgeInsets.only(top: 15),
           ),
-          Container(
+          // Container(
+          //   width: 110,
+          //   child: ListTile(
+          //     // title: Text(
+          //     //   "Report",
+          //     //   style: TextStyle(color: Colors.grey, fontSize: 15),
+          //     // ),
+          //     trailing: Text(
+          //       "All",
+          //       style: TextStyle(
+          //           color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+          //     ),
+          //     leading: Radio<timeDuration>(
+          //       value: timeDuration.all,
+          //       groupValue: _timeDuration,
+          //       onChanged: (timeDuration? value) {
+          //         setState(() {
+          //           _timeDuration = value;
+          //         });
+          //       },
+          //       activeColor: Colors.green,
+          //     ),
+          //   ),
+          // ),
+          SizedBox(
             width: 110,
             child: ListTile(
               // title: Text(
               //   "Report",
               //   style: TextStyle(color: Colors.grey, fontSize: 15),
               // ),
-              trailing: Text(
-                "All",
-                style: TextStyle(
-                    color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
-              ),
-              leading: Radio<timeDuration>(
-                value: timeDuration.all,
-                groupValue: _timeDuration,
-                onChanged: (timeDuration? value) {
-                  setState(() {
-                    _timeDuration = value;
-                  });
-                },
-                activeColor: Colors.green,
-              ),
-            ),
-          ),
-          Container(
-            width: 110,
-            child: ListTile(
-              // title: Text(
-              //   "Report",
-              //   style: TextStyle(color: Colors.grey, fontSize: 15),
-              // ),
-              trailing: Text(
+              trailing: const Text(
                 "Daily",
-                style: TextStyle(
+                style: const TextStyle(
                     color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
               ),
               leading: Radio<timeDuration>(
@@ -194,21 +193,21 @@ class _PressDetailsState extends State<PressDetails> {
                   setState(() {
                     _timeDuration = value;
                     Provider.of<PressProvider>(context, listen: false)
-                        .getDailPressData(pressId);
+                        .getDailyTempLowPressData(pressId);
                   });
                 },
                 activeColor: Colors.green,
               ),
             ),
           ),
-          Container(
+          SizedBox(
             width: 110,
             child: ListTile(
               // title: Text(
               //   "Chart",
               //   style: TextStyle(color: Colors.grey, fontSize: 15),
               // ),
-              trailing: Text(
+              trailing: const Text(
                 "Weekly",
                 style: TextStyle(
                     color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
@@ -227,14 +226,14 @@ class _PressDetailsState extends State<PressDetails> {
               ),
             ),
           ),
-          Container(
+          SizedBox(
             width: 115,
             child: ListTile(
               // title: Text(
               //   "Chart",
               //   style: TextStyle(color: Colors.grey, fontSize: 15),
               // ),
-              trailing: Text(
+              trailing: const Text(
                 "Monthly",
                 style: TextStyle(
                     color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
@@ -253,14 +252,14 @@ class _PressDetailsState extends State<PressDetails> {
               ),
             ),
           ),
-          Container(
+          SizedBox(
             width: 130,
             child: ListTile(
               // title: Text(
               //   "Chart",
               //   style: TextStyle(color: Colors.grey, fontSize: 15),
               // ),
-              trailing: Text(
+              trailing: const Text(
                 "Customize",
                 style: TextStyle(
                     color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
@@ -291,13 +290,13 @@ class _PressDetailsState extends State<PressDetails> {
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
+      child: SizedBox(
         width: 500,
         height: 500,
         child: Column(children: [
           Container(
-            child: Text("Select Temperature: "),
-            margin: EdgeInsets.only(top: 15),
+            child: const Text("Select Temperature: "),
+            margin: const EdgeInsets.only(top: 15),
           ),
           Container(
             width: 110,
@@ -306,7 +305,7 @@ class _PressDetailsState extends State<PressDetails> {
               //   "Report",
               //   style: TextStyle(color: Colors.grey, fontSize: 15),
               // ),
-              trailing: Text(
+              trailing: const Text(
                 "Temperature Low",
                 style: TextStyle(
                     color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
@@ -330,9 +329,9 @@ class _PressDetailsState extends State<PressDetails> {
               //   "Report",
               //   style: TextStyle(color: Colors.grey, fontSize: 15),
               // ),
-              trailing: Text(
+              trailing: const Text(
                 "Temperature High",
-                style: TextStyle(
+                style: const TextStyle(
                     color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
               ),
               leading: Radio<choose_temp>(
@@ -354,7 +353,7 @@ class _PressDetailsState extends State<PressDetails> {
               //   "Chart",
               //   style: TextStyle(color: Colors.grey, fontSize: 15),
               // ),
-              trailing: Text(
+              trailing: const Text(
                 "Hose Temp",
                 style: TextStyle(
                     color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
@@ -378,10 +377,10 @@ class _PressDetailsState extends State<PressDetails> {
               //   "Chart",
               //   style: TextStyle(color: Colors.grey, fontSize: 15),
               // ),
-              trailing: Text(
+              trailing: const Text(
                 "Block Temp",
-                style: TextStyle(
-                    color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+                style: const TextStyle(
+                    color: const Color.fromARGB(169, 0, 0, 0), fontSize: 15),
               ),
               leading: Radio<choose_temp>(
                 value: choose_temp.blockTemp,
@@ -408,14 +407,14 @@ class _PressDetailsState extends State<PressDetails> {
     final pressDetails = pressData.details.isEmpty ? [] : pressData.details;
     final latestDetail = pressData.details.isEmpty ? [] : pressDetails.last;
     final pressDataList =
-        Provider.of<PressProvider>(context, listen: false).pressdatas;
+        Provider.of<PressProvider>(context, listen: false).PressAverages;
     final lastPressData = pressDataList.isEmpty ? [] : pressDataList.last;
 
     // print(lastPressData.entery_id);
     //pressDataList.map((index) => {print(pressDataList[index]['BlockTemp'])});
     // print(pressDetails.last);
     final logo = Provider.of<Auth>(context, listen: false).logo;
-    Color backG = Color.fromARGB(174, 230, 231, 233);
+    Color backG = const Color.fromARGB(174, 230, 231, 233);
     final deviceSize = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -429,9 +428,9 @@ class _PressDetailsState extends State<PressDetails> {
                 //width: 400,
                 child: SingleChildScrollView(
                     child: Column(children: [
-                  LogoHeading(),
+                  const LogoHeading(),
                   const SizedBox(height: 10),
-                  UserNameHeader(),
+                  const UserNameHeader(),
                   const SizedBox(
                     height: 20,
                   ),
@@ -465,19 +464,19 @@ class _PressDetailsState extends State<PressDetails> {
                                 child: Container(
                                     alignment: Alignment.center,
                                     width: 70,
-                                    padding: EdgeInsets.all(4),
+                                    padding: const EdgeInsets.all(4),
                                     color: Colors.white,
                                     child: Text(
                                       StringUtils.capitalize(
                                           pressData.press_name),
-                                      style: TextStyle(fontSize: 14),
+                                      style: const TextStyle(fontSize: 14),
                                     ))),
                             Positioned(
                               top: 107,
                               right: 63,
                               child: Text(
                                 latestDetail['BlockTemp'].toString(),
-                                style: TextStyle(color: Colors.white),
+                                style: const TextStyle(color: Colors.white),
                               ),
                             ),
                             Positioned(
@@ -485,7 +484,7 @@ class _PressDetailsState extends State<PressDetails> {
                               right: 105,
                               child: Text(
                                 latestDetail['TankTopTemp'].toString(),
-                                style: TextStyle(color: Colors.white),
+                                style: const TextStyle(color: Colors.white),
                               ),
                             ),
                             Positioned(
@@ -493,7 +492,7 @@ class _PressDetailsState extends State<PressDetails> {
                               right: 63,
                               child: Text(
                                 latestDetail['TankLowerTemp'].toString(),
-                                style: TextStyle(color: Colors.white),
+                                style: const TextStyle(color: Colors.white),
                               ),
                             ),
                             Positioned(
@@ -501,7 +500,7 @@ class _PressDetailsState extends State<PressDetails> {
                               right: 105,
                               child: Text(
                                 latestDetail['HoseTemp']!.toString(),
-                                style: TextStyle(color: Colors.white),
+                                style: const TextStyle(color: Colors.white),
                               ),
                             ),
                             Positioned(
@@ -509,7 +508,7 @@ class _PressDetailsState extends State<PressDetails> {
                               right: 63,
                               child: Text(
                                 latestDetail['PartCount']!.toString(),
-                                style: TextStyle(color: Colors.white),
+                                style: const TextStyle(color: Colors.white),
                               ),
                             ),
                             Positioned(
@@ -517,7 +516,7 @@ class _PressDetailsState extends State<PressDetails> {
                               right: 105,
                               child: Text(
                                 latestDetail['Timer']!.toString(),
-                                style: TextStyle(color: Colors.white),
+                                style: const TextStyle(color: Colors.white),
                               ),
                             ),
                             // Positioned(
@@ -549,7 +548,7 @@ class _PressDetailsState extends State<PressDetails> {
                   //       ],
                   //     )),
                   //  RadioType(reportType, updateReportType),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Padding(
@@ -561,12 +560,12 @@ class _PressDetailsState extends State<PressDetails> {
                           padding: const EdgeInsets.symmetric(horizontal: 15.0),
                           child: _time_Duration(),
                         )
-                      : SizedBox(),
-                  // if (_reportType == reportType.report)
-                  //   Padding(
-                  //     padding: const EdgeInsets.all(8.0),
-                  //     child: ReportTable(pressDataList),
-                  //   ),
+                      : const SizedBox(),
+                  if (_reportType == reportType.report)
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ReportTable(pressDataList),
+                    ),
                   // if (_reportType == reportType.chart)
                   //   ShowChart(pressId, pressDataList),
                   //  Text('chart'),

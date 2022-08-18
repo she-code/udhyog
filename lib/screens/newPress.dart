@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:udhyog/screens/mainPage.dart';
+import 'package:udhyog/widgets/userNameHeader.dart';
 import '../models/http_exception.dart';
 import '../providers/press.dart';
 import '../screens/payment.dart';
@@ -27,9 +29,8 @@ enum frequency {
   oneHour
 }
 
-enum pressType { automatic, semiautomatic }
-
 extension freEnum on frequency {
+  // String get name => describeEnum(this);
   int get freq {
     switch (this) {
       case frequency.oneS:
@@ -60,23 +61,23 @@ class _NewPressState extends State<NewPress> {
   final _locationFocusNode = FocusNode();
   final _hotsFocusNode = FocusNode();
   final _hotsPassFocusNode = FocusNode();
-  frequency? _frequency = frequency.tenMin;
+  frequency? _frequency;
   TextEditingController staticId = TextEditingController();
   TextEditingController _location = TextEditingController();
   TextEditingController _hotspot = TextEditingController();
   TextEditingController _hotsPassword = TextEditingController();
-  String dropDownValue = "Automatic";
+  String? dropDownValue;
 
   //global keys
   final GlobalKey<FormState> _form = GlobalKey();
 
-  final Map<String, String> _pressData = {
+  final Map<String, dynamic> _pressData = {
     "static_id": '',
     "dynamicId": '',
     "location": "",
     "hotspot": "",
     "hotsPassword": "",
-    "frequency": "",
+    "frequency": 0,
     "TypeOfPress": ""
   };
   var _isLoading = false;
@@ -93,7 +94,7 @@ class _NewPressState extends State<NewPress> {
               onPressed: () {
                 Navigator.of(ctx).pop();
               },
-              child: Text('Okay'))
+              child: const Text('Okay'))
         ],
       ),
     );
@@ -120,7 +121,7 @@ class _NewPressState extends State<NewPress> {
         _pressData["TypeOfPress"].toString(),
         // autTok!
       );
-      Navigator.of(context).pushReplacementNamed(Payment.routeName);
+      Navigator.of(context).pushReplacementNamed(MainPage.routeName);
     } on HttpException catch (e) {
       var errorMessage = 'Authentication Failed';
       print(e.toString());
@@ -152,226 +153,209 @@ class _NewPressState extends State<NewPress> {
   }
 
   Widget frequencyWidget() {
-    return Flexible(
-        // width: 500,
+    return Container(
+        width: 400,
         // padding: EdgeInsets.symmetric(horizontal: 8),
-        // height: 150,
+        // height: 250,
+        alignment: Alignment.center,
         child: Wrap(
             //S scrollDirection: Axis.horizontal,
             children: [
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Text("Frequency: "),
-          ),
-          Container(
-            height: 50,
-            width: 110,
-            child: ListTile(
-              // title: Text(
-              //   "Report",
-              //   style: TextStyle(color: Colors.grey, fontSize: 15),
-              // ),
-              trailing: Text(
-                "1 sec",
-                style: TextStyle(
-                    color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+              const Padding(
+                padding: EdgeInsets.all(15.0),
+                child: Text("Frequency: "),
               ),
-              leading: Radio<frequency>(
-                value: frequency.oneS,
-                groupValue: _frequency,
-                onChanged: (frequency? value) {
-                  setState(() {
-                    _frequency = value;
-                    _pressData["frequency"] = describeEnum(value!);
-                  });
-                },
-                activeColor: Colors.green,
+              Container(
+                height: 50,
+                width: 110,
+                child: ListTile(
+                  // title: Text(
+                  //   "Report",
+                  //   style: TextStyle(color: Colors.grey, fontSize: 15),
+                  // ),
+                  trailing: const Text(
+                    "1 sec",
+                    style: TextStyle(
+                        color: const Color.fromARGB(169, 0, 0, 0),
+                        fontSize: 15),
+                  ),
+                  leading: Radio<frequency>(
+                    value: frequency.oneS,
+                    groupValue: _frequency,
+                    onChanged: (frequency? value) {
+                      setState(() {
+                        _frequency = value;
+                        _pressData["frequency"] = frequency.oneS.freq;
+                        print(frequency.oneS.freq);
+                      });
+                    },
+                    activeColor: Colors.green,
+                  ),
+                ),
               ),
-            ),
-          ),
-          Container(
-            height: 50,
-            width: 110,
-            child: ListTile(
-              // title: Text(
-              //   "Report",
-              //   style: TextStyle(color: Colors.grey, fontSize: 15),
-              // ),
-              trailing: Text(
-                "30 sec",
-                style: TextStyle(
-                    color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+              Container(
+                height: 50,
+                width: 110,
+                child: ListTile(
+                  // title: Text(
+                  //   "Report",
+                  //   style: TextStyle(color: Colors.grey, fontSize: 15),
+                  // ),
+                  trailing: const Text(
+                    "30 sec",
+                    style: TextStyle(
+                        color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+                  ),
+                  leading: Radio<frequency>(
+                    value: frequency.thirtyS,
+                    groupValue: _frequency,
+                    onChanged: (frequency? value) {
+                      setState(() {
+                        _frequency = value;
+                        _pressData["frequency"] = frequency.thirtyS.freq;
+                      });
+                    },
+                    activeColor: Colors.green,
+                  ),
+                ),
               ),
-              leading: Radio<frequency>(
-                value: frequency.thirtyS,
-                groupValue: _frequency,
-                onChanged: (frequency? value) {
-                  setState(() {
-                    _frequency = value;
-                    _pressData["frequency"] = describeEnum(value!);
-                  });
-                },
-                activeColor: Colors.green,
+              Container(
+                height: 50,
+                width: 110,
+                child: ListTile(
+                  // title: Text(
+                  //   "Report",
+                  //   style: TextStyle(color: Colors.grey, fontSize: 15),
+                  // ),
+                  trailing: const Text(
+                    "60 sec",
+                    style: TextStyle(
+                        color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+                  ),
+                  leading: Radio<frequency>(
+                    value: frequency.sixtyS,
+                    groupValue: _frequency,
+                    onChanged: (frequency? value) {
+                      setState(() {
+                        _frequency = value;
+                        _pressData["frequency"] = frequency.sixtyS.freq;
+                      });
+                    },
+                    activeColor: Colors.green,
+                  ),
+                ),
               ),
-            ),
-          ),
-          Container(
-            height: 50,
-            width: 110,
-            child: ListTile(
-              // title: Text(
-              //   "Report",
-              //   style: TextStyle(color: Colors.grey, fontSize: 15),
-              // ),
-              trailing: Text(
-                "60 sec",
-                style: TextStyle(
-                    color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+              SizedBox(
+                height: 50,
+                width: 110,
+                child: ListTile(
+                  trailing: const Text(
+                    "300 sec",
+                    style: TextStyle(
+                        color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+                  ),
+                  leading: Radio<frequency>(
+                    value: frequency.threehunS,
+                    groupValue: _frequency,
+                    onChanged: (frequency? value) {
+                      setState(() {
+                        _frequency = value;
+                        _pressData["frequency"] = frequency.threehunS.freq;
+                      });
+                    },
+                    activeColor: Colors.green,
+                  ),
+                ),
               ),
-              leading: Radio<frequency>(
-                value: frequency.sixtyS,
-                groupValue: _frequency,
-                onChanged: (frequency? value) {
-                  setState(() {
-                    _frequency = value;
-                    _pressData["frequency"] = describeEnum(value!);
-                  });
-                },
-                activeColor: Colors.green,
+              SizedBox(
+                height: 50,
+                width: 110,
+                child: ListTile(
+                  trailing: const Text(
+                    "10 min",
+                    style: TextStyle(
+                        color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+                  ),
+                  leading: Radio<frequency>(
+                    value: frequency.tenMin,
+                    groupValue: _frequency,
+                    onChanged: (frequency? value) {
+                      setState(() {
+                        _frequency = value;
+                        _pressData["frequency"] = frequency.tenMin.freq;
+                      });
+                    },
+                    activeColor: Colors.green,
+                  ),
+                ),
               ),
-            ),
-          ),
-          Container(
-            height: 50,
-            width: 110,
-            child: ListTile(
-              // title: Text(
-              //   "Report",
-              //   style: TextStyle(color: Colors.grey, fontSize: 15),
-              // ),
-              trailing: Text(
-                "300 sec",
-                style: TextStyle(
-                    color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+              SizedBox(
+                height: 50,
+                width: 110,
+                child: ListTile(
+                  trailing: const Text(
+                    "20 min",
+                    style: TextStyle(
+                        color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+                  ),
+                  leading: Radio<frequency>(
+                    value: frequency.TwenMin,
+                    groupValue: _frequency,
+                    onChanged: (frequency? value) {
+                      setState(() {
+                        _frequency = value;
+                        _pressData["frequency"] = frequency.TwenMin.freq;
+                      });
+                    },
+                    activeColor: Colors.green,
+                  ),
+                ),
               ),
-              leading: Radio<frequency>(
-                value: frequency.threehunS,
-                groupValue: _frequency,
-                onChanged: (frequency? value) {
-                  setState(() {
-                    _frequency = value;
-                    _pressData["frequency"] = describeEnum(value!);
-                  });
-                },
-                activeColor: Colors.green,
+              Container(
+                height: 50,
+                width: 110,
+                child: ListTile(
+                  trailing: const Text(
+                    "30 min",
+                    style: TextStyle(
+                        color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+                  ),
+                  leading: Radio<frequency>(
+                    value: frequency.thirtyMin,
+                    groupValue: _frequency,
+                    onChanged: (frequency? value) {
+                      setState(() {
+                        _frequency = value;
+                        _pressData["frequency"] = frequency.thirtyMin.freq;
+                      });
+                    },
+                    activeColor: Colors.green,
+                  ),
+                ),
               ),
-            ),
-          ),
-          Container(
-            height: 50,
-            width: 110,
-            child: ListTile(
-              // title: Text(
-              //   "Report",
-              //   style: TextStyle(color: Colors.grey, fontSize: 15),
-              // ),
-              trailing: Text(
-                "10 min",
-                style: TextStyle(
-                    color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+              SizedBox(
+                height: 50,
+                width: 110,
+                child: ListTile(
+                  trailing: const Text(
+                    "1 hour",
+                    style: TextStyle(
+                        color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
+                  ),
+                  leading: Radio<frequency>(
+                    value: frequency.oneHour,
+                    groupValue: _frequency,
+                    onChanged: (frequency? value) {
+                      setState(() {
+                        _frequency = value;
+                        _pressData["frequency"] = frequency.oneHour.freq;
+                      });
+                    },
+                    activeColor: Colors.green,
+                  ),
+                ),
               ),
-              leading: Radio<frequency>(
-                value: frequency.tenMin,
-                groupValue: _frequency,
-                onChanged: (frequency? value) {
-                  setState(() {
-                    _frequency = value;
-                    _pressData["frequency"] = describeEnum(value!);
-                  });
-                },
-                activeColor: Colors.green,
-              ),
-            ),
-          ),
-          Container(
-            height: 50,
-            width: 110,
-            child: ListTile(
-              // title: Text(
-              //   "Report",
-              //   style: TextStyle(color: Colors.grey, fontSize: 15),
-              // ),
-              trailing: Text(
-                "20 min",
-                style: TextStyle(
-                    color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
-              ),
-              leading: Radio<frequency>(
-                value: frequency.TwenMin,
-                groupValue: _frequency,
-                onChanged: (frequency? value) {
-                  setState(() {
-                    _frequency = value;
-                    _pressData["frequency"] = describeEnum(value!);
-                  });
-                },
-                activeColor: Colors.green,
-              ),
-            ),
-          ),
-          Container(
-            height: 50,
-            width: 110,
-            child: ListTile(
-              // title: Text(
-              //   "Report",
-              //   style: TextStyle(color: Colors.grey, fontSize: 15),
-              // ),
-              trailing: Text(
-                "30 min",
-                style: TextStyle(
-                    color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
-              ),
-              leading: Radio<frequency>(
-                value: frequency.thirtyMin,
-                groupValue: _frequency,
-                onChanged: (frequency? value) {
-                  setState(() {
-                    _frequency = value;
-                    _pressData["frequency"] = describeEnum(value!);
-                  });
-                },
-                activeColor: Colors.green,
-              ),
-            ),
-          ),
-          Container(
-            height: 50,
-            width: 110,
-            child: ListTile(
-              // title: Text(
-              //   "Report",
-              //   style: TextStyle(color: Colors.grey, fontSize: 15),
-              // ),
-              trailing: Text(
-                "1 hour",
-                style: TextStyle(
-                    color: Color.fromARGB(169, 0, 0, 0), fontSize: 15),
-              ),
-              leading: Radio<frequency>(
-                value: frequency.oneHour,
-                groupValue: _frequency,
-                onChanged: (frequency? value) {
-                  setState(() {
-                    _frequency = value;
-                    _pressData["frequency"] = describeEnum(value!);
-                  });
-                },
-                activeColor: Colors.green,
-              ),
-            ),
-          ),
-        ]));
+            ]));
   }
 
   Widget pressTypeWidget() {
@@ -385,15 +369,15 @@ class _NewPressState extends State<NewPress> {
         DropdownButton<String>(
           value: dropDownValue,
           onChanged: (String? newValue) {
-            // setState(() {
-            dropDownValue = newValue!;
-            _pressData["TypeOfPress"] = dropDownValue;
-            print(_pressData['TypeOFPress']);
-            // });
+            setState(() {
+              dropDownValue = newValue!;
+              _pressData["TypeOfPress"] = dropDownValue!;
+              print(_pressData["TypeOfPress"]);
+            });
           },
           style: const TextStyle(
               //te
-              color: Colors.grey, //Font color
+              // color: Colors.grey, //Font color
               fontSize: 15 //font size on dropdown button
               ),
           items: <String>[
@@ -405,6 +389,7 @@ class _NewPressState extends State<NewPress> {
               child: Text(value),
             );
           }).toList(),
+          hint: const Text('Select'),
         ),
       ],
     );
@@ -412,237 +397,269 @@ class _NewPressState extends State<NewPress> {
 
   @override
   Widget build(BuildContext context) {
-    Color green = Color(0xFF008001);
+    Color green = const Color(0xFF008001);
 
     //controllers
 
     final deviceSize = MediaQuery.of(context).size;
-    Color back = Color(0xFFeeeee4);
+    Color back = const Color(0xFFeeeee4);
     return SafeArea(
         child: Scaffold(
-            body: SingleChildScrollView(
-      child: Container(
-          decoration: BoxDecoration(color: back),
-          width: deviceSize.width,
-          height: deviceSize.height,
-          child: Column(children: [
-            const LogoHeading(),
-            const SizedBox(
-              height: 20,
+      body: Container(
+        decoration: BoxDecoration(color: back),
+        width: deviceSize.width,
+        height: deviceSize.height,
+        child: ListView(shrinkWrap: true, children: [
+          const LogoHeading(),
+          const UserNameHeader(),
+          const SizedBox(
+            height: 20,
+          ),
+          Container(
+            alignment: Alignment.center,
+            child: const Text(
+              "Wax Injection Press Monitoring System",
+              style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
             ),
-            // UserNameHeader(),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              child: const Text(
-                "Wax Injection Press Monitoring System",
-                style: TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
-              ),
-            ),
-            Expanded(
-              // height: deviceSize.height - 200,
-              child: Form(
-                key: _form,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  // mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                        padding: EdgeInsets.all(8),
-                        width: 400,
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: TextFormField(
-                          controller: staticId,
-                          textInputAction: TextInputAction.next,
-                          onFieldSubmitted: (_) {
-                            FocusScope.of(context)
-                                .requestFocus(_locationFocusNode);
-                          },
-                          focusNode: _staticFocusNode,
-                          decoration: InputDecoration(
-                              labelText: 'Static Id',
-                              labelStyle: TextStyle(
-                                  color: _staticFocusNode.hasFocus
-                                      ? Colors.green
-                                      : Colors.grey),
-                              focusedBorder: OutlineInputBorder(
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          SizedBox(
+            // fit: FlexFit.loose,
+            height: 600,
+            child: Form(
+              key: _form,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                // mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                      padding: const EdgeInsets.all(8),
+                      width: 400,
+                      margin: const EdgeInsets.symmetric(horizontal: 10),
+                      child: TextFormField(
+                        controller: staticId,
+                        textInputAction: TextInputAction.next,
+                        onFieldSubmitted: (_) {
+                          FocusScope.of(context)
+                              .requestFocus(_locationFocusNode);
+                        },
+                        focusNode: _staticFocusNode,
+                        decoration: InputDecoration(
+                            labelText: 'Static Id',
+                            labelStyle: TextStyle(
+                                color: _staticFocusNode.hasFocus
+                                    ? Colors.green
+                                    : Colors.grey),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Theme.of(context).errorColor,
+                                  width: 2),
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                              borderSide: BorderSide(color: green, width: 1.5),
+                            ),
+                            enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15.0),
-                                borderSide:
-                                    BorderSide(color: green, width: 1.5),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  borderSide: const BorderSide(
-                                    color: Colors.grey,
-                                    width: 1.5,
-                                  ))),
-                          onSaved: (value) {
-                            _pressData["static_id"] = value!;
-                          },
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Static Id must be inserted";
-                            }
-                          },
-                        )),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                        width: 400,
-                        padding: EdgeInsets.symmetric(horizontal: 8),
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: TextFormField(
-                          controller: _location,
-                          textInputAction: TextInputAction.next,
-                          onFieldSubmitted: (_) {
-                            FocusScope.of(context).requestFocus(_hotsFocusNode);
-                          },
-                          focusNode: _locationFocusNode,
-                          decoration: InputDecoration(
-                              labelText: 'Location',
-                              labelStyle: TextStyle(
-                                  color: _locationFocusNode.hasFocus
-                                      ? Colors.green
-                                      : Colors.grey),
-                              focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                  color: Colors.grey,
+                                  width: 1.5,
+                                ))),
+                        onSaved: (value) {
+                          _pressData["static_id"] = value!;
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Static Id must be inserted";
+                          }
+                        },
+                      )),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                      width: 400,
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      margin: const EdgeInsets.symmetric(horizontal: 10),
+                      child: TextFormField(
+                        controller: _location,
+                        textInputAction: TextInputAction.next,
+                        onFieldSubmitted: (_) {
+                          FocusScope.of(context).requestFocus(_hotsFocusNode);
+                        },
+                        focusNode: _locationFocusNode,
+                        decoration: InputDecoration(
+                            labelText: 'Location',
+                            labelStyle: TextStyle(
+                                color: _locationFocusNode.hasFocus
+                                    ? Colors.green
+                                    : Colors.grey),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Theme.of(context).errorColor,
+                                  width: 2),
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                              borderSide: BorderSide(color: green, width: 1.5),
+                            ),
+                            enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15.0),
-                                borderSide:
-                                    BorderSide(color: green, width: 1.5),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  borderSide: const BorderSide(
-                                    color: Colors.grey,
-                                    width: 1.5,
-                                  ))),
-                          onSaved: (value) {
-                            _pressData["location"] = value!;
-                          },
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Location must be inserted";
-                            }
-                          },
-                        )),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                        padding: EdgeInsets.all(8),
-                        width: 400,
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: TextFormField(
-                          controller: _hotspot,
-                          textInputAction: TextInputAction.next,
-                          onFieldSubmitted: (_) {
-                            FocusScope.of(context)
-                                .requestFocus(_hotsPassFocusNode);
-                          },
-                          focusNode: _hotsFocusNode,
-                          decoration: InputDecoration(
-                              labelText: 'Hotspot Id',
-                              labelStyle: TextStyle(
-                                  color: _staticFocusNode.hasFocus
-                                      ? Colors.green
-                                      : Colors.grey),
-                              focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                  color: Colors.grey,
+                                  width: 1.5,
+                                ))),
+                        onSaved: (value) {
+                          _pressData["location"] = value!;
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Location must be inserted";
+                          }
+                        },
+                      )),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                      padding: const EdgeInsets.all(8),
+                      width: 400,
+                      margin: const EdgeInsets.symmetric(horizontal: 10),
+                      child: TextFormField(
+                        controller: _hotspot,
+                        textInputAction: TextInputAction.next,
+                        onFieldSubmitted: (_) {
+                          FocusScope.of(context)
+                              .requestFocus(_hotsPassFocusNode);
+                        },
+                        focusNode: _hotsFocusNode,
+                        decoration: InputDecoration(
+                            labelText: 'Hotspot Id',
+                            labelStyle: TextStyle(
+                                color: _staticFocusNode.hasFocus
+                                    ? Colors.green
+                                    : Colors.grey),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Theme.of(context).errorColor,
+                                  width: 2),
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                              borderSide: BorderSide(color: green, width: 1.5),
+                            ),
+                            enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15.0),
-                                borderSide:
-                                    BorderSide(color: green, width: 1.5),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  borderSide: const BorderSide(
-                                    color: Colors.grey,
-                                    width: 1.5,
-                                  ))),
-                          onSaved: (value) {
-                            _pressData["hotspot"] = value!;
-                          },
-                        )),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                        width: 400,
-                        padding: EdgeInsets.symmetric(horizontal: 8),
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: TextFormField(
-                          controller: _hotsPassword,
-                          textInputAction: TextInputAction.next,
-                          onFieldSubmitted: (_) {
-                            //  FocusScope.of(context).requestFocus(_location);
-                          },
-                          focusNode: _hotsPassFocusNode,
-                          obscureText: true,
-                          decoration: InputDecoration(
-                              labelText: 'Hotspot Password',
-                              labelStyle: TextStyle(
-                                  color: _staticFocusNode.hasFocus
-                                      ? Colors.green
-                                      : Colors.grey),
-                              focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                  color: Colors.grey,
+                                  width: 1.5,
+                                ))),
+                        onSaved: (value) {
+                          _pressData["hotspot"] = value!;
+                        },
+                      )),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                      width: 400,
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      margin: const EdgeInsets.symmetric(horizontal: 10),
+                      child: TextFormField(
+                        controller: _hotsPassword,
+                        textInputAction: TextInputAction.next,
+                        onFieldSubmitted: (_) {
+                          //  FocusScope.of(context).requestFocus(_location);
+                        },
+                        focusNode: _hotsPassFocusNode,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                            labelText: 'Hotspot Password',
+                            labelStyle: TextStyle(
+                                color: _staticFocusNode.hasFocus
+                                    ? Colors.green
+                                    : Colors.grey),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Theme.of(context).errorColor,
+                                  width: 2),
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                              borderSide: BorderSide(color: green, width: 1.5),
+                            ),
+                            enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15.0),
-                                borderSide:
-                                    BorderSide(color: green, width: 1.5),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  borderSide: const BorderSide(
-                                    color: Colors.grey,
-                                    width: 1.5,
-                                  ))),
-                          onSaved: (value) {
-                            _pressData["hotsPassword"] = value!;
-                          },
-                        )),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    //  PressType(_pressData["TypeOfPress"].toString()),
-                    pressTypeWidget(),
-                    frequencyWidget(),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8),
-                      width: 300,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20)),
-                      child: ElevatedButton(
-                        child: Text(
-                          "Create".toUpperCase(),
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                        onPressed: submitData,
-                        //     () {
-                        //   Navigator.of(context)
-                        //       .pushReplacementNamed(MainPage.routeName);
-                        // },
-                        style: ElevatedButton.styleFrom(
-                          elevation: 15,
-                          shadowColor: green,
-                          padding: EdgeInsets.all(20),
-                          primary: green,
-                          minimumSize: const Size.fromHeight(50),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(30.0),
-                          ),
+                                borderSide: const BorderSide(
+                                  color: Colors.grey,
+                                  width: 1.5,
+                                ))),
+                        onSaved: (value) {
+                          _pressData["hotsPassword"] = value!;
+                        },
+                      )),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  //  PressType(_pressData["TypeOfPress"].toString()),
+                  pressTypeWidget(),
+                  //  freqWidget(),
+                  frequencyWidget(),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    width: 300,
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                    child: ElevatedButton(
+                      child: Text(
+                        "Create".toUpperCase(),
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                      onPressed: submitData,
+                      //     () {
+                      //   Navigator.of(context)
+                      //       .pushReplacementNamed(MainPage.routeName);
+                      // },
+                      style: ElevatedButton.styleFrom(
+                        elevation: 15,
+                        shadowColor: green,
+                        padding: const EdgeInsets.all(20),
+                        primary: green,
+                        minimumSize: const Size.fromHeight(50),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const MainFooter()
-                  ],
-                ),
+                  ),
+                ],
               ),
-            )
-          ])),
-    )));
+            ),
+          )
+        ]),
+        //])
+      ),
+    ));
   }
 }
