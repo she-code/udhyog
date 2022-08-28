@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:udhyog/screens/press_container.dart';
 
 import '../providers/press.dart';
 
@@ -20,6 +21,67 @@ class Overview extends StatefulWidget {
 }
 
 class _OverviewState extends State<Overview> {
+  final GlobalKey _form = GlobalKey();
+  TextEditingController locationController = TextEditingController();
+  TextEditingController staticController = TextEditingController();
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    locationController.dispose();
+    staticController.dispose();
+    super.dispose();
+  }
+
+  Future updatePress() async {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("Update Press"),
+        content: SizedBox(
+          height: 180,
+          child: Form(
+              key: _form,
+              child: Column(
+                children: [
+                  TextFormField(
+                      //  initialValue: "ji",
+                      decoration: const InputDecoration(
+                        labelText: "Location",
+
+                        // border: Border.all(color: Colors.black12,width: 2),
+                      ),
+                      controller: locationController..text = widget.location),
+                  TextFormField(
+                    controller: staticController..text = widget.static_id,
+                  )
+                ],
+              )),
+        ),
+        actions: [
+          TextButton(
+              onPressed: () async {
+                await Provider.of<PressProvider>(context, listen: false)
+                    .updatePress(widget.press_id, locationController.text,
+                        staticController.text);
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text("Press updated")));
+                print(locationController.text);
+
+                Navigator.of(ctx).pop();
+                Navigator.of(context)
+                    .pushReplacementNamed(PressContainer.routeName);
+              },
+              child: Text('Update')),
+          TextButton(
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+              child: Text('Cancel'))
+        ],
+      ),
+    );
+  }
+
   Future deletePres() async {
     print("delete");
     showDialog(
@@ -50,7 +112,6 @@ class _OverviewState extends State<Overview> {
 
   @override
   Widget build(BuildContext context) {
-    final pressData = Provider.of<PressProvider>(context).presses;
     var deviceSize = MediaQuery.of(context).size;
     Color backG = const Color.fromARGB(174, 230, 231, 233);
     return Slidable(
@@ -72,7 +133,7 @@ class _OverviewState extends State<Overview> {
           ),
           SlidableAction(
             onPressed: (_) {
-              print("object");
+              updatePress();
             },
             backgroundColor: Theme.of(context).primaryColor,
             foregroundColor: Colors.white,

@@ -22,7 +22,7 @@ class _PressListCardsState extends State<PressListCards> {
   @override
   Widget build(BuildContext context) {
     bool openDetails = false;
-    final snackBar = SnackBar(
+    const snackBar = SnackBar(
       content: Text('Press details is empty'),
       duration: Duration(seconds: 3),
     );
@@ -36,8 +36,6 @@ class _PressListCardsState extends State<PressListCards> {
           setState(() {
             showActive = !showActive;
           });
-          Provider.of<PressProvider>(context, listen: false)
-              .getPress(widget.press_id);
         } else {
           setState(() {
             openDetails = true;

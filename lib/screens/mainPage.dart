@@ -1,7 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/auth.dart';
 import 'press_container.dart';
 import '../widgets/logoHeading.dart';
 import '../widgets/mainFooter.dart';
@@ -40,13 +42,13 @@ class _MainPageState extends State<MainPage> {
           Navigator.of(context).pushNamed(PressContainer.routeName);
         },
       ),
-      // TextButton(
-      //     onPressed: () {
-      //       Provider.of<Auth>(context, listen: false).logout();
+      TextButton(
+          onPressed: () {
+            Provider.of<Auth>(context, listen: false).logout();
 
-      //       Navigator.of(context).pushReplacementNamed('/');
-      //     },
-      //     child: Text('logout')),
+            Navigator.of(context).pushReplacementNamed('/');
+          },
+          child: Text('logout')),
       const MainFooter()
     ];
     int _selectedIndex = 1;

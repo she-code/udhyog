@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 
 class HomeHero extends StatelessWidget {
   const HomeHero({Key? key}) : super(key: key);

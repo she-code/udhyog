@@ -1,3 +1,4 @@
+import 'package:basic_utils/basic_utils.dart' as utils;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -105,7 +106,8 @@ class _UserPageExpandableState extends State<UserPageExpandable> {
                                   color: iconColor,
                                 ),
                               ),
-                              Text(value.me.email),
+                              Text(
+                                  utils.StringUtils.capitalize(value.me.email)),
                             ]),
                             height: 50,
                             padding: const EdgeInsets.all(8),
@@ -144,7 +146,8 @@ class _UserPageExpandableState extends State<UserPageExpandable> {
                                   color: iconColor,
                                 ),
                               ),
-                              Text(value.me.contactPerson),
+                              Text(utils.StringUtils.capitalize(
+                                  value.me.contactPerson)),
                             ]),
                             height: 50,
                             padding: const EdgeInsets.all(8),
@@ -165,7 +168,7 @@ class _UserPageExpandableState extends State<UserPageExpandable> {
                                 ),
                               ),
                               Text(
-                                  '${value.me.address1},${value.me.city},${value.me.state},${value.me.country}'),
+                                  '${utils.StringUtils.capitalize(value.me.address1)} ${utils.StringUtils.capitalize(value.me.city)},${utils.StringUtils.capitalize(value.me.state)},${utils.StringUtils.capitalize(value.me.country)}'),
                             ]),
                             height: 50,
                             padding: const EdgeInsets.all(8),

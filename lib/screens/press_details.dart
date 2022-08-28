@@ -1,13 +1,16 @@
 import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
+import 'package:udhyog/widgets/chart.dart';
+import '../models/press.dart';
 
+import '../models/pressAvg.dart';
 import '../providers/auth.dart';
 import '../screens/payment.dart';
 import '../widgets/logoHeading.dart';
 import '../widgets/userNameHeader.dart';
-
 import '../providers/press.dart';
 import '../widgets/table.dart';
 import 'newPress.dart';
@@ -41,24 +44,27 @@ class _PressDetailsState extends State<PressDetails> {
   var _isinit = true;
   var _isLoading = false;
   var showTime = true;
+  String duration = 'daily';
+  String? pressId;
+  GlobalKey _chartGlobal = GlobalKey();
+  // RenderRepaintBoundary boundary = _chartGlobal.currentContext.findRenderObject();
+  Future<List<PressAverage>>? _presess;
   @override
   void didChangeDependencies() {
-    final pressId = ModalRoute.of(context)?.settings.arguments as String;
+    pressId = ModalRoute.of(context)?.settings.arguments as String;
 
     if (_isinit) {
       setState(() {
         _isLoading = true;
       });
 
-      Provider.of<PressProvider>(context, listen: false)
-          .getDailyTempLowPressData(pressId)
-          .then((_) => setState(() {
-                _isLoading = false;
-              }));
+      _presess = Provider.of<PressProvider>(context, listen: false)
+          .getDailyTempLowPressData(pressId!);
+
+      _isinit = false;
+      // TODO: implement didChangeDependencies
+      super.didChangeDependencies();
     }
-    _isinit = false;
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
   }
 
   void _presentDatePicker() {
@@ -84,13 +90,9 @@ class _PressDetailsState extends State<PressDetails> {
       padding: const EdgeInsets.all(8.0),
       child: Row(children: [
         const Text("Report Type: "),
-        Container(
+        SizedBox(
           width: 110,
           child: ListTile(
-            // title: Text(
-            //   "Report",
-            //   style: TextStyle(color: Colors.grey, fontSize: 15),
-            // ),
             trailing: const Text(
               "Report",
               style:
@@ -109,13 +111,9 @@ class _PressDetailsState extends State<PressDetails> {
             ),
           ),
         ),
-        Container(
+        SizedBox(
           width: 110,
           child: ListTile(
-            // title: Text(
-            //   "Chart",
-            //   style: TextStyle(color: Colors.grey, fontSize: 15),
-            //),
             trailing: const Text(
               "Chart",
               style:
@@ -143,7 +141,7 @@ class _PressDetailsState extends State<PressDetails> {
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
+      child: SizedBox(
         width: double.infinity,
         child: Wrap(children: [
           Container(
@@ -192,8 +190,10 @@ class _PressDetailsState extends State<PressDetails> {
                 onChanged: (timeDuration? value) {
                   setState(() {
                     _timeDuration = value;
-                    Provider.of<PressProvider>(context, listen: false)
-                        .getDailyTempLowPressData(pressId);
+                    _presess =
+                        Provider.of<PressProvider>(context, listen: false)
+                            .getDailyTempLowPressData(pressId);
+                    duration = 'daily';
                   });
                 },
                 activeColor: Colors.green,
@@ -218,8 +218,10 @@ class _PressDetailsState extends State<PressDetails> {
                 onChanged: (timeDuration? value) {
                   setState(() {
                     _timeDuration = value;
-                    Provider.of<PressProvider>(context, listen: false)
-                        .getWeeklyPressData(pressId);
+                    _presess =
+                        Provider.of<PressProvider>(context, listen: false)
+                            .getWeeklyPressData(pressId);
+                    duration = 'weekly';
                   });
                 },
                 activeColor: Colors.green,
@@ -244,8 +246,10 @@ class _PressDetailsState extends State<PressDetails> {
                 onChanged: (timeDuration? value) {
                   setState(() {
                     _timeDuration = value;
-                    Provider.of<PressProvider>(context, listen: false)
-                        .getMonthlyPressData(pressId);
+                    _presess =
+                        Provider.of<PressProvider>(context, listen: false)
+                            .getMonthlyPressData(pressId);
+                    duration = 'monthly';
                   });
                 },
                 activeColor: Colors.green,
@@ -272,9 +276,10 @@ class _PressDetailsState extends State<PressDetails> {
                     _timeDuration = value;
                   });
                   _presentDatePicker();
-                  Provider.of<PressProvider>(context, listen: false)
+                  _presess = Provider.of<PressProvider>(context, listen: false)
                       .getCustomizedPressData(
                           pressId, _selectedDate.toString());
+                  duration = _selectedDate.toString();
                 },
                 activeColor: Colors.green,
               ),
@@ -298,7 +303,7 @@ class _PressDetailsState extends State<PressDetails> {
             child: const Text("Select Temperature: "),
             margin: const EdgeInsets.only(top: 15),
           ),
-          Container(
+          SizedBox(
             width: 110,
             child: ListTile(
               // title: Text(
@@ -322,7 +327,7 @@ class _PressDetailsState extends State<PressDetails> {
               ),
             ),
           ),
-          Container(
+          SizedBox(
             width: 110,
             child: ListTile(
               // title: Text(
@@ -346,7 +351,7 @@ class _PressDetailsState extends State<PressDetails> {
               ),
             ),
           ),
-          Container(
+          SizedBox(
             width: 110,
             child: ListTile(
               // title: Text(
@@ -370,7 +375,7 @@ class _PressDetailsState extends State<PressDetails> {
               ),
             ),
           ),
-          Container(
+          SizedBox(
             width: 115,
             child: ListTile(
               // title: Text(
@@ -401,14 +406,10 @@ class _PressDetailsState extends State<PressDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final pressId = ModalRoute.of(context)?.settings.arguments as String;
     final pressData =
-        Provider.of<PressProvider>(context, listen: false).findByID(pressId);
+        Provider.of<PressProvider>(context, listen: false).findByID(pressId!);
     final pressDetails = pressData.details.isEmpty ? [] : pressData.details;
     final latestDetail = pressData.details.isEmpty ? [] : pressDetails.last;
-    final pressDataList =
-        Provider.of<PressProvider>(context, listen: false).PressAverages;
-    final lastPressData = pressDataList.isEmpty ? [] : pressDataList.last;
 
     // print(lastPressData.entery_id);
     //pressDataList.map((index) => {print(pressDataList[index]['BlockTemp'])});
@@ -563,11 +564,22 @@ class _PressDetailsState extends State<PressDetails> {
                       : const SizedBox(),
                   if (_reportType == reportType.report)
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ReportTable(pressDataList),
-                    ),
-                  // if (_reportType == reportType.chart)
-                  //   ShowChart(pressId, pressDataList),
+                        padding: const EdgeInsets.all(8.0),
+                        child: FutureBuilder(
+                            future: _presess,
+                            builder: ((context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const Text("No data");
+                              }
+                              return ReportTable(snapshot.data, duration,
+                                  pressData.press_name);
+                            }))),
+
+                  if (_reportType == reportType.chart)
+                    Chart(
+                        // key: _chartGlobal,
+                        )
                   //  Text('chart'),
                 ])),
               ),

@@ -406,7 +406,8 @@ class _NewPressState extends State<NewPress> {
     return SafeArea(
         child: Scaffold(
       body: Container(
-        decoration: BoxDecoration(color: back),
+        // color: Colors.white,
+        decoration: BoxDecoration(color: Colors.white),
         width: deviceSize.width,
         height: deviceSize.height,
         child: ListView(shrinkWrap: true, children: [
@@ -425,9 +426,10 @@ class _NewPressState extends State<NewPress> {
           const SizedBox(
             height: 15,
           ),
-          SizedBox(
+          Container(
+            margin: const EdgeInsets.only(bottom: 80),
             // fit: FlexFit.loose,
-            height: 600,
+            // height: 600,
             child: Form(
               key: _form,
               child: Column(

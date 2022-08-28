@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../models/auth.dart';
 import '../screens/userDetails.dart';
 
 import '../providers/auth.dart';
@@ -13,23 +14,18 @@ class UserNameHeader extends StatefulWidget {
 }
 
 class _UserNameHeaderState extends State<UserNameHeader> {
+  Future<User>? _user;
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    var token = SharedPreferences.getInstance();
-    // final extractedUserData =
-    //       json.decode(prefs.getString('userData')!) as Map<String, dynamic>;
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    _user = Provider.of<Auth>(context, listen: false).myProfile();
   }
 
   @override
   Widget build(BuildContext context) {
     Color greenLight = Color(0xff63d47a);
-    final deviceSize = MediaQuery.of(context).size;
-    final company = Provider.of<Auth>(context, listen: false).company == null
-        ? "F"
-        : Provider.of<Auth>(context, listen: false).company;
-    final city = Provider.of<Auth>(context, listen: false).city;
+
     //final logo = Provider.of<Auth>(context, listen: false).logo ?? "";
     // final logo = Provider.of<Auth>(context, listen: false).logo;
 
@@ -42,7 +38,9 @@ class _UserNameHeaderState extends State<UserNameHeader> {
           children: [
             SizedBox(
               child: ModalRoute.of(context)?.settings.name == '/'
-                  ? SizedBox()
+                  ? const SizedBox(
+                      width: 50,
+                    )
                   : IconButton(
                       onPressed: () {
                         Navigator.of(context).pop();
@@ -53,30 +51,48 @@ class _UserNameHeaderState extends State<UserNameHeader> {
                         size: 16,
                       )),
             ),
-            Text(
-                company!.isEmpty
-                    ? "Hello"
-                    : '${company.toUpperCase()} - ${city!.toUpperCase()}',
-                style: TextStyle(color: Colors.white, fontSize: 16)),
-            GestureDetector(
-              onTap: () {
-                if (ModalRoute.of(context)?.settings.name ==
-                    UserDetails.routeName) {
-                  Navigator.of(context).pop();
-                }
-                Navigator.of(context).pushNamed(UserDetails.routeName,
-                    arguments:
-                        Provider.of<Auth>(context, listen: false).userId);
-              },
-              child: Container(
-                margin: EdgeInsets.only(right: 30),
-                child: CircleAvatar(
-                  radius: 20,
-                  child: Text(company.substring(0, 1).toUpperCase()),
-                  // backgroundImage: NetworkImage(logo),
-                ),
-              ),
-            )
+            FutureBuilder(
+                future: _user,
+                builder: (ctx, data) {
+                  if (data.connectionState == ConnectionState.waiting) {
+                    return const SizedBox();
+                  }
+                  return Consumer<Auth>(
+                      builder: (context, value, child) => Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                    ' ${value.me.company.toUpperCase()} - ${value.me.city.toUpperCase()}',
+                                    style: const TextStyle(
+                                        color: Colors.white, fontSize: 16)),
+                                GestureDetector(
+                                  onTap: () {
+                                    if (ModalRoute.of(context)?.settings.name ==
+                                        UserDetails.routeName) {
+                                      Navigator.of(context).pop();
+                                    }
+                                    Navigator.of(context).pushNamed(
+                                        UserDetails.routeName,
+                                        arguments: Provider.of<Auth>(context,
+                                                listen: false)
+                                            .userId);
+                                  },
+                                  child: Container(
+                                    margin: EdgeInsets.only(right: 30),
+                                    child: CircleAvatar(
+                                      radius: 20,
+                                      child: Text(value.me.company
+                                          .substring(0, 1)
+                                          .toUpperCase()),
+                                      // backgroundImage: NetworkImage(logo),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ));
+                })
           ],
         ));
   }

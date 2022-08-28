@@ -11,15 +11,19 @@ class PdfPreviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var pressDataList = ModalRoute.of(context)?.settings.arguments;
+    List<dynamic> args =
+        ModalRoute.of(context)?.settings.arguments as List<dynamic>;
     final company = Provider.of<Auth>(context, listen: false).company;
-
+    final pressDataList = args[0];
+    final duration = args[1];
+    final pressName = args[2];
     return Scaffold(
       appBar: AppBar(
-        title: Text('Report'),
+        title: const Text('Report'),
       ),
       body: PdfPreview(
-        build: (context) => pdfExport().makePdf(pressDataList, company!),
+        build: (context) =>
+            pdfExport().makePdf(pressDataList, company!, duration, pressName),
       ),
     );
   }

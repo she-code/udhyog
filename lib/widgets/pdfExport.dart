@@ -4,11 +4,8 @@ import 'dart:typed_data';
 import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pdf;
 import 'package:intl/intl.dart';
-import 'package:printing/printing.dart';
+import 'package:pdf/widgets.dart' as pdf;
 
 class pdfExport {
   final pw = pdf.Document();
@@ -24,7 +21,10 @@ class pdfExport {
           textAlign: align,
         ),
       );
-  Future<Uint8List> makePdf(var pressDetails, String name) async {
+  Future<Uint8List> makePdf(
+      var pressDetails, String name, String duration, String pressName) async {
+    List<String> splitted = [];
+
     final imageLogo = MemoryImage(
         (await rootBundle.load('assets/images/mainLogo.png'))
             .buffer
@@ -43,9 +43,7 @@ class pdfExport {
               alignment: pdf.Alignment.center,
               child: pdf.Text(StringUtils.capitalize(name, allWords: true),
                   textScaleFactor: 1.3,
-                  style:
-                      // PdfGoogleFonts.cormorantBold(),
-                      pdf.TextStyle(
+                  style: pdf.TextStyle(
                     fontSize: 20,
                   ))),
           pdf.Container(
@@ -53,12 +51,17 @@ class pdfExport {
               child: pdf.Row(
                   mainAxisAlignment: pdf.MainAxisAlignment.spaceBetween,
                   children: [
-                    pdf.Text("Press: "),
-                    pdf.Text(""),
-                    pdf.Container(
-                        child: pdf.Text(
-                      "Duration: ",
-                    ))
+                    pdf.Text(StringUtils.capitalize(pressName)),
+                    pdf.Container(child: pdf.Text((() {
+                      if (duration == 'daily') {
+                        return 'Duration: ${DateFormat.yMEd().format(DateTime.now()).toString()}';
+                      } else if (duration == 'weekly') {
+                        return 'Duration: ${DateFormat.yMd().format(DateTime.now().subtract(const Duration(days: 7))).toString()} to ${DateFormat.yMd().format(DateTime.now()).toString()}';
+                      } else if (duration == 'monthly') {
+                        return 'Duration: ${DateFormat.yMd().format(DateTime.now().subtract(const Duration(days: 30))).toString()} to ${DateFormat.yMd().format(DateTime.now()).toString()}';
+                      }
+                      return DateFormat.yMd().format(DateTime.parse(duration));
+                    })()))
                   ])),
           pdf.Table.fromTextArray(context: context, data: <List<String>>[
             <String>[
@@ -76,14 +79,21 @@ class pdfExport {
                 .asMap()
                 .entries
                 .map((index) => [
-                      DateFormat.MEd()
-                          .format(
-                              DateTime.parse(pressDetails[index.key].createdAt))
-                          .toString(),
-                      DateFormat.Hm()
-                          .format(
-                              DateTime.parse(pressDetails[index.key].createdAt))
-                          .toString(),
+                      (() {
+                        if ((pressDetails[index.key].date).contains(" ")) {
+                          splitted = (pressDetails[index.key].date).split(' ');
+                          return splitted[0];
+                        }
+
+                        return (pressDetails[index.key].date).toString();
+                      })(),
+                      (() {
+                        if (splitted.length == 3) {
+                          return ' ${splitted[1]} ${StringUtils.capitalize(splitted[2])}';
+                        }
+
+                        return '';
+                      })(),
                       pressDetails[index.key].TankTopTemp.toString(),
                       pressDetails[index.key].TankLowerTemp.toString(),
                       pressDetails[index.key].BlockTemp.toString(),

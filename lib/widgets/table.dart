@@ -1,102 +1,49 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 
-import '../models/press.dart';
 import '../providers/press.dart';
-//import 'package';
-import 'package:printing/printing.dart';
-
 import '../screens/pdfPriview.dart';
 
-class ReportTable extends StatelessWidget {
+class ReportTable extends StatefulWidget {
   var pressDetails;
-  ReportTable(this.pressDetails);
-  Future<String> get _localPath async {
-    final directory = await getApplicationDocumentsDirectory();
-
-    return directory.path;
-  }
-
-  Future<File> get _localFile async {
-    final path = await _localPath;
-    return File('$path/report.pdf');
-  }
-
-  Future<Uint8List> _createPdf() async {
-    print("clicked");
-    try {
-      final pdf = pw.Document();
-      pdf.addPage(
-        pw.MultiPage(
-          build: (context) => [
-            pw.Table.fromTextArray(context: context, data: <List<String>>[
-              <String>[
-                'Date',
-                'Time',
-                'Temprature-Tank Top(C)',
-                'Temprature-Tank Lower(C)',
-                'Temprature-Block (C)',
-                'Dwell Time',
-                'Part Counter',
-                'Power Consumption'
-              ],
-              ...pressDetails
-                  .asMap()
-                  .entries
-                  .map((index) => [
-                        DateFormat.MEd()
-                            .format(DateTime.parse(
-                                pressDetails[index.key].createdAt))
-                            .toString(),
-                        DateFormat.MEd()
-                            .format(DateTime.parse(
-                                pressDetails[index.key].createdAt))
-                            .toString(),
-                        pressDetails[index.key].TankTopTemp.toString(),
-                        pressDetails[index.key].TankLowerTemp.toString(),
-                        pressDetails[index.key].BlockTemp.toString(),
-                        pressDetails[index.key].HoseTemp.toString(),
-                        pressDetails[index.key].Timer.toString(),
-                        pressDetails[index.key].PartCount.toString(),
-                        pressDetails[index.key].powerConsumption.toString()
-                      ])
-                  .toList()
-            ]),
-          ],
-        ),
-      );
-      //final directory = await getApplgetApplicationDocumentsDirectory();
-      final file = await _localFile;
-      final dow = await file.writeAsBytes(await pdf.save());
-      return pdf.save();
-    } catch (e) {
-      throw e;
-    }
-  }
+  final String duration;
+  final String pressName;
+  ReportTable(this.pressDetails, this.duration, this.pressName);
 
   @override
+  State<ReportTable> createState() => _ReportTableState();
+}
+
+class _ReportTableState extends State<ReportTable> {
+  @override
   Widget build(BuildContext context) {
-    return pressDetails != null
+    List<String> splitted = [];
+    return widget.pressDetails != null
         ? Column(children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                SizedBox(),
+                const SizedBox(),
                 ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).pushNamed(PdfPreviewPage.routeName,
-                          arguments: pressDetails);
+                          arguments: [
+                            widget.pressDetails,
+                            widget.duration,
+                            widget.pressName
+                          ]);
                     },
-                    child: Text("Download")),
+                    child: const Text("Download")),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             SingleChildScrollView(
@@ -124,78 +71,102 @@ class ReportTable extends StatelessWidget {
                     DataColumn(label: Text('Power Consumption')),
                   ],
                   rows: [
-                    ...pressDetails.asMap().entries.map((index) => DataRow(
+                    ...widget.pressDetails.asMap().entries.map((index) =>
+                        DataRow(
                           cells: [
                             DataCell(Container(
                                 alignment: AlignmentDirectional.center,
                                 child: Text(
-                                  DateFormat.MMMd().format(DateTime.parse(
-                                      // pressDetails[index.key].date
-                                      DateTime.now().toString())).toString(),
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  (() {
+                                    if ((widget.pressDetails[index.key].date)
+                                        .contains(" ")) {
+                                      splitted =
+                                          (widget.pressDetails[index.key].date)
+                                              .split(' ');
+                                      return splitted[0];
+                                    }
+
+                                    return (widget.pressDetails[index.key].date)
+                                        .toString();
+                                  })(),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
                                 ))),
                             DataCell(Container(
                                 alignment: AlignmentDirectional.center,
                                 child: Text(
-                                  DateFormat.Hm()
-                                      .format(DateTime.parse(
-                                          DateTime.now().toString()))
+                                  (() {
+                                    if (splitted.length == 3) {
+                                      return ' ${splitted[1]} ${StringUtils.capitalize(splitted[2])}';
+                                    }
+
+                                    return '';
+                                  })(),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ))),
+                            DataCell(Container(
+                                alignment: AlignmentDirectional.center,
+                                child: Text(
+                                  widget.pressDetails[index.key].TankTopTemp
                                       .toString(),
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
                                 ))),
                             DataCell(Container(
                                 alignment: AlignmentDirectional.center,
                                 child: Text(
-                                  pressDetails[index.key]
-                                      .TankTopTemp
+                                  widget.pressDetails[index.key].TankLowerTemp
                                       .toString(),
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
                                 ))),
                             DataCell(Container(
                                 alignment: AlignmentDirectional.center,
                                 child: Text(
-                                  pressDetails[index.key]
-                                      .TankLowerTemp
+                                  widget.pressDetails[index.key].BlockTemp
                                       .toString(),
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
                                 ))),
                             DataCell(Container(
                                 alignment: AlignmentDirectional.center,
                                 child: Text(
-                                  pressDetails[index.key].BlockTemp.toString(),
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ))),
-                            DataCell(Container(
-                                alignment: AlignmentDirectional.center,
-                                child: Text(
-                                  pressDetails[index.key].HoseTemp.toString(),
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ))),
-                            DataCell(Container(
-                                alignment: AlignmentDirectional.center,
-                                child: Text(
-                                  pressDetails[index.key].Timer.toString(),
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ))),
-                            DataCell(Container(
-                                alignment: AlignmentDirectional.center,
-                                child: Text(
-                                  pressDetails[index.key].PartCount.toString(),
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ))),
-                            DataCell(Container(
-                                alignment: AlignmentDirectional.center,
-                                child: Text(
-                                  pressDetails[index.key]
-                                      .powerConsumption
+                                  widget.pressDetails[index.key].HoseTemp
                                       .toString(),
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ))),
+                            DataCell(Container(
+                                alignment: AlignmentDirectional.center,
+                                child: Text(
+                                  widget.pressDetails[index.key].Timer
+                                      .toString(),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ))),
+                            DataCell(Container(
+                                alignment: AlignmentDirectional.center,
+                                child: Text(
+                                  widget.pressDetails[index.key].PartCount
+                                      .toString(),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ))),
+                            DataCell(Container(
+                                alignment: AlignmentDirectional.center,
+                                child: Text(
+                                  widget
+                                      .pressDetails[index.key].powerConsumption
+                                      .toString(),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
                                 ))),
                           ],
                         ))
                   ]),
             ),
           ])
-        : Text("No data");
+        : const Text("No data");
   }
 }
