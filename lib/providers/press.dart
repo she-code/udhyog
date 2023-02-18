@@ -5,6 +5,7 @@ import 'package:udhyog/models/pressAvg.dart';
 import 'package:udhyog/models/pressData.dart';
 import 'package:udhyog/screens/newPress.dart';
 
+import '../config/config.dart';
 import '../models/press.dart';
 
 class PressProvider with ChangeNotifier {
@@ -53,8 +54,8 @@ class PressProvider with ChangeNotifier {
     String TypeOfPress,
     //String authTok
   ) async {
-    final url = Uri.parse('http://localhost:5001/press');
-    //final url = Uri.parse('http://192.168.53.189:5001/press');
+    final url = Uri.parse('http://192.168.254.16:5001/api/press');
+    //final url = Uri.parse('http://192.168.53.189:5001/api/press');
 
     try {
       // print(_pressData);
@@ -84,8 +85,8 @@ class PressProvider with ChangeNotifier {
 
   Future<void> getPressForCompany() async {
     try {
-      final url = Uri.parse('http://192.168.13.189:5001/press');
-      //final url = Uri.parse('http://localhost:5001/press');
+      //final url = Uri.parse('http://192.168.13.189:5001/api/press');
+      final url = Uri.parse('http://192.168.254.16:5001/api/press');
       final responseData = await http.get(url, headers: {
         "Content-Type": "application/json",
         "Access-Control_Allow_Origin": "*",
@@ -105,7 +106,7 @@ class PressProvider with ChangeNotifier {
 
   Future<void> getPress(String pressId) async {
     try {
-      final url = Uri.parse('http://192.168.13.189:5001/press/$pressId');
+      final url = Uri.parse('http://192.168.13.189:5001/api/press/$pressId');
       final responseData = await http.get(url, headers: {
         "Content-Type": "application/json",
         "Access-Control_Allow_Origin": "*",
@@ -134,9 +135,9 @@ class PressProvider with ChangeNotifier {
 
   Future<void> removePress(String pressId) async {
     try {
-      //final url = Uri.parse('http://localhost:5001/press/$pressId');
+      final url = Uri.parse('http://192.168.254.16:5001/api/press/$pressId');
 
-      final url = Uri.parse('http://192.168.13.189:5001/press/$pressId');
+      // final url = Uri.parse('http://192.168.13.189:5001/api/press/$pressId');
 
       final responseData = await http.delete(url, headers: {
         "Content-Type": "application/json",
@@ -155,9 +156,9 @@ class PressProvider with ChangeNotifier {
   Future<void> updatePress(
       String pressId, String location, String static_id) async {
     try {
-      // final url = Uri.parse('http://localhost:5001/press/$pressId');
+      final url = Uri.parse('http://192.168.254.16:5001/api/press/$pressId');
 
-      final url = Uri.parse('http://192.168.13.189:5001/press/$pressId');
+      // final url = Uri.parse('http://192.168.13.189:5001/api/press/$pressId');
 
       final responseData = await http.patch(url,
           body: json.encode({"location": location, "static_id": static_id}),
@@ -178,8 +179,8 @@ class PressProvider with ChangeNotifier {
 
   Future<List<PressAverage>> getDailyTempLowPressData(String id) async {
     try {
-      final url = Uri.parse('http://192.168.13.189:5001/press/$id/daily');
-      // final url = Uri.parse('http://localhost:5001/press/$id/daily');
+      // final url = Uri.parse('http://192.168.13.189:5001/api/press/$id/daily');
+      final url = Uri.parse('http://192.168.254.16:5001/api/press/$id/daily');
       final responseData = await http.get(url, headers: {
         "Content-Type": "application/json",
         "Access-Control_Allow_Origin": "*",
@@ -202,8 +203,8 @@ class PressProvider with ChangeNotifier {
 
   Future<List<PressAverage>> getWeeklyPressData(String id) async {
     try {
-      final url = Uri.parse('http://192.168.13.189:5001/press/$id/weekly');
-      // final url = Uri.parse('http://localhost:5001/press/$id/weekly');
+      // final url = Uri.parse('http://192.168.13.189:5001/api/press/$id/weekly');
+      final url = Uri.parse('http://192.168.254.16:5001/api/press/$id/weekly');
       final responseData = await http.get(url, headers: {
         "Content-Type": "application/json",
         "Access-Control_Allow_Origin": "*",
@@ -225,8 +226,8 @@ class PressProvider with ChangeNotifier {
 
   Future<List<PressAverage>> getMonthlyPressData(String id) async {
     try {
-      final url = Uri.parse('http://192.168.13.189:5001/press/$id/monthly');
-      // final url = Uri.parse('http://localhost:5001/press/$id/monthly');
+      // final url = Uri.parse('http://192.168.13.189:5001/api/press/$id/monthly');
+      final url = Uri.parse('http://192.168.254.16:5001/api/press/$id/monthly');
       final responseData = await http.get(url, headers: {
         "Content-Type": "application/json",
         "Access-Control_Allow_Origin": "*",
@@ -249,8 +250,9 @@ class PressProvider with ChangeNotifier {
   Future<List<PressAverage>> getCustomizedPressData(
       String id, String selectedDate) async {
     try {
-      final url = Uri.parse('http://192.168.13.189:5001/press/$id/customized');
-      // final url = Uri.parse('http://localhost:5001/press/$id/customized');
+      //final url = Uri.parse('http://192.168.13.189:5001/api/press/$id/customized');
+      final url =
+          Uri.parse('http://192.168.254.16:5001/api/press/$id/customized');
       final responseData = await http.post(url,
           body: json.encode({"selectedDate": selectedDate}),
           headers: {

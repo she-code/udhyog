@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:udhyog/providers/order.dart';
+import 'package:udhyog/screens/orderDetails.dart';
 import 'package:udhyog/screens/register.dart';
 
 import './providers/auth.dart';
@@ -30,6 +32,9 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider.value(
             value: Auth(),
+          ),
+          ChangeNotifierProvider.value(
+            value: OrderProvider(),
           ),
           // ChangeNotifierProvider(
           //   create: (ctx) => PressProvider('', []),
@@ -75,7 +80,8 @@ class MyApp extends StatelessWidget {
                     PressDetails.routeName: (ctx) => PressDetails(),
                     UserDetails.routeName: (ctx) => UserDetails(),
                     Register.routeName: (ctx) => Register(),
-                    PdfPreviewPage.routeName: (ctx) => PdfPreviewPage()
+                    PdfPreviewPage.routeName: (ctx) => PdfPreviewPage(),
+                    OrderDetails.routeName: (ctx) => OrderDetails()
                     //  AddPress.routeName:(ctx) => AddPress(),
                   },
                 )));

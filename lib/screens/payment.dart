@@ -2,6 +2,8 @@ import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:udhyog/models/auth.dart';
+import 'package:udhyog/providers/order.dart';
+import 'package:udhyog/screens/orderDetails.dart';
 import 'package:udhyog/widgets/overview.dart';
 import 'package:udhyog/screens/press_container.dart';
 import 'package:udhyog/widgets/logoHeading.dart';
@@ -20,60 +22,12 @@ class Payment extends StatefulWidget {
 }
 
 class _PaymentState extends State<Payment> {
-  // late Razorpay _razorpay;
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _razorpay = Razorpay();
-  //   _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
-  //   _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
-  //   _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
-  // }
-
-  // void _handlePaymentSuccess(PaymentSuccessResponse response) {
-  //   // Do something when payment succeed
-  //   print({"Success", response});
-  // }
-
-  // void _handlePaymentError(PaymentFailureResponse response) {
-  //   // Do something when payment fails
-  //   print({"error", response});
-  // }
-
-  // void _handleExternalWallet(ExternalWalletResponse response) {
-  //   // Do something when an external wallet is selected
-
-  //   print({"external", response});
-  // }
-
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  //   _razorpay.clear();
-  // }
-
-  // void openCheckout() {
-  //   var options = {
-  //     'key': 'rzp_test_ovopv6bm1rGf6q',
-  //     'amount': 50000, //in the smallest currency sub-unit.
-  //     'name': 'Acme Corp.',
-  //     'order_id': "order_Jz7Ab06IlRURcP", // Generate order_id using Orders API
-  //     'description': 'Fine T-Shirt',
-  //     'timeout': 60, // in seconds
-  //     'prefill': {'contact': '9123456789', 'email': 'gaurav.kumar@example.com'}
-  //   };
-  //   try {
-  //     _razorpay.open(options);
-  //   } catch (e) {
-  //     print({"e", e.toString()});
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     final pressId = ModalRoute.of(context)?.settings.arguments as String;
     final pressData =
         Provider.of<PressProvider>(context, listen: false).findByID(pressId);
+    final authToken = Provider.of<Auth>(context, listen: false).token;
     // final user = Provider.of<Auth>(context, listen: false).myProfile();
     // print(user);
     return Scaffold(
@@ -227,8 +181,13 @@ class _PaymentState extends State<Payment> {
                 onPressed:
                     // openCheckout
                     () {
+                  Provider.of<OrderProvider>(context, listen: false)
+                      .createOrder(899, authToken!, context);
                   Navigator.of(context)
-                      .pushReplacementNamed(PressContainer.routeName);
+                      .pushReplacementNamed(OrderDetails.routeName);
+
+                  // Navigator.of(context)
+                  //     .pushReplacementNamed(PressContainer.routeName);
                 },
               ),
             )
