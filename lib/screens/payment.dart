@@ -183,8 +183,8 @@ class _PaymentState extends State<Payment> {
                     () {
                   Provider.of<OrderProvider>(context, listen: false)
                       .createOrder(899, authToken!, context);
-                  Navigator.of(context)
-                      .pushReplacementNamed(OrderDetails.routeName);
+                  // Navigator.of(context)
+                  //     .pushReplacementNamed(OrderDetails.routeName);
 
                   // Navigator.of(context)
                   //     .pushReplacementNamed(PressContainer.routeName);
