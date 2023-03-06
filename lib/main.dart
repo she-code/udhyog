@@ -36,9 +36,9 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider.value(
             value: OrderProvider(),
           ),
-          // ChangeNotifierProvider(
-          //   create: (ctx) => PressProvider('', []),
-          // ),
+          ChangeNotifierProvider.value(
+            value: PressProvider('', []),
+          ),
           ChangeNotifierProxyProvider<Auth, PressProvider>(
               update: (ctx, auth, previousState) => PressProvider(
                   auth.token.toString(),

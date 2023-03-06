@@ -50,7 +50,7 @@ class Auth with ChangeNotifier {
 
   Future<User> myProfile() async {
     try {
-      final url = Uri.parse('${AppConstants.baseURl}/users/me');
+      final url = Uri.parse('${AppConstants.baseURl}/api/users/me');
       //final url = Uri.parse('http://localhost:5001/users/me');
       final responseData = await http.get(url, headers: {
         "Content-Type": "application/json",
@@ -251,7 +251,7 @@ class Auth with ChangeNotifier {
 
   Future<void> signin(String email, String password) async {
     //final url = Uri.parse('http://localhost:5001/users/login');
-    final url = Uri.parse('${AppConstants.baseURl}/users/login');
+    final url = Uri.parse('${AppConstants.baseURl}/api/users/login');
     print({password, email});
     try {
       final response = await http.post(url,

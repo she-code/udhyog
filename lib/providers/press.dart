@@ -54,7 +54,7 @@ class PressProvider with ChangeNotifier {
     String TypeOfPress,
     //String authTok
   ) async {
-    final url = Uri.parse('${AppConstants.baseURl}/press');
+    final url = Uri.parse('${AppConstants.baseURl}/api/press');
     //final url = Uri.parse('http://192.168.53.189:5001/api/press');
 
     try {
@@ -86,7 +86,7 @@ class PressProvider with ChangeNotifier {
   Future<void> getPressForCompany() async {
     try {
       //final url = Uri.parse('http://192.168.13.189:5001/api/press');
-      final url = Uri.parse('${AppConstants.baseURl}/press');
+      final url = Uri.parse('${AppConstants.baseURl}/api/press');
       final responseData = await http.get(url, headers: {
         "Content-Type": "application/json",
         "Access-Control_Allow_Origin": "*",
@@ -135,7 +135,7 @@ class PressProvider with ChangeNotifier {
 
   Future<void> removePress(String pressId) async {
     try {
-      final url = Uri.parse('${AppConstants.baseURl}/press/$pressId');
+      final url = Uri.parse('${AppConstants.baseURl}/api/press/$pressId');
 
       // final url = Uri.parse('http://192.168.13.189:5001/api/press/$pressId');
 
@@ -156,7 +156,7 @@ class PressProvider with ChangeNotifier {
   Future<void> updatePress(
       String pressId, String location, String static_id) async {
     try {
-      final url = Uri.parse('${AppConstants.baseURl}/press/$pressId');
+      final url = Uri.parse('${AppConstants.baseURl}/api/press/$pressId');
 
       // final url = Uri.parse('http://192.168.13.189:5001/api/press/$pressId');
 
@@ -180,7 +180,7 @@ class PressProvider with ChangeNotifier {
   Future<List<PressAverage>> getDailyTempLowPressData(String id) async {
     try {
       // final url = Uri.parse('http://192.168.13.189:5001/api/press/$id/daily');
-      final url = Uri.parse('${AppConstants.baseURl}/press/$id/daily');
+      final url = Uri.parse('${AppConstants.baseURl}/api/press/$id/daily');
       final responseData = await http.get(url, headers: {
         "Content-Type": "application/json",
         "Access-Control_Allow_Origin": "*",
@@ -192,7 +192,7 @@ class PressProvider with ChangeNotifier {
       final List<PressAverage> pressAvg = pA.PressAverages;
       _PressAverage = pressAvg;
 
-      //  print(_PressAverage);
+      print({"from daily", _PressAverage, 'results', results});
       notifyListeners();
       return _PressAverage;
     } catch (e) {
@@ -204,7 +204,7 @@ class PressProvider with ChangeNotifier {
   Future<List<PressAverage>> getWeeklyPressData(String id) async {
     try {
       // final url = Uri.parse('http://192.168.13.189:5001/api/press/$id/weekly');
-      final url = Uri.parse('${AppConstants.baseURl}/press/$id/weekly');
+      final url = Uri.parse('${AppConstants.baseURl}/api/press/$id/weekly');
       final responseData = await http.get(url, headers: {
         "Content-Type": "application/json",
         "Access-Control_Allow_Origin": "*",
@@ -227,7 +227,7 @@ class PressProvider with ChangeNotifier {
   Future<List<PressAverage>> getMonthlyPressData(String id) async {
     try {
       // final url = Uri.parse('http://192.168.13.189:5001/api/press/$id/monthly');
-      final url = Uri.parse('${AppConstants.baseURl}/press/$id/monthly');
+      final url = Uri.parse('${AppConstants.baseURl}/api/press/$id/monthly');
       final responseData = await http.get(url, headers: {
         "Content-Type": "application/json",
         "Access-Control_Allow_Origin": "*",
@@ -238,7 +238,7 @@ class PressProvider with ChangeNotifier {
       PressAverageList pA = PressAverageList.fromJson(results['data']);
       final List<PressAverage> pressAvg = pA.PressAverages;
       _PressAverage = pressAvg;
-      // print(_pressData);
+      print(_pressData);
       notifyListeners();
       return _PressAverage;
     } catch (e) {
@@ -251,7 +251,7 @@ class PressProvider with ChangeNotifier {
       String id, String selectedDate) async {
     try {
       //final url = Uri.parse('http://192.168.13.189:5001/api/press/$id/customized');
-      final url = Uri.parse('${AppConstants.baseURl}/press/$id/customized');
+      final url = Uri.parse('${AppConstants.baseURl}/api/press/$id/customized');
       final responseData = await http.post(url,
           body: json.encode({"selectedDate": selectedDate}),
           headers: {
@@ -263,7 +263,7 @@ class PressProvider with ChangeNotifier {
       PressAverageList pA = PressAverageList.fromJson(results['data']);
       final List<PressAverage> pressAvg = pA.PressAverages;
       _PressAverage = pressAvg;
-      // print(_pressData);
+      print(_pressData);
       notifyListeners();
       return _PressAverage;
     } catch (e) {

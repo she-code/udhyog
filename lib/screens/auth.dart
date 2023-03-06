@@ -46,8 +46,11 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
                     child: const Text(
                       'Udhyog 4.0 (U4) is a start-up initiation by professionals in 2019, and mainly provides technological solutions related to emerging technologies such as Industry 4.0. This in turn transform existing industrial setup into SMART and sustainable manufacturing setup. ',
                       maxLines: 7,
+                      textAlign: TextAlign.justify,
                       style: TextStyle(
-                          overflow: TextOverflow.visible, fontSize: 16),
+                        overflow: TextOverflow.visible,
+                        fontSize: 16,
+                      ),
                     ),
                   ),
                 ),

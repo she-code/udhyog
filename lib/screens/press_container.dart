@@ -34,7 +34,7 @@ class _PressContainerState extends State<PressContainer>
         _isLoading = true;
       });
 
-      Provider.of<PressProvider>(context)
+      Provider.of<PressProvider>(context, listen: false)
           .getPressForCompany()
           .then((_) => setState(() {
                 _isLoading = false;

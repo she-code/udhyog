@@ -422,168 +422,159 @@ class _PressDetailsState extends State<PressDetails> {
       body: pressDetails.isEmpty
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
-              child: Container(
-                color: backG,
-                height: MediaQuery.of(context).size.height,
-                // width: MediaQuery.of(context).size.width,
-                //width: 400,
-                child: SingleChildScrollView(
-                    child: Column(children: [
-                  const LogoHeading(),
-                  const SizedBox(height: 10),
-                  const UserNameHeader(),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                      width: deviceSize.width,
-                      //height: deviceSize.height,
-                      alignment: Alignment.center,
-                      decoration: const BoxDecoration(color: Colors.white),
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: 400,
-                        height: 400,
-                        decoration: const BoxDecoration(
-                            image: DecorationImage(
-                          image: AssetImage(
-                            'assets/images/press_img.jpg',
-                          ),
-                          fit: BoxFit.cover,
-                        )),
-                        child: Stack(
-                          children: [
-                            Positioned(
-                              bottom: 100,
-                              left: 60,
-                              child: Image.asset("assets/images/mainLogo.png",
-                                  height: 50, width: 60),
-                            ),
-                            Positioned(
-                                bottom: 110,
-                                left: 153,
-                                child: Container(
-                                    alignment: Alignment.center,
-                                    width: 70,
-                                    padding: const EdgeInsets.all(4),
-                                    color: Colors.white,
-                                    child: Text(
-                                      StringUtils.capitalize(
-                                          pressData.press_name),
-                                      style: const TextStyle(fontSize: 14),
-                                    ))),
-                            Positioned(
-                              top: 107,
-                              right: 63,
-                              child: Text(
-                                latestDetail['BlockTemp'].toString(),
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                            ),
-                            Positioned(
-                              top: 107,
-                              right: 105,
-                              child: Text(
-                                latestDetail['TankTopTemp'].toString(),
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                            ),
-                            Positioned(
-                              top: 133,
-                              right: 63,
-                              child: Text(
-                                latestDetail['TankLowerTemp'].toString(),
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                            ),
-                            Positioned(
-                              top: 133,
-                              right: 105,
-                              child: Text(
-                                latestDetail['HoseTemp']!.toString(),
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                            ),
-                            Positioned(
-                              top: 165,
-                              right: 63,
-                              child: Text(
-                                latestDetail['PartCount']!.toString(),
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                            ),
-                            Positioned(
-                              top: 165,
-                              right: 105,
-                              child: Text(
-                                latestDetail['Timer']!.toString(),
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                            ),
-                            // Positioned(
-                            //   bottom: 100,
-                            //   right: 60,
-                            //   child: Image.network('http://localhost/:5001/$logo',
-                            //       height: 50, width: 60),
-                            // )
-                          ],
-                        ),
-                      )),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  // Container(
-                  //     margin: EdgeInsets.all(8),
-                  //     width: double.maxFinite,
-                  //     height: 200,
-                  //     child: ListView(
-                  //       scrollDirection: Axis.horizontal,
-                  //       children: [
-                  //         GaugeApp(
-                  //             'Lower Tank Temp', latestDetail["TankLowerTemp"]),
-                  //         GaugeApp(
-                  //             'Higher Tank Temp', latestDetail['TankTopTemp']),
-                  //         GaugeApp('Hose Temp', latestDetail['HoseTemp']),
-                  //         GaugeApp('Block Temp',
-                  //             double.parse(latestDetail['BlockTemp'])),
-                  //       ],
-                  //     )),
-                  //  RadioType(reportType, updateReportType),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                    child: Report_Type(),
-                  ),
-                  showTime
-                      ? Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                          child: _time_Duration(),
-                        )
-                      : const SizedBox(),
-                  if (_reportType == reportType.report)
-                    Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: FutureBuilder(
-                            future: _presess,
-                            builder: ((context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return const Text("No data");
-                              }
-                              return ReportTable(snapshot.data, duration,
-                                  pressData.press_name);
-                            }))),
-
-                  if (_reportType == reportType.chart)
-                    Chart(
-                        // key: _chartGlobal,
-                        )
-                  //  Text('chart'),
-                ])),
+              child: Column(children: [
+              const LogoHeading(),
+              const SizedBox(height: 10),
+              const UserNameHeader(),
+              const SizedBox(
+                height: 20,
               ),
-            ),
+              Container(
+                  width: deviceSize.width,
+                  //height: deviceSize.height,
+                  alignment: Alignment.center,
+                  decoration: const BoxDecoration(color: Colors.white),
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: 400,
+                    height: 400,
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                      image: AssetImage(
+                        'assets/images/press_img.jpg',
+                      ),
+                      fit: BoxFit.cover,
+                    )),
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          bottom: 100,
+                          left: 60,
+                          child: Image.asset("assets/images/mainLogo.png",
+                              height: 50, width: 60),
+                        ),
+                        Positioned(
+                            bottom: 110,
+                            left: 153,
+                            child: Container(
+                                alignment: Alignment.center,
+                                width: 70,
+                                padding: const EdgeInsets.all(4),
+                                color: Colors.white,
+                                child: Text(
+                                  StringUtils.capitalize(pressData.press_name),
+                                  style: const TextStyle(fontSize: 14),
+                                ))),
+                        Positioned(
+                          top: 107,
+                          right: 63,
+                          child: Text(
+                            latestDetail['BlockTemp'].toString(),
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        Positioned(
+                          top: 107,
+                          right: 105,
+                          child: Text(
+                            latestDetail['TankTopTemp'].toString(),
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        Positioned(
+                          top: 133,
+                          right: 63,
+                          child: Text(
+                            latestDetail['TankLowerTemp'].toString(),
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        Positioned(
+                          top: 133,
+                          right: 105,
+                          child: Text(
+                            latestDetail['HoseTemp']!.toString(),
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        Positioned(
+                          top: 165,
+                          right: 63,
+                          child: Text(
+                            latestDetail['PartCount']!.toString(),
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        Positioned(
+                          top: 165,
+                          right: 105,
+                          child: Text(
+                            latestDetail['Timer']!.toString(),
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        // Positioned(
+                        //   bottom: 100,
+                        //   right: 60,
+                        //   child: Image.network('http://localhost/:5001/$logo',
+                        //       height: 50, width: 60),
+                        // )
+                      ],
+                    ),
+                  )),
+              const SizedBox(
+                height: 20,
+              ),
+              // Container(
+              //     margin: EdgeInsets.all(8),
+              //     width: double.maxFinite,
+              //     height: 200,
+              //     child: ListView(
+              //       scrollDirection: Axis.horizontal,
+              //       children: [
+              //         GaugeApp(
+              //             'Lower Tank Temp', latestDetail["TankLowerTemp"]),
+              //         GaugeApp(
+              //             'Higher Tank Temp', latestDetail['TankTopTemp']),
+              //         GaugeApp('Hose Temp', latestDetail['HoseTemp']),
+              //         GaugeApp('Block Temp',
+              //             double.parse(latestDetail['BlockTemp'])),
+              //       ],
+              //     )),
+              //  RadioType(reportType, updateReportType),
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: Report_Type(),
+              ),
+              showTime
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      child: _time_Duration(),
+                    )
+                  : const SizedBox(),
+              if (_reportType == reportType.report)
+                Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: FutureBuilder(
+                        future: _presess,
+                        builder: ((context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Text("No data");
+                          }
+                          return ReportTable(
+                              snapshot.data, duration, pressData.press_name);
+                        }))),
+
+              if (_reportType == reportType.chart)
+                Chart(
+                    // key: _chartGlobal,
+                    )
+              //  Text('chart'),
+            ])),
       floatingActionButton:
           SpeedDial(icon: Icons.menu, backgroundColor: Colors.amber, children: [
         SpeedDialChild(
